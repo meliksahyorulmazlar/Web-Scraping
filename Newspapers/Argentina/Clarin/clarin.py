@@ -13,6 +13,10 @@ class Clarin:
 
     #the start date should be later than the end date
     def download(self):
+        try:
+            os.makedirs("Clarin Headlines")
+        except FileExistsError:
+            pass
         while self.start_date != self.end_date:
             year = self.start_date.year
             month = self.start_date.strftime("%m")
@@ -45,5 +49,6 @@ if __name__ == "__main__":
     month_now = datetime.datetime.now().month
     day_now = datetime.datetime.now().day
     #If you want to get all of the photos:
+    #The earliest date is the 28th August 1945
     clarin = Clarin(start_date=datetime.datetime(day=28,month=8,year=1945),end_date=datetime.datetime(day=day_now,month=month_now,year=year_now))
     clarin.download()
