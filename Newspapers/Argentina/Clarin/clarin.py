@@ -28,13 +28,13 @@ class Clarin:
                 with open(f"{day}-{month}-{year}.jpg","wb") as data_file:
                     data_file.write(photo)
 
-                with open("clarin.txt","a") as data_file:
+                with open("download_results.txt","a") as data_file:
                     data_file.write(f"{day}/{month}/{year}.jpg was downloaded \n")
                 print(f"{day}-{month}-{year}.jpg was downloaded \n")
                 self.start_date += self.one_day
 
             elif response.status_code == 404:
-                with open("clarin.txt","a") as data_file:
+                with open("download_results.txt","a") as data_file:
                     data_file.write(f"{day}/{month}/{year} does not exist\n")
                 self.start_date += self.one_day
 
