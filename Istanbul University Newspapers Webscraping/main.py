@@ -39,11 +39,11 @@ class DownloadIstanbul:
                     with open(f"{newspaper_name}/{filename}","wb") as f:
                         f.write(response.content)
                     print(f"{filename} was downloaded")
-                    with open("results.txt","a") as f:
+                    with open("download_results.txt","a") as f:
                         f.write(f"{filename} was downloaded\n")
                 else:
                     print(f"{newspaper_name} had response status code {response.status_code}")
-                    with open("results.txt","a") as f:
+                    with open("download_results.txt","a") as f:
                         f.write(f"{newspaper_name} had response status code {response.status_code}")
 
     #You can use to find this to get the names of the newspapers
@@ -75,11 +75,11 @@ class DownloadIstanbul:
                     with open(f"{newspaper_name}/{filename}", "wb") as f:
                         f.write(response.content)
                     print(f"{filename} was downloaded")
-                    with open("results.txt", "a") as f:
+                    with open("download_results.txt", "a") as f:
                         f.write(f"{filename} was downloaded\n")
                 else:
                     print(f"{newspaper_name} had response status code {response.status_code}")
-                    with open("results.txt", "a") as f:
+                    with open("download_results.txt", "a") as f:
                         f.write(f"{newspaper_name} had response status code {response.status_code}")
         else:
             print(f"Newspaper not found")
