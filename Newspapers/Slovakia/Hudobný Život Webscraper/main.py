@@ -54,6 +54,5 @@ class HudobnyZivot:
 
 if __name__ == "__main__":
     hz = HudobnyZivot()
-    hz.download_year(year="1999")
     #hz.download_year(year="2020") example usage to download all the pdfs in 2020
     #hz.download_all() example usage to download all the pdfs found on the website
