@@ -68,7 +68,7 @@ class VataneEmrooz:
 
 
     #This method will download a specific numbered newspaper of Vatan-e Emrooz if it exists
-    def download(self,number:int)
+    def download_number(self,number:int)
         self.download(number)
 
 
