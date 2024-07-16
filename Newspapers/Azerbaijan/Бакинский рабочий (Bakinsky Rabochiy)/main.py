@@ -13,7 +13,8 @@ class BakinskyRabochiy:
 
     #This method will find how many pages there are on the archive
     def find_count(self):
-        count = 1
+        #When I last checked there were 216 pages on the archive
+        count = 216
         all_found = False
         while not all_found:
             page = f"https://br.az/newspaper/?page={count}"
