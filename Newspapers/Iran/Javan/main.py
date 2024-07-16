@@ -63,6 +63,20 @@ class Javan:
     def download_latest(self):
         self.download(self.latest)
 
+
+    #This will download all the newspapers from Javan numbered n1 till Javan numbered n2
+    #javan.download_n1_n2(500,505)
+    #this will download javan newspapers numbered 500,501,502,503,504,505 from their website
+    def download_n1_n2(self,n1:int,n2:int):
+        if n2 < n1:
+            c = n2
+            n2 = n1
+            n1 = c
+
+        for i in range(n1,n2+1):
+            self.download(i)
+
+
 if __name__ == "__main__":
     javan = Javan()
     javan.download_latest()
