@@ -81,19 +81,23 @@ class GazeteKadikoy:
         link = count_link[1]
         print(count)
         os.makedirs(count)
-        
-        response = requests.get(url=link)
-
-        if response.status_code == 200:
-            with open(f"{count}/{count}.pdf","wb") as f:
-                f.write(response.content)
+        if count == 0:
             with open("download_results.txt","a") as f:
-                f.write(f"{count}.pdf was downloaded\n")
-            print(f"{count}.pdf was downloaded")
+                f.write(f"{link} had no pdf to download\n")
+            print(f"{link} had no pdf to download")
         else:
-            with open("download_results.txt","a") as f:
-                f.write(f"{count}.pdf was not downloaded,it had response status code {response.status_code}\n")
-            print(f"{count}.pdf was not downloaded,it had response status code {response.status_code}")
+            response = requests.get(url=link)
+    
+            if response.status_code == 200:
+                with open(f"{count}/{count}.pdf","wb") as f:
+                    f.write(response.content)
+                with open("download_results.txt","a") as f:
+                    f.write(f"{count}.pdf was downloaded\n")
+                print(f"{count}.pdf was downloaded")
+            else:
+                with open("download_results.txt","a") as f:
+                    f.write(f"{count}.pdf was not downloaded,it had response status code {response.status_code}\n")
+                print(f"{count}.pdf was not downloaded,it had response status code {response.status_code}")
 
 
     #This method will download all of n1 till n2
