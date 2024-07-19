@@ -35,7 +35,7 @@ class MerhabaGazete:
         webpage = f"https://www.merhabahaber.com/egazete/merhaba-gazetesi-1-p{number}.htm"
         soup = BeautifulSoup(requests.get(url=webpage).text,"lxml")
         links = [(f'https://www.merhabahaber.com{link["href"]}',link.text) for link in soup.find_all("a",href=True) if "/egazete/merhaba-gazetesi/" in link["href"]]
-        return links
+        return links[::-1]
 
     #This will download the entire page
     def download_page(self,number:int):
@@ -103,7 +103,7 @@ class MerhabaGazete:
     #This method will download the latest copy of Merhaba Gazete
     def download_latest(self):
         links = self.find_newspapers(1)
-        link = links[0]
+        link = links[-1]
         self.download_link(link)
 
 if __name__ == "__main__":
