@@ -287,7 +287,7 @@ if __name__ == "__main__":
     li = LegoInstructions()
     #li.download_theme('LEGOLAND (5)')
 
-    #The following method will download a specifi year between 1996 and the current year that we are in
+    #The following method will download a specific year between 1996 and the current year that we are in
     #the year input has to be an integer between 1996 to the year that we are in
     #li.download_year(year=1996)
     #li.download_year(year=2010)
