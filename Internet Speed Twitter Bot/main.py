@@ -37,6 +37,8 @@ class InternetTwitterBot:
         self.username_entry = Entry(self.root,width=40)
         self.username_entry.place(x=150,y=100)
 
+        self.username_entry.focus()
+
         self.username_tip = Label(self.root,text="For the username, enter your phone number, username or your email")
         self.username_tip.place(x=75,y=130)
 
