@@ -2,7 +2,7 @@
 # This bot will get the person's internet speed etc. and post it on Twitter
 
 
-import time
+import time,os
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
@@ -13,6 +13,8 @@ from tkinter import messagebox
 
 class InternetTwitterBot:
     def __init__(self):
+        key = os.environ['password']
+        print(key)
         self.start_chrome()
         # This way the graphical user interface only comes up when the internet speed website has loaded up
         self.start_graphics()
