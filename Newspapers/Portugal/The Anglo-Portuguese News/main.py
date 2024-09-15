@@ -1,4 +1,14 @@
-#
+#The Anglo Portuguese News was founded in 1937 by Major C. E. Wakeham, with Luiz Marques as editor.
+#It was the only English language newspaper published right through the Second World War in continental Europe, 
+#and the German broadcasting system referred to the paper as "Churchill's mouthpiece in Lisbon", which was a source of great pride to the editor.
+
+#Luiz Marques purchased the paper in 1954 and from then on was proprietor and editor until his death in October 1976.
+#His wife Susan Lowndes Marques, who had written for the newspaper since 1954, assumed the role of proprietor and editor after her husband's death 
+#and sold the paper to Nigel Batley in 1980.
+
+#From 1937 until its closure in 2004, The Anglo-Portuguese News served as a record for the British 
+#and other foreign communities in Portugal as well as publishing articles by local residents and topographical pieces on Portugal,
+#and is an invaluable resource for researchers and anyone writing about the British community and institutions in Portugal.
 
 import requests,lxml
 from bs4 import BeautifulSoup
