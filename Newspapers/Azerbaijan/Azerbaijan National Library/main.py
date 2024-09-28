@@ -67,19 +67,22 @@ class AzerbaijanLibrary:
                 os.mkdir(f"Newspapers")
             except FileExistsError:
                 pass
-
+        
         if "journals" in pdf_link:
             type = "Journals"
             try:
                 os.mkdir(f"Journals")
             except FileExistsError:
                 pass
-
+                
+        file_name = f"{name}-{date}.pdf"
+        if type == "Journals" and "/" in name:
+            name = name.replace("/","-")
+            
         try:
             os.makedirs(f"{type}/{name}")
         except FileExistsError:
             pass
-        file_name = f"{name}-{date}.pdf"
 
         response = requests.get(url=pdf_link)
         if response.status_code == 200:
