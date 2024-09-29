@@ -75,10 +75,11 @@ class AzerbaijanLibrary:
             except FileExistsError:
                 pass
                 
-        file_name = f"{name}-{date}.pdf"
+        
         if type == "Journals" and "/" in name:
             name = name.replace("/","-")
-            
+            date = date.replace("/","-")
+        file_name = f"{name}-{date}.pdf"
         try:
             os.makedirs(f"{type}/{name}")
         except FileExistsError:
