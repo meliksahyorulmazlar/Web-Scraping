@@ -10,12 +10,6 @@ class DiariodeLisboa:
         self.end_date = datetime.datetime(day=30,month=11,year=1990)
         self.one_day = datetime.timedelta(days=1)
 
-    def start_driver(self):
-        chrome_options = webdriver.ChromeOptions()
-        chrome_options.add_experimental_option("detach",True)
-
-
-
     # The following method will download a particular given date
     def download_date(self,date:datetime.datetime):
         if self.start_date <= date <= self.end_date:
