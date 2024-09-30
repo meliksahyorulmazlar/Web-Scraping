@@ -3,7 +3,6 @@
 
 import requests,lxml,datetime,os,time
 from bs4 import BeautifulSoup
-from selenium import webdriver
 
 class DiariodeLisboa:
     def __init__(self):
