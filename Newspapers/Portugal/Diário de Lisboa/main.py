@@ -40,10 +40,6 @@ class DiariodeLisboa:
     # The following method when given a link will find all the images
     def get_images(self,date:datetime.datetime,link:str):
         soup = BeautifulSoup(requests.get(url=link).text,"lxml")
-        spans = [int(span.text.replace("/","").strip()) for span in soup.find_all("span") if "/" in span.text]
-        page_count = spans[0]
-
-        soup = BeautifulSoup(requests.get(url=link).text,"lxml")
         images = [image["src"] for image in soup.find_all("img",alt=True)]
         images = images[4:]
         images = [img.replace("d3","d2").replace("D3","D2").replace("jpg","png") for img in images]
