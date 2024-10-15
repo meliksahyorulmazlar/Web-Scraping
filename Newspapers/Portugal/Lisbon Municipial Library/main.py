@@ -46,6 +46,8 @@ class LisbonMuncipialLibrary:
                     newspaper = f"{newspaper}"
                     if link in self.links:
                         self.newspapers[-1] += newspaper
+                        if self.newspapers.count(self.newspapers[-1]) == 2:
+                            self.newspapers[-1] += f" {extension}"
                     elif newspaper in self.newspapers:
                         newspaper = f"{newspaper} {extension}"
                         self.newspapers.append(newspaper)
