@@ -1,7 +1,6 @@
 # Lisbon Municipial Library Archive
-import os
 
-import requests,lxml
+import requests,lxml,os
 from bs4 import BeautifulSoup
 
 
