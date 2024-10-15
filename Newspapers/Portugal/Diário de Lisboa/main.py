@@ -22,8 +22,7 @@ class DiariodeLisboa:
             days = [int(span.text) for span in soup.find_all("span",class_="dia_do_mes_sobre")]
 
             if date.day in days:
-                links = [self.replace_href(link["href"]) for link in soup.find_all("a",href=True)]
-                links = links[6:]
+                links = [self.replace_href(link["href"]) for link in soup.find_all("a",href=True) if 'pasta' in link['href']]
                 index = days.index(date.day)
                 link = links[index]
                 print(link)
