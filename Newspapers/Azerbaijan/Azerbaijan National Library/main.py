@@ -2,7 +2,7 @@
 #The main page is www.millikitabxana.az
 
 
-import requests,os,lxml,json
+import requests,os,lxml,json,unicodedata
 from bs4 import BeautifulSoup
 
 
