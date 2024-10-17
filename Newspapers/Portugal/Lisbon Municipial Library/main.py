@@ -125,6 +125,11 @@ class LisbonMuncipialLibrary:
                             print(f"{newspaper}/{filename} was not downloaded,it had response status code {response.status_code}\n")
                 else:
                     print("option 2b")
+                    links = []
+                    for directory in html_links:
+                        if directory not in links:
+                            links.append(directory)
+                    html_links = links
                     for directory in html_links:
                         directory_name = directory.split("/")[-1]
                         directory_name = directory_name.replace(".htm","").replace(".HTM","")
