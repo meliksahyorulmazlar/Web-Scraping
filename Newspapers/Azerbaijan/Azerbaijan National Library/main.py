@@ -125,9 +125,14 @@ class AzerbaijanLibrary:
     # This method will download a specific journal's archive
     def download_journal(self,journal:str):
         if journal in self.journals:
-            website = f"https://www.millikitabxana.az/journals/search?name={journal}&year=&month="
-            soup = BeautifulSoup(requests.get(url=website).text,"lxml")
-            number = int([s.text for s in soup.find_all("span")][4])
+            website = f"https://www.millikitabxana.az/newspapers/search?name={journal}&year=&month="
+            soup = BeautifulSoup(requests.get(url=website).text, "lxml")
+            print([s.text for s in soup.find_all("span")], journal)
+            items = [s.text for s in soup.find_all("span")]
+            item = items[4]
+            number = 1
+            if item != '[email\xa0protected]':
+                number = int(item)
             page_count = self.check_pages(count=number)
             pdfs = []
             dates = []
