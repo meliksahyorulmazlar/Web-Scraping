@@ -1,0 +1,726 @@
+\documentclass[amssymb,twocolumn,pra,10pt,aps]{revtex4-1}
+\usepackage{mathptmx,amsmath,amsthm}
+
+\newtheorem{lemma}{Lemma}
+\newtheorem{cor}[lemma]{Corollary}
+\newtheorem*{lemma*}{Lemma}
+\newcommand{\FF}{\mathbb{F}}
+\newcommand{\QQ}{\mathbb{Q}}
+\newcommand{\RR}{\mathbb{R}}
+\newcommand{\CC}{\mathbb{C}}
+\newcommand{\ZZ}{\mathbb{Z}}
+\DeclareMathOperator{\lcm}{lcm}
+\DeclareMathOperator{\sgn}{sgn}
+\DeclareMathOperator{\Trace}{Trace}
+\newcommand{\ee}{\ell}
+
+\begin{document}
+\title{Solutions to the 79th William Lowell Putnam Mathematical Competition \\
+    Saturday, December 1, 2018}
+\author{Kiran Kedlaya and Lenny Ng}
+\noaffiliation
+\maketitle
+
+While preparing these solutions, we learned of the November 27 death of Kent Merryfield, who moderated the Putnam discussions on the Art of Problem Solving Forums and thereby contributed directly and indirectly to these solutions over many years.
+His presence will be dearly missed.
+
+\begin{itemize}
+\item[A1]
+By clearing denominators and regrouping, we see that the given equation is equivalent to 
+\[
+(3a-2018)(3b-2018) = 2018^2.
+\]
+Each of the factors is congruent to $1 \pmod 3$. There are $6$ positive factors of $2018^2 = 2^2 \cdot 1009^2$ that are congruent to $1 \pmod 3$: $1$, $2^2$, $1009$, $2^2 \cdot 1009$, $1009^2$, $2^2 \cdot 1009^2$. These lead to the $6$ possible pairs: $(a,b) = (673,1358114)$, $(674,340033)$, $(1009,2018)$, $(2018,1009)$, $(340033,674)$, and $(1358114,673)$.
+
+As for negative factors, the ones that are congruent to $1 \pmod 3$ are $-2, -2 \cdot 1009, -2 \cdot 1009^2$.
+However, all of these lead to pairs where $a \leq 0$ or $b \leq 0$.
+
+\item[A2]
+The answer is $1$ if $n=1$ and $-1$ if $n>1$. Write $M_n$ for a $(2^n-1) \times (2^n-1)$ matrix of the given form, and note that $\det M_n$ does not depend on the ordering of the subsets: transposing two subsets has the effect of transposing two rows and then transposing two columns in $M_n$, and this does not change the determinant.
+
+Clearly $\det M_1 = 1$. We claim that for $n>1$, $\det M_n = -(\det M_{n-1})^2$, and the desired answer will follow by induction. Let $S_1',\ldots,S_{2^{n-1}-1}'$ denote the nonempty subsets of $\{1,\ldots,n-1\}$ in any order, with resulting matrix $M_{n-1}$. Let $m_{ij}'$ denote the $(i,j)$ entry of $M_{n-1}$. Now order the nonempty subsets $S_1,\ldots,S_{2^n-1}$ of $\{1,\ldots,n\}$ as follows: 
+\[
+S_i= \begin{cases} S_i' &  i \leq 2^{n-1}-1 \\
+S_{i-2^{n-1}+1}' \cup \{n\} & 2^{n-1} \leq i \leq 2^n-2 \\
+\{n\} & i=2^{n}-1.
+\end{cases}
+\]
+(For example, if $S_1', \dots, S_{2^{n-1}-1}'$ are ordered in lexicographic order
+as binary strings, then so are $S_1,\dots,S_{2^n-1}$.)
+Let $M_n$ be the resulting matrix. Then we have:
+\[
+M_n = \left( \begin{array}{ccc|ccc|c}
+&&&&&& 0 \\
+& M_{n-1} &&& M_{n-1} && \vdots \\
+&&&&&& 0 \\ \hline
+&&&1 & \cdots & 1 & 1 \\
+& M_{n-1} && \vdots & \ddots & \vdots & \vdots \\
+&&&1 &\cdots & 1 & 1 \\ \hline
+0 & \cdots & 0 & 1 & \cdots & 1 & 1
+\end{array} \right).
+\]
+
+In $M_n$, perform the following operations, which do not change the determinant: subtract the final row from rows $2^{n-1}$ through $2^n-2$, and then subtract the final column from columns $2^{n-1}$ through $2^n-2$. The result is the matrix
+\[
+\left( \begin{array}{ccc|ccc|c}
+&&&&&& 0 \\
+& M_{n-1} &&& M_{n-1} && \vdots \\
+&&&&&& 0 \\ \hline
+&&&0 & \cdots & 0 & 0 \\
+& M_{n-1} && \vdots & \ddots & \vdots & \vdots \\
+&&&0 &\cdots & 0 & 0 \\ \hline
+0 & \cdots & 0 & 0 & \cdots & 0 & 1
+\end{array} \right).
+\]
+
+We can remove the final row and column without changing the determinant. Now swap the first $2^{n-1}-1$ rows with the final $2^{n-1}-1$ rows: this changes the determinant by an overall factor of $(-1)^{(2^{n-1}-1)^2} = -1$. The result is the block-diagonal matrix $\left( \begin{matrix} M_{n-1} & 0 \\ M_{n-1} & M_{n-1} \end{matrix} \right)$, whose determinant is $(\det M_{n-1})^2$. Thus $\det M_n = -(\det M_{n-1})^2$ as desired.
+
+\item[A3]
+The maximum value is $480/49$.
+Since $\cos(3x_i) = 4 \cos(x_i)^3 - 3 \cos(x_i)$, it is equivalent to maximize $4 \sum_{i=1}^{10} y_i^3$
+for $y_1,\dots,y_{10} \in [-1,1]$ with $\sum_{i=1}^{10} y_i = 0$; 
+note that this domain is compact, so the maximum value is guaranteed to exist.
+For convenience, we establish something slightly stronger: we maximize $4 \sum_{i=1}^{n} y_i^3$
+for $y_1,\dots,y_{n} \in [-1,1]$ with $\sum_{i=1}^{n} y_i = 0$, where $n$ may be any even nonnegative integer up to $10$,
+and show that the maximum is achieved when $n=10$.
+
+We first study the effect of varying $y_i$ and $y_j$ while fixing their sum. If that sum is $s$,
+then the function $y \mapsto y^3 + (s-y)^3$ has constant second derivative $6s$, so it is either everywhere convex or everywhere concave. Consequently, if $(y_1,\dots,y_{n})$ achieves the maximum, then for any two indices $i<j$,
+at least one of the following must be true:
+\begin{itemize}
+\item one of $y_i$, $y_j$ is extremal (i.e., equal to $1$ or $-1$);
+\item $y_i = y_j < 0$ (in which case $s<0$ and the local maximum is achieved above);
+\item $y_i = -y_j$ (in which case $s=0$ above).
+\end{itemize}
+In the third case, we may discard $y_i$ and $y_j$ and achieve a case with smaller $n$; we may thus assume that this does not occur. In this case, all of the non-extremal values are equal to some common value $y < 0$, and moreover we cannot have both 1 and -1. We cannot omit 1, as otherwise the condition $\sum_{i=1}^{n} y_i = 0$ cannot be achieved;
+we must thus have only the terms 1 and $y$, occurring with some positive multiplicities $a$ and $b$ adding up to $n$. 
+Since $a+b=n$ and $a+by = 0$, we can solve for $y$ to obtain $y = -a/b$; we then have
+\[
+4\sum_{i=1}^n y_i^3 = a + by^3 = 4a \left( 1 - \frac{a^2}{b^2} \right).
+\]
+Since $y > -1$, we must have $a < b$. For fixed $a$, the target function increases as $b$ increases,
+so the optimal case must occur when $a+b=10$. The possible pairs $(a,b)$ at this point are
+\[
+(1,9), (2,8), (3,7), (4,6);
+\]
+computing the target function for these values yields respectively
+\[
+\frac{32}{9}, \frac{15}{2}, \frac{480}{49}, \frac{80}{9},
+\]
+yielding $480/49$ as the maximum value.
+
+\noindent
+\textbf{Remark.}
+Using Lagrange multipliers yields a similar derivation, but with a slight detour required to separate local minima and maxima. For general $n$, the above argument shows that the target function is maximized when $a+b=n$.
+
+\item[A4]
+\noindent
+\textbf{First solution.}
+We prove the claim by induction on $m+n$.
+For the base case, suppose that $n=1$; we then have $m=1$ and the given equation becomes $gh=e$. The claim then reduces to the fact that a one-sided inverse in $G$ is also a two-sided inverse. (Because $G$ is a group, $g$ has an inverse $g^{-1}$; since $gh = e$, we have $h = g^{-1}(gh) = g^{-1} e = g^{-1}$, so $hg = e = gh$.)
+
+Suppose now that $n>1$. In case $m>n$, set $\tilde{g} = g h$, $\tilde{h} = h$, and
+\[
+b_k = \left\lfloor \frac{(m-n)k}{n} \right\rfloor - \left\lfloor \frac{(m-n)(k-1)}{n} \right\rfloor 
+\quad (k=1,\dots,n).
+\]
+then
+\[
+\tilde{g} \tilde{h}^{b_1} \cdots \tilde{g} \tilde{h}^{b_n} = gh^{a_1} \cdots gh^{a_n} = e,
+\]
+so the induction hypothesis implies that $\tilde{g}$ and $\tilde{h}$ commute; this implies that $g$ and $h$ commute.
+
+In case $m < n$, note that $a_k \in \{0,1\}$ for all $k$. Set $\tilde{g} = h^{-1}$, $\tilde{h} = g^{-1}$, and
+\[
+b_l = \left\lfloor \frac{n \ell}{m} \right\rfloor - \left\lfloor \frac{n(\ell-1)}{m} \right\rfloor 
+\quad (\ell=1,\dots,m);
+\]
+we claim that 
+\[
+\tilde{g}\tilde{h}^{b_1}\cdots\tilde{g}\tilde{h}^{b_m} = (gh^{a_1}\cdots gh^{a_n})^{-1} = e,
+\]
+so the induction hypothesis implies that $\tilde{h}$ and $\tilde{g}$ commute; this implies that $g$ and $h$ commute.
+
+To clarify this last equality, consider a lattice walk starting from $(0,0)$, ending at $(n,m)$, staying below the line
+$y = mx/n$, and keeping as close to this line as possible. If one follows this walk and records the element $g$ for each horizontal step and $h$ for each vertical step, one obtains the word $gh^{a_1}\cdots gh^{a_n}$. 
+Now take this walk, reflect across the line $y = x$, rotate by a half-turn, then translate to put the endpoints at $(0,0)$ and $(m,n)$; this is the analogous walk for the pair $(n,m)$.
+
+\noindent
+\textbf{Remark.}
+By tracing more carefully through the argument, one sees in addition that there exists an element $k$ of $G$
+for which $g = k^m, h = k^{-n}$.
+
+\noindent
+\textbf{Second solution.} (by Greg Martin)
+Since $\gcd(m,n) = 1$, there exist integers $x,y$ such that $mx + ny = 1$; we may further assume that 
+$x \in \{1,\dots,n\}$. We first establish the identity
+\[
+a_{k-x} = \begin{cases}
+a_k - 1 & \mbox{if $k \equiv 0 \pmod{n}$} \\
+a_k + 1 & \mbox{if $k \equiv 1 \pmod{n}$} \\
+a_k & \mbox{otherwise}.
+\end{cases}
+\]
+Namely, by writing $-mx = ny-1$, we see that
+\begin{align*}
+a_{k-x} &= \left\lfloor \frac{m(k-x)}{n} \right\rfloor - \left\lfloor \frac{m(k-x-1)}{n} \right\rfloor
+\\
+&= \left\lfloor \frac{mk+ny-1}{n} \right\rfloor - \left\lfloor \frac{m(k-1)+ny-1}{n} \right\rfloor \\
+&= \left\lfloor \frac{mk-1}{n} \right\rfloor - \left\lfloor \frac{m(k-1)-1}{n} \right\rfloor
+\end{align*}
+and so
+\begin{align*}
+a_{k-x} - a_k &= \left( \left\lfloor \frac{mk-1}{n} \right\rfloor - \left\lfloor \frac{mk}{n} \right\rfloor \right)
+\\
+&\quad
+- \left( \left\lfloor \frac{m(k-1)-1}{n} \right\rfloor - \left\lfloor \frac{m(k-1)}{n} \right\rfloor \right).
+\end{align*}
+The first parenthesized expression equals 1 if $n$ divides $mk$, or equivalently $n$ divides $k$, and 0 otherwise.
+Similarly, the second parenthesized expression equals 1 if $n$ divides $k-1$ and 0 otherwise. This proves the stated identity.
+
+We now use the given relation $g h^{a_1} \cdots g h^{a_n} = e$ to write
+\begin{align*}
+ghg^{-1}h^{-1} &= gh(h^{a_1} g h^{a_2} \cdots gh^{a_{n-1}} g h^{a_n})h^{-1} \\
+&= gh^{a_1+1} gh^{a_2} \cdots gh^{a_{n-1}} gh^{a_n-1} \\
+&= gh^{a_{1-x}} \cdots gh^{a_{n-x}} \\
+&= (gh^{a_{n+1-x}} \cdots gh^{a_{n}}) (gh^{a_1} \cdots gh^{a_{n-x}}).
+\end{align*}
+The two parenthesized expressions multiply in the opposite order to $g h^{a_1} \cdots g h^{a_n} = e$, so they must be
+(two-sided) inverses of each other. We deduce that $ghg^{-1} h^{-1} = e$, meaning that $g$ and $h$ commute.
+
+\noindent
+\textbf{Third solution.} (by Sucharit Sarkar)
+Let $T$ denote the torus $\mathbb{R}^2/\mathbb{Z}^2$. The line segments from $(0,0)$ to $(1,0)$ and from $(0,0)$ to $(0,1)$ are closed loops in $T$, and we denote them by $g$ and $h$ respectively. Now let $p$ be the (image of the) point $(\epsilon,-\epsilon)$ in $T$ for some $0<\epsilon\ll 1$. The punctured torus $T \setminus \{p\}$ deformation retracts onto the union of the loops $g$ and $h$, and so $\pi_1(T\setminus\{p\})$, the fundamental group of $T\setminus\{p\}$ based at $(0,0)$, is the free group on two generators, $\langle g,h\rangle$.
+
+Let $\gamma$ and $\tilde{\gamma}$ denote the following loops based at $(0,0)$ in $T$: $\gamma$ is the image of the line segment from $(0,0)$ to $(n,m)$ under the projection $\mathbb{R}^2 \to T$, and $\tilde{\gamma}$ is the image of the lattice walk from $(0,0)$ to $(n,m)$, staying just below the line $y=mx/n$, that was described in the first solution. There is a straight-line homotopy with fixed endpoints between the two paths in $\mathbb{R}^2$ from $(0,0)$ to $(n,m)$, the line segment and the lattice walk, and this homotopy does not pass through any point of the form $(a+\epsilon,b-\epsilon)$ for $a,b\in\mathbb{Z}$ by the construction of the lattice walk. It follows that $\gamma$ and $\tilde{\gamma}$ are homotopic loops in $T \setminus \{p\}$. Since the class of $\tilde{\gamma}$ in $\pi_1(T\setminus\{p\})$ is evidently $gh^{a_1}gh^{a_2}\cdots gh^{a_n}$, it follows that the class of $\gamma$ in $\pi_1(T\setminus\{p\})$ is the same.
+
+Now since $\gcd(m,n)=1$, there is an element $\phi \in GL_2(\mathbb{Z})$ sending $(n,m)$ to $(1,0)$, which then sends the line segment from $(0,0)$ to $(n,m)$ to the segment from $(0,0)$ to $(1,0)$. Then $\phi$ induces a homeomorphism of $T$ sending $\gamma$ to $g$, which in turn induces an isomorphism $\phi_* :\thinspace \pi_1(T\setminus \{p\}) \to \pi_1(T\setminus \{\phi^{-1}(p)\})$. Both fundamental groups are equal to $\langle g,h\rangle$, and we conclude that $\phi_*$ sends $gh^{a_1}gh^{a_2}\cdots gh^{a_n}$ to $g$. It follows that $\phi_*$ induces an isomorphism
+\[
+\langle g,h\,|\,gh^{a_1}gh^{a_2}\cdots gh^{a_n} \rangle \to \langle g,h \,|\, g\rangle \cong \langle h\rangle \cong \mathbb{Z}.
+\]
+
+Since $\mathbb{Z}$ is abelian, $g$ and $h$ must commute in $\langle g,h\,|\,gh^{a_1}gh^{a_2}\cdots gh^{a_n}\rangle$, whence they must also commute in $G$.
+
+
+\item[A5]
+\textbf{First solution.}
+Call a function $f\colon \mathbb{R} \to \mathbb{R}$ \textit{ultraconvex} if $f$ is infinitely differentiable and $f^{(n)}(x) \geq 0$ for all $n \geq 0$ and all $x \in \mathbb{R}$, where $f^{(0)}(x) = f(x)$;
+note that if $f$ is ultraconvex, then so is $f'$.
+Define the set
+\[
+S = \{ f :\thinspace \mathbb{R} \to \mathbb{R} \,|\,f \text{ ultraconvex and } f(0)=0\}.
+\]
+For $f \in S$, we must have $f(x) = 0$ for all $x < 0$: if $f(x_0) > 0$ for some $x_0 < 0$, then
+by the mean value theorem there exists $x \in (0,x_0)$ for which $f'(x) = \frac{f(x_0)}{x_0} < 0$.
+In particular, $f'(0) = 0$, so $f' \in S$ also.
+
+We show by induction that for all $n \geq 0$,
+\[
+f(x) \leq \frac{f^{(n)}(1)}{n!} x^n \qquad (f \in S, x \in [0,1]).
+\]
+We induct with base case $n=0$, which holds because any $f \in S$ is nondecreasing. Given the claim for $n=m$,
+we apply the induction hypothesis to $f' \in S$ to see that
+\[
+f'(t) \leq \frac{f^{(n+1)}(1)}{n!} t^n \qquad (t \in [0,1]),
+\]
+then integrate both sides from $0$ to $x$ to conclude.
+
+Now for $f \in S$, we have $0 \leq f(1) \leq \frac{f^{(n)}(1)}{n!}$ for all $n \geq 0$. 
+On the other hand, by Taylor's theorem with remainder,
+\[
+f(x) \geq \sum_{k=0}^n \frac{f^{(k)}(1)}{k!}(x-1)^k \qquad (x \geq 1).
+\]
+Applying this with $x=2$, we obtain $f(2) \geq \sum_{k=0}^n \frac{f^{(k)}(1)}{k!}$ for all $n$;
+this implies that $\lim_{n\to\infty}  \frac{f^{(n)}(1)}{n!} = 0$.
+Since $f(1) \leq \frac{f^{(n)}(1)}{n!}$, we must have $f(1) = 0$.
+
+For $f \in S$, we proved earlier that $f(x) = 0$ for all $x\leq 0$, as well as for $x=1$. Since
+the function $g(x) = f(cx)$ is also ultraconvex for $c>0$, we also have $f(x) = 0$ for all $x>0$;
+hence $f$ is identically zero.
+
+To sum up, if $f\colon \mathbb{R} \to \mathbb{R}$ is infinitely differentiable, $f(0)=0$, and $f(1) = 1$,
+then $f$ cannot be ultraconvex. This implies the desired result.
+
+\noindent
+\textbf{Variant.}
+(by Yakov Berchenko-Kogan)
+Another way to show that any $f \in S$ is identically zero is to show that for $f \in S$ and $k$ a positive integer,
+\[
+f(x) \leq \frac{x}{k} f'(x) \qquad (x \geq 0).
+\]
+We prove this by induction on $k$.
+For the base case $k=1$, note that $f''(x) \geq 0$ implies that $f'$ is nondecreasing. For $x \geq 0$, we thus have
+\[
+f(x) = \int_0^x f'(t)\,dt \leq \int_0^x f'(x)\,dt = x f'(x).
+\]
+To pass from $k$ to $k+1$, apply the induction hypothesis to $f'$ and integrate by parts to obtain
+\begin{align*}
+kf(x) &= \int_0^x k f'(t)\,dt \\
+&\leq \int_0^x t f''(t)\,dt \\
+&= xf'(x) - \int_0^x f'(t)\,dt = xf'(x) - f(x).
+\end{align*}
+
+
+
+\noindent
+\textbf{Remark.}
+Noam Elkies points out that one can refine the argument to show that
+if $f$ is ultraconvex, then it is analytic (i.e., it is represented by an entire Taylor series about any point, as opposed to a function like $f(x) = e^{-1/x^2}$ whose Taylor series at $0$ is identically zero);
+he attributes the following argument to 
+Peter Shalen. Let $g_n(x) = \sum_{k=0}^n \frac{1}{k!} f^{(k})(0) x^k$ be the $n$-th order Taylor polynomial of $f$.
+By Taylor's theorem with remainder (a/k/a Lagrange's theorem), $f(x) - g_n(x)$ is everywhere nonnegative;
+consequently, for all $x \geq 0$, the Taylor series $\sum_{n=0}^\infty \frac{1}{n!} f^{(n)}(0) x^n$
+converges and is bounded above by $f$. But since $f^{(n+1)}(x)$ is nondecreasing, Lagrange's theorem 
+also implies that $f(x) - g_n(x) \leq \frac{1}{(n+1)!} f^{(n+1)}(x)$; for fixed $x \geq 0$, the right side 
+tends to 0 as $n \to \infty$. Hence $f$ is represented by its Taylor series for $x \geq 0$, and so
+is analytic for $x>0$; by replacing $f(x)$ with $f(x-c)$, we may conclude that $f$ is everywhere analytic.
+
+\noindent
+\textbf{Remark.}
+We record some properties of the class of ultraconvex functions.
+\begin{itemize}
+\item
+Any nonnegative constant function is ultraconvex. The exponential function is ultraconvex.
+\item
+If $f$ is ultraconvex, then $f'$ is ultraconvex. Conversely, if $f'$ is ultraconvex and
+$\liminf_{x \to -\infty} f(x) \geq 0$, then $f$ is ultraconvex.
+\item
+The class of ultraconvex functions is closed under addition, multiplication, and composition.
+\end{itemize}
+
+
+\noindent
+\textbf{Second solution.} (by Zachary Chase)
+In this solution, we use \emph{Bernstein's theorem on monotone functions}.
+To state this result, we say that a function $f: [0, \infty) \to \mathbb{R}$ is \emph{totally monotone} if
+$f$ is continuous, $f$ is infinitely differentiable on $(0, \infty)$, and $(-1)^n f^{(n)}(x)$ is nonnegative
+for all positive integers $n$ and all $x > 0$. For such a function, Bernstein's theorem asserts that there is a nonnegative finite Borel measure $\mu$ on $[0, \infty)$ such that
+\[
+f(x) = \int_0^\infty e^{-tx} d\mu(t) \qquad (x \geq 0).
+\]
+For $f$ as in the problem statement, 
+for any $M > 0$, the restriction of $f(M-x)$ to $[0, \infty)$ is totally monotone, so Bernstein's theorem provides a Borel measure $\mu$ for which $f(M-x) = \int_0^\infty e^{-tx} d\mu(t)$ for all $x \geq 0$.
+Taking $x = M$, we see that $\int_0^\infty e^{-Mt} d\mu(t) = f(0) = 0$; since $\mu$ is a nonnegative measure, it must be identically zero. Hence $f(x)$ is identically zero for $x \leq M$; varying over all $M$, we deduce the desired result.
+
+\noindent
+\textbf{Third solution.}
+(from Art of Problem Solving user \texttt{chronondecay})
+In this solution, we only consider the behavior of $f$ on $[0,1]$.
+We first establish the following result.
+Let $f: (0,1) \to \mathbb{R}$ be a function such that for each positive integer $n$, $f^{(n)}(x)$ is nonnegative on $(0,1)$, tends to 0 as $x \to 0^+$, and tends to some limit as $x \to 1^-$.
+Then for each nonnegative integer $n$, $f(x) x^{-n}$ is nondecreasing on $(0,1)$.
+
+To prove the claimed result, we proceed by induction on $n$, the case $n=0$ being a consequence of the assumption that $f'(x)$ is nonnegative on $(0,1)$. Given the claim for some $n \geq 0$, note that
+since $f'$ also satisfies the hypotheses of the problem, $f'(x) x^{-n}$ is also nondecreasing on $(0,1)$.
+Choose $c \in (0,1)$ and consider the function
+\[
+g(x) = \frac{f'(c)}{c^n} x^n \qquad (x \in [0,1)).
+\]
+For $x \in (0,c)$, $f'(x)x^{-n} \leq f'(c) c^{-n}$, so $f'(x) \leq g(x)$;
+similarly, for $x \in (c,1)$, $f'(x) \geq g(x)$. It follows that if $f'(c) > 0$, then
+\[
+\frac{\int_c^1 f'(x)\,dx}{\int_0^c f'(x)\,dx} \geq \frac{\int_c^1 g(x)\,dx}{\int_0^c g(x)\,dx}
+\Rightarrow
+\frac{\int_0^c f'(x)\,dx}{\int_0^1 f'(x)\,dx} \leq \frac{\int_0^c g(x)\,dx}{\int_0^1 g(x)\,dx}
+\]
+and so $f(c)/f(1) \leq c^{n+1}$. (Here for convenience, we extend $f$ continuously to $[0,1]$.)
+That is, $f(c)/c^{n+1} \leq f(1)$ for all $c \in (0,1)$.
+For any $b \in (0,1)$, we may apply the same logic to the function $f(bx)$ to deduce that
+if $f'(c) > 0$, then $f(bc)/c^{n+1} \leq f(b)$, or equivalently 
+\[
+\frac{f(bc)}{(bc)^{n+1}} \leq \frac{f(b)}{b^{n+1}}.
+\]
+This yields the claim unless $f'$ is identically 0 on $(0,1)$, but in that case the claim is obvious anyway.
+
+We now apply the claim to show that for $f$ as in the problem statement, it cannot be the case that
+$f^{(n)}(x)$ is nonnegative on $(0,1)$ for all $n$. Suppose the contrary; then for any fixed $x \in (0,1)$,
+we may apply the previous claim with arbitrarily large $n$ to deduce that $f(x) = 0$. By continuity, we also then have
+$f(1) = 0$, a contradiction.
+
+\noindent
+\textbf{Fourth solution.}
+(by Alexander Karabegov)
+As in the first solution, we may see that $f^{(n)}(0) = 0$ for all $n$.
+Consequently, for all $n$ we have
+\[
+f(x) = \frac{1}{(n-1)!} \int_0^x (x-t)^{n-1} f^{(n)}(t)\,dt \qquad (x \in \mathbb{R})
+\]
+and hence
+\[
+\int_0^1 f(x)\,dx = \frac{1}{n!} \int_0^1 (1-t)^n f^{(n)}(t)\,dt. 
+\]
+Suppose now that $f$ is infinitely differentiable, $f(1) = 1$, and $f^{(n)}(x) \geq 0$ for all $n$ and all $x \in [0,1]$. Then
+\begin{align*}
+\int_0^1 f(x)\,dx &= \frac{1}{n} \cdot \frac{1}{(n-1)!} \int_0^1 (1-t)^n f^{(n)}(t)\,dt \\
+&\leq \frac{1}{n} \cdot \frac{1}{(n-1)!} \int_0^1 (1-t)^{n-1} f^{(n)}(t)\,dt \\
+&= \frac{1}{n} f(1) = \frac{1}{n}.
+\end{align*}
+Since this holds for all $n$, we have $\int_0^1 f(x)\,dx = 0$, and so $f(x) = 0$ for $x \in [0,1]$; this yields the desired contradiction.
+
+\item[A6]
+\textbf{First solution.}
+Choose a Cartesian coordinate system with origin at the midpoint of $AB$ and positive $x$-axis containing $A$.
+By the condition on $AB$, we have $A = (\sqrt{a}, 0)$, $B = (-\sqrt{a}, 0)$ for some positive rational number $a$.
+Let $(x_1, y_1)$ and $(x_2, y_2)$ be the respective coordinates of $C$ and $D$; by computing the lengths
+of the segments $AC, BC, AD, BD, CD$, we see that the quantities
+\begin{gather*}
+(x_1 - \sqrt{a})^2 + y_1^2, \quad (x_1 + \sqrt{a})^2 + y_1^2, \\
+(x_2 - \sqrt{a})^2 + y_2^2, \quad (x_2 + \sqrt{a})^2 + y_2^2, \\
+(x_1 - x_2)^2 + (y_1 - y_2)^2
+\end{gather*}
+are all rational numbers. By adding and subtracting the first two quantities, and similarly for the next two, we see that the quantities
+\[
+x_1^2 + y_1^2,\quad x_1 \sqrt{a}, \quad x_2^2 + y_2^2, \quad x_2 \sqrt{a}
+\]
+are rational numbers. Since $a$ is a rational number, so then are
+\begin{align*}
+x_1^2 &= \frac{(x_1 \sqrt{a})^2}{a} \\
+x_2^2 &= \frac{(x_2 \sqrt{a})^2}{a} \\
+x_1x_2 &= \frac{(x_1 \sqrt{a})(x_2 \sqrt{a})}{a} \\
+y_1^2 &= (x_1^2 + y_1^2) - x_1^2 \\
+y_2^2 &= (x_2^2 + y_2^2) - x_2^2.
+\end{align*}
+Now note that the quantity
+\[
+(x_1 - x_2)^2 + (y_1 - y_2)^2 = x_1^2 -2x_1 x_2 + x_2^2 + y_1^2 - 2y_1y_2 + y_2^2
+\]
+is known to be rational, as is every summand on the right except $-2y_1y_2$; thus $y_1y_2$ is also rational.
+Since $y_1^2$ is also rational, so then is $y_1/y_2 = (y_1y_2)/(y_1^2)$;
+since
+\[
+\mathrm{area}(\triangle ABC) = \sqrt{a} y_1, \qquad \mathrm{area}(\triangle ABD) = \sqrt{a} y_2,
+\]
+this yields the desired result.
+
+
+\noindent
+\textbf{Second solution.} (by Manjul Bhargava)
+Let $\mathbf{b},\mathbf{c}, \mathbf{d}$ be the vectors $AB, AC, AD$ viewed as column vectors.
+The desired ratio is given by
+\begin{align*}
+\frac{\det(\mathbf{b},\mathbf{c})}{\det(\mathbf{b},\mathbf{d})} &= \frac{\det(\mathbf{b},\mathbf{c})^T \det(\mathbf{b},\mathbf{c}) }{ \det(\mathbf{b},\mathbf{c})^T\det(\mathbf{b},\mathbf{d})} \\
+&= \det \begin{pmatrix} \mathbf{b} \cdot \mathbf{b} & \mathbf{b} \cdot \mathbf{c} \\
+\mathbf{c} \cdot \mathbf{b} & \mathbf{c} \cdot \mathbf{c}
+\end{pmatrix}
+\det \begin{pmatrix}
+\mathbf{b} \cdot \mathbf{b} & \mathbf{b} \cdot \mathbf{d} \\
+\mathbf{c} \cdot \mathbf{b} & \mathbf{c} \cdot \mathbf{d}
+\end{pmatrix}^{-1}.
+\end{align*}
+
+The square of the length of $AB$ is $\mathbf{b} \cdot \mathbf{b}$, so this quantity is rational.
+The square of the lengths of $AC$ and $BC$ are $\mathbf{c} \cdot \mathbf{c}$ and
+$(\mathbf{c} - \mathbf{b}) \cdot (\mathbf{c} - \mathbf{b}) = \mathbf{b} \cdot \mathbf{b} + \mathbf{c} \cdot \mathbf{c}
+- 2 \mathbf{b} \cdot \mathbf{c}$, so $\mathbf{b} \cdot \mathbf{c} = \mathbf{c} \cdot \mathbf{b}$ is rational.
+Similarly, using $AD$ and $BD$, we deduce that $\mathbf{d} \cdot \mathbf{d}$ and $\mathbf{b} \cdot \mathbf{d}$ is rational; then using $CD$, we deduce that $\mathbf{c} \cdot \mathbf{d}$ is rational.
+
+\noindent
+\textbf{Third solution.}
+(by David Rusin)
+Recall that Heron's formula (for the area of a triangle in terms of its side length) admits the following three-dimensional analogue due to Piero della Francesca: if $V$ denotes the volume of a tetrahedron with vertices $A,B,C,D \in \mathbb{R}^3$, then
+\[
+288 V^2 = \det
+\begin{pmatrix}
+0 & AB^2 & AC^2 & AD^2 & 1 \\
+AB^2 & 0 & BC^2 & BD^2 & 1 \\
+AC^2 & BC^2 & 0 & CD^2 & 1 \\
+AD^2 & BD^2 & CD^2 & 0 & 1 \\
+1 & 1 & 1 & 1 & 0
+\end{pmatrix}
+\]
+In particular, the determinant vanishes if and only if $A,B,C,D$ are coplanar. From the identity
+\begin{gather*}
+64(4 \mathrm{Area}(\triangle ABC)^2 \mathrm{Area}(\triangle ABD)^2 - 9 AB^2 V^2) \\
+= (AB^4 - AB^2(AC^2 + AD^2 + BC^2 + BD^2 - 2CD^2) \\ + (AC^2-BC^2)(AD^2-BD^2))^2
+\end{gather*}
+we see that $\mathrm{Area}(\triangle ABC) \mathrm{Area}(\triangle ABD)$ is rational;
+since each of the areas has rational square, we deduce the claim.
+
+\noindent
+\textbf{Fourth solution.}
+(by Greg Martin)
+Define the signed angles $\alpha = \angle BAC, \beta = \angle BAD, \gamma = \angle CAD$, so that $\alpha + \gamma = \beta$. By the Law of Cosines,
+\begin{align*}
+2 AB \cdot AC \cos \alpha &= AB^2 + AC^2 - BC^2 \in \mathbb{Q} \\
+2  AB \cdot AD \cos \beta &= AB^2 + AD^2 - BD^2 \in \mathbb{Q} \\
+2  AC \cdot AD \cos \gamma &= AC^2 + AD^2 - CD^2 \in \mathbb{Q}.
+\end{align*}
+In particular, $(2 AB \cdot AC \cos \alpha)^2 \in \mathbb{Q}$, and so
+$\cos^2 \alpha \in \mathbb{Q}$ and $\sin^2 \alpha = 1 - \cos^2 \alpha \in \mathbb{Q}$,
+and similarly for the other two angles.
+
+Applying the addition formula to $\cos \beta$, we deduce that
+\[
+2  AB \cdot AD \cos \alpha \cos \gamma - 
+2 AB \cdot AD \sin \alpha \sin \gamma \in \mathbb{Q}. 
+\]
+The first of these terms equals
+\[
+\frac{(2 AB \cdot AC \cos \alpha)(2 AB \cdot AC \cos \alpha)}{AC^2} \in \mathbb{Q},
+\]
+so the second term must also be rational. But now
+\begin{align*}
+\frac{\mathrm{Area}(\triangle ABC)}{\mathrm{Area}(\triangle ACD)}
+&= \frac{AB \cdot AC \sin \alpha}{AC \cdot AD \sin \gamma} \\
+&= \frac{2 AB \cdot AD \sin \alpha \sin \gamma}{2 AD^2 \sin^2 \gamma} \in \mathbb{Q}
+\end{align*}
+as desired.
+
+\noindent
+\textbf{Remark.}
+Derek Smith observes that this result
+is Proposition 1 of: M. Knopf, J. Milzman, D. Smith, D. Zhu and D. Zirlin,
+Lattice embeddings of planar point sets, \textit{Discrete and Computational Geometry} \textbf{56} (2016), 693--710.
+
+\noindent
+\textbf{Remark.}
+It is worth pointing out that it is indeed possible to choose points $A,B,C,D$ satisfying the conditions of the problem;
+ one can even ensure that the lengths of all four segments are themselves rational.
+For example, it was originally observed by Euler that one can find an infinite set of points on the unit circle whose pairwise distances are all rational numbers.
+One way to see this is to apply the linear fractional transformation $f(z) = \frac{z+i}{z-i}$ to the Riemann sphere to carry the real axis (plus $\infty$) to the unit circle, then compute that
+\[
+\left| f(z_1) - f(z_2) \right| = \frac{2|z_1-z_2||}{|(z_1-i)(z_2-i)|}.
+\]
+Let $S$ be the set of rational numbers $z$ for which $2(z^2 + 1)$ is a perfect square; the set $f(S)$ has the desired property provided that it is infinite. That can be checked in various ways; for instance, the equation
+$2(x^2+1) = (2y)^2$ equates to $x^2-2y^2 = -1$ (a modified Brahmagupta-Pell equation), which has infinitely many solutions even over the integers:
+\[
+x + y \sqrt{2} = (1 + \sqrt{2})^{2n+1}.
+\]
+
+\item[B1]
+The answer is the collection of vectors $(1,b)$ where $0 \leq b \leq 100$ and $b$ is even.
+ (For ease of typography, we write tuples instead of column vectors.)
+
+First we show that if $\mathcal{P} \setminus \{\mathbf{v}\}$ can be partitioned into subsets $S_1$ and $S_2$ of equal size and equal sum, then $\mathbf{v}$ must be of the form $(1,b)$ where $b$ is even. For a finite nonempty set $S$ of vectors in $\mathbb{Z}^2$, let $\Sigma(S)$ denote the sum of the vectors in $S$. 
+Since the average $x$- and $y$-coordinates in $\mathcal{P}$ are $1$ and $50$, respectively, and there are $3\cdot 101$ elements in $\mathcal{P}$, we have
+\[
+\Sigma(P) = 303 \cdot (1,50) = (303,15150). 
+\]
+On the other hand, 
+\[
+\Sigma(P) = \mathbf{v}+\Sigma(S_1)+\Sigma(S_2) = \mathbf{v}+2\Sigma(S_1). 
+\]
+By parity considerations, the entries of $\mathbf{v}$ must be odd and even, respectively, and thus $\mathbf{v}$ is of the claimed form.
+
+Next suppose $\mathbf{v} = (1,b)$ where $b$ is even. Note that $\mathcal{P} \setminus \{(1,50)\}$ can be partitioned into $151$ pairs of (distinct) vectors $(x,y)$ and $(2-x,100-y)$, each summing to $(2,100)$. If $b \neq 50$ then three of these pairs are $\{(1,b),(1,100-b)\}$,$\{(2,b),(0,100-b)\}$, and $\{(2,25+b/2),(0,75-b/2)\}$. Of the remaining $148$ pairs, assign half of them to $S_1$ and half to $S_2$, and then complete the partition of $\mathcal{P} \setminus \{\mathbf{v}\}$ by assigning $(0,100-b)$, $(2,25+b/2)$, and $(1,50)$ to $S_1$ and $(1,100-b)$, $(2,b)$, and $(0,75-b/2)$ to $S_2$. (Note that the three vectors assigned to each of $S_1$ and $S_2$ have the same sum $(3,175-b/2)$.) By construction, $S_1$ and $S_2$ have the same number of elements, and $\Sigma(S_1) = \Sigma(S_2)$.
+
+For $b=50$, this construction does not work because $(1,b) = (100-b)$, but a slight variation can be made.
+ In this case, three of the pairs in $\mathcal{P} \setminus \{(1,50)\}$ are $\{(2,50),(0,50)\}$, $\{(1,51),(1,49)\}$, and $\{(0,49),(2,51)\}$. Assign half of the other $148$ pairs to $S_1$ and half to $S_2$, and complete the partition of
+$\mathcal{P} \setminus \{(1,50)\}$ by assigning $(2,50)$, $(1,51)$, and $(0,49)$ to $S_1$ and $(0,50)$, $(1,49)$, and $(2,51)$ to $S_2$.
+
+
+\item[B2]
+\textbf{First solution.}
+Note first that $f_n(1) > 0$, so $1$ is not a root of $f_n$.
+Next, note that
+\[
+(z-1)f_n(z) = z^n + \cdots + z - n;
+\]
+however, for $\left| z \right| \leq 1$, we have 
+$\left| z^n + \cdots + z \right| \leq n$ by the triangle inequality;
+equality can only occur if $z,\dots,z^n$ have norm 1 and the same argument, which only happens for $z=1$.
+Thus there can be no root of $f_n$ with $|z| \leq 1$.
+
+
+\noindent
+\textbf{Second solution.}
+(by Karl Mahlburg)
+Define the polynomial
+\[
+g_n(z) = nz^{n-1} + \cdots + 2z + 1
+\]
+and note that $z^{n-1} g_n(z^{-1}) = f_n(z)$.
+Since $f_n(0) \neq 0$, to prove the claim it is equivalent to show that $g_n$
+has no roots in the region $|z| \geq 1$.
+
+Now note that $g_n(z) = h_n'(z)$ for
+\[
+h_n(z) = z^n + \cdots + z + 1,
+\]
+a polynomial with roots $e^{2\pi ij/(n+1)}$ for $j=0,\dots,n$.
+By the Gauss-Lucas theorem, the roots of $g_n$ lie in the convex hull of the roots of $h_n$,
+and moreover cannot be vertices of the convex hull because $h_n$ has no repeated roots.
+This implies the claim.
+
+\noindent
+\textbf{Remark.}
+Yet another approach is to use the \emph{Enestr\"om-Kakeya theorem}: if $P_n(z) = a_0 + \cdots + a_n z^n$
+is a polynomial with real coefficients satisfying $|a_n|  \geq \cdots \geq |a_0| > 0$, then the roots of $P_n(z)$
+all satisfy $|z| \leq 1$. Namely, applying this to the polynomial $g_n(z/c)$ for 
+$c = n/(n-1)$ shows that the roots of $g_n$ all satisfy $\left|z \right| \leq 1/c$. 
+
+\noindent
+\textbf{Remark.}
+For a related problem, see problem A5 from the 2014 Putnam competition.
+
+\item[B3]
+The values of $n$ with this property are $2^{2^\ell}$ for $\ell = 1,2,4,8$.
+First, note that $n$ divides $2^n$ if and only if $n$ is itself a power of 2; we may thus write $n = 2^m$ and note that
+if $n<10^{100}$, then
+\[
+2^m = n < 10^{100} < (10^3)^{34} < (2^{10})^{34} = 2^{340}.
+\]
+Moreover, the case $m=0$ does not lead to a solution because for $n=1$, $n-1 = 0$ does not divide $2^n-1 = 1$; we 
+may thus assume $1 \leq m \leq 340$.
+
+Next, note that modulo $n-1 = 2^m-1$, the powers of $2$ cycle with period $m$ (the terms
+$2^0, \dots, 2^{m-1}$ remain the same upon reduction, and then the next term repeats the initial 1); consequently,
+$n-1$ divides $2^n-1$ if and only if $m$ divides $n$, which happens if and only if $m$ is a power of 2.
+Write $m = 2^\ell$ and note that $2^\ell < 340 < 512$, so $\ell < 9$. The case $\ell=0$ does not lead to a solution because for $n=2$, $n-2 =0$ does not divide $2^n-2 = 2$; we may thus assume $1 \leq \ell \leq 8$.
+
+Finally, note that $n-2 = 2^m-2$ divides $2^n-2$ if and only if $2^{m-1} - 1$ divides $2^{n-1} - 1$.
+By the same logic as the previous paragraph, this happens if and only if $m-1$ divides $n-1$,
+that is, if $2^\ell - 1$ divides $2^m-1$. This in turn happens if and only if $\ell$ divides $m = 2^\ell$,
+which happens if and only if $\ell$ is a power of 2. The values allowed by the bound $\ell < 9$ are
+$\ell = 1,2,4,8$; for these values, $m \leq 2^8 = 256$ and
+\[
+n = 2^m \leq 2^{256} \leq (2^3)^{86} < 10^{86} < 10^{100},
+\]
+so the solutions listed do satisfy the original inequality.
+
+\item[B4]
+We first rule out the case $|a|>1$. In this case, we prove that $|x_{n+1}| \geq |x_n|$ for all $n$, meaning that we cannot have $x_n = 0$. We proceed by induction; the claim is true for $n=0,1$ by hypothesis. To prove the claim for  $n \geq 2$, write
+\begin{align*}
+|x_{n+1}| &= |2x_nx_{n-1}-x_{n-2}| \\
+&\geq 2|x_n||x_{n-1}|-|x_{n-2}| \\
+&\geq |x_n|(2|x_{n-1}|-1) \geq |x_n|,
+\end{align*} 
+where the last step follows from $|x_{n-1}| \geq |x_{n-2}| \geq \cdots \geq |x_0| = 1$.
+
+We may thus assume hereafter that $|a|\leq 1$. We can then write $a = \cos b$ for some $b \in [0,\pi]$. 
+Let $\{F_n\}$ be the Fibonacci sequence, defined as usual by $F_1=F_2=1$ and $F_{n+1}=F_n+F_{n-1}$. We show by induction that
+\[
+x_n = \cos(F_n b) \qquad (n \geq 0).
+\]
+Indeed, this is true for $n=0,1,2$; given that it is true for $n \leq m$, then
+\begin{align*}
+2x_mx_{m-1}&=2\cos(F_mb)\cos(F_{m-1}b) \\
+&= \cos((F_m-F_{m-1})b)+\cos((F_m+F_{m-1})b) \\
+&= \cos(F_{m-2}b)+\cos(F_{m+1}b)
+\end{align*}
+and so 
+$x_{m+1} = 2x_mx_{m-1}-x_{m-2} = \cos(F_{m+1}b)$. This completes the induction.
+
+
+Since $x_n = \cos(F_n b)$, if $x_n=0$ for some $n$ then $F_n b = \frac{k}{2} \pi$ for some odd integer $k$. In particular, we can write $b = \frac{c}{d}(2\pi)$ where $c = k$ and $d = 4F_n$ are integers.
+
+
+Let $x_n$ denote the pair $(F_n,F_{n+1})$, where each entry in this pair is viewed as an element of $\mathbb{Z}/d\mathbb{Z}$. Since there are only finitely many possibilities for $x_n$, there must be some $n_2>n_1$ such that $x_{n_1}=x_{n_2}$. Now $x_n$ uniquely determines both $x_{n+1}$ and $x_{n-1}$, and it follows that the sequence $\{x_n\}$ is periodic: for $\ell = n_2-n_1$, $x_{n+\ell} = x_n$ for all $n \geq 0$. In particular, $F_{n+\ell} \equiv F_n \pmod{d}$ for all $n$. But then $\frac{F_{n+\ell}c}{d}-\frac{F_n c}{d}$ is an integer, and so
+\begin{align*}
+x_{n+\ell} &= \cos\left(\frac{F_{n+\ell}c}{d}(2\pi)\right)\\
+& = \cos\left(\frac{F_n c}{d}(2\pi)\right) = x_n
+\end{align*}
+for all $n$. Thus the sequence $\{x_n\}$ is periodic, as desired.
+
+\noindent
+\textbf{Remark.}
+Karl Mahlburg points out that one can motivate the previous solution by computing the terms
+\[
+x_2 = 2a^2 - 1, x_3 = 4a^3 - 3a, x_4 = 16a^5 - 20a^3 + 5a
+\]
+and recognizing these as the Chebyshev polynomials $T_2, T_3, T_5$. (Note that $T_3$ was used in the solution of
+problem A3.)
+
+\noindent
+\textbf{Remark.}
+It is not necessary to handle the case $\left| a \right| > 1$ separately; the cosine function extends
+to a surjective analytic function on $\mathbb{C}$ and continues to satisfy the addition formula,
+so one can write $a = \cos b$ for some $b \in \mathbb{C}$
+and then proceed as above.
+
+
+\item[B5]
+Let $(a_1,a_2)$ and $(a_1',a_2')$ be distinct points in $\mathbb{R}^2$; we want to show that $f(a_1,a_2) \neq f(a_1',a_2')$. Write $(v_1,v_2) = (a_1',a_2')-(a_1,a_2)$, and let $\gamma(t) = (a_1,a_2)+t(v_1,v_2)$, $t \in [0,1]$, be the path between $(a_1,a_2)$ and $(a_1',a_2')$. Define a real-valued function $g$ by $g(t) = (v_1,v_2) \cdot f(\gamma(t))$.
+By the Chain Rule, 
+\[
+f'(\gamma(t)) = \left( \begin{matrix} \partial f_1/\partial x_1 & \partial f_1/\partial x_2 \\ \partial f_2/\partial x_1 & \partial f_2/\partial x_2 \end{matrix} \right) \left(
+\begin{matrix} v_1 \\ v_2 \end{matrix} \right). 
+\]
+Abbreviate $\partial f_i/\partial x_j$ by $f_{ij}$; then
+\begin{align*}
+g'(t) &= \left( \begin{matrix} v_1 & v_2 \end{matrix} \right) \left( \begin{matrix} f_{11} & f_{12} \\ f_{21} & f_{22} \end{matrix} \right) \left( \begin{matrix} v_1 \\ v_2 \end{matrix} \right) \\
+&= f_{11} v_1^2 + (f_{12}+f_{21})v_1v_2+f_{22} v_2^2 \\
+&= f_{11} \left(v_1+\frac{f_{12}+f_{21}}{2f_{11}} v_2 \right)^2 + \frac{4f_{11}f_{22}-(f_{12}+f_{21})^2}{4f_{11}} v_2^2 \\
+& \geq 0
+\end{align*}
+since $f_{11}$ and $f_{11}f_{22}-(f_{12}+f_{21})^2/4$ are positive by assumption. Since the only way that equality could hold is if $v_1$ and $v_2$ are both $0$, we in fact have $g'(t)>0$ for all $t$. But if $f(a_1,a_2) = f(a_1',a_2')$, then $g(0) = g(1)$, a contradiction.
+
+\noindent
+\textbf{Remark.}
+A similar argument shows more generally that $f:\thinspace \mathbb{R}^n \to \mathbb{R}^n$ is injective if at all points in $\mathbb{R}^n$, the Jacobian matrix $Df$ satisfies the following property: the quadratic form associated to the bilinear form with matrix $Df$ (or the symmetrized bilinear form with matrix $(Df+(Df)^T)/2$) is positive definite. In the setting of the problem, the symmetrized matrix is
+\[
+\left( \begin{matrix} f_{11} & (f_{12}+f_{21})/2 \\ (f_{12}+f_{21})/2 & f_{22} \end{matrix} \right),
+\]
+and this is positive definite if and only if $f_{11}$ and the determinant of the matrix are both positive
+(Sylvester's criterion). Note that the assumptions that $f_{12},f_{21}>0$ are unnecessary for the argument;
+it is also easy to see that the hypotheses $f_{11}, f_{12} > 0$ are also superfluous.
+(The assumption $f_{11}f_{22}-(f_{12}+f_{21})^2 > 0$ implies $f_{11} f_{22} > 0$, so both are nonzero and of the same sign; by continuity, this common sign must be constant over all of $\mathbb{R}^2$. If it is negative, then
+apply the same logic to $(-f_1, -f_2)$.) 
+
+\item[B6]
+(by Manjul Bhargava)
+Let $a(k,n)$ denote the number of sequences of length $k$ taken from the set $\{1,2,3,4,5,6,10\}$ and having sum $n$.
+We prove that 
+\[
+a(k,n) < 2^n \left( \frac{2018}{2048} \right)^k
+\]
+by double induction on $n+k$ and $n-k$.  The claim is clearly true when $n-k \leq 0$ and in particular when $n=k=1$, the smallest case for $n+k$.
+
+We categorize the sequences counted by $a(k,n)$ by whether they end in $1,2,3,4,5,6,10$; removing the last
+term of such a sequence yields a sequence counted by $a(k-1,n-1), a(k-1,n-2), a(k-1,n-3), a(k-1,n-4), a(k-1,n-5), a(k-1,n-6), a(k-1,n-10)$, respectively.  Therefore,
+\begin{align*}
+a(k,n) &= a(k-1,n-1) + \cdots \\
+&\quad + a(k-1,n-6) + a(k-1,n-10) \\
+&< (  2^{n-1} + \cdots +   2^{n-6}  +  2^{n-10} ) \left( \frac{2018}{2048} \right)^{k-1} \\
+&= 2^n \left( \frac{1}{2} + \cdots + \frac{1}{64} + \frac{1}{1024} \right) \left( \frac{2018}{2048} \right)^{k-1} \\
+&= 2^n \left( \frac{1009}{1024} \right) \left( \frac{2018}{2048} \right)^{k-1} \\
+&= 2^n \left( \frac{2018}{2048} \right)^{k}
+\end{align*}
+where we used directly the induction hypothesis to obtain the inequality on the second line.
+The case $k=2018, n=3860$ yields the desired result.
+
+\noindent
+\textbf{Remark.}
+K. Soundararajan suggests the following reinterpretation of this argument. The quantity $a(k,n)$ can be interpreted as the coefficient of $x^n$ in $(x + x^2 + \cdots + x^6 + x^{10})^k$. Since this polynomial has nonnegative coefficients, 
+for any $x$, we have
+\[
+a(k,n) x^n < (x + x^2 + \cdots + x^6 + x^{10})^k.
+\]
+Substituting $x = \frac{1}{2}$ yields the bound stated above.
+
+On a related note, Alexander Givental suggests that the value $n=3860$ (which is otherwise irrelevant to the problem) may have been chosen for the following reason: as a function of $x$, the upper bound $x^{-n} (x+x^2 + \cdots + x^6 + x^{10})^k$
+is minimized when
+\[
+\frac{x(1 + 2x + \cdots + 6x^5 + x^9)}{x + x^2 + \cdots + x^6 + x^{10}} = \frac{n}{k}.
+\]
+In order for this to hold for $x = 1/2$, $k=2018$, one must take $n = 3860$.
+
+\noindent
+\textbf{Remark.}
+For purposes of comparison, the stated bound is about $10^{1149}$, while the trivial upper bound
+given by counting all sequences of length 2018 of positive integers that sum to 3860 is
+\[
+\binom{3859}{2017} \sim 10^{1158}.
+\]
+The latter can be easily derived by a ``stars and bars'' argument: visualize each sequence of this form by representing the value $n$ by $n$ stars and inserting a bar between adjacent terms of the sequence. The resulting string of symbols consists of one star at the beginning, 2017 bar-star combinations, and 3860-2018 more stars.
+
+Using a computer, it is practical to compute the exact cardinality of $S$ by finding the coefficient of $x^{3860}$ in
+$(x + x^2 + \cdots + x^6 + x^{10})^{2018}$. For example, this can be done in \texttt{Sage} in a couple of seconds as follows. (The truncation is truncated modulo $x^{4000}$ for efficiency.)
+
+\begin{verbatim}
+sage: P.<x> = PowerSeriesRing(ZZ, 4000)
+sage: f = (x + x^2 + x^3 + x^4 + \
+....:      x^5 + x^6 + x^10)^2018
+sage: m = list(f)[3860]
+sage: N(m)
+8.04809122940636e1146
+\end{verbatim}
+
+This computation shows that the upper bound of the problem differs from the true value by a factor of about 150.
+
+
+\end{itemize}
+\end{document}
+
+
+

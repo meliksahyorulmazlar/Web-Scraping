@@ -1,0 +1,303 @@
+\documentclass[amssymb,twocolumn,pra,10pt,aps]{revtex4-1}
+\usepackage{mathptmx,amsmath}
+
+\begin{document}
+\title{Solutions to the 58th William Lowell Putnam Mathematical Competition \\
+    Saturday, December 6, 1997}
+\author{Manjul Bhargava, Kiran Kedlaya, and Lenny Ng}
+\noaffiliation
+\maketitle
+
+\begin{itemize}
+\item[A--1]
+The centroid $G$ of the triangle is collinear with $H$ and $O$
+(Euler line), and the centroid lies two-thirds of the way from $A$ to
+$M$. Therefore $H$ is also two-thirds of the way from $A$ to $F$, so
+$AF = 15$. Since the triangles $BFH$ and $AFC$ are similar (they're
+right triangles and
+\[
+\angle HBC = \pi/2 - \angle C = \angle CAF),
+\]
+we have
+\[
+BF/FH = AF/FC
+\]
+or
+\[
+BF \cdot FC = FH \cdot AF = 75.
+\]
+Now
+\[
+BC^2 = (BF + FC)^2 = (BF - FC)^2 + 4 BF \cdot FC,
+\]
+but
+\[
+BF - FC = BM+MF-(MC-MF) = 2MF = 22,
+\]
+so
+\[
+BC = \sqrt{22^2 + 4 \cdot 75} = \sqrt{784} = 28.
+\]
+
+\item[A--2]
+We show more precisely that the game terminates with one player
+holding all of the pennies if and only if $n = 2^m + 1$ or $n = 2^m +
+2$ for some $m$. First suppose we are in the following situation for
+some $k \geq 2$. (Note: for us, a ``move'' consists of two turns,
+starting with a one-penny pass.)
+\begin{itemize}
+\item
+Except for the player to move, each player has $k$ pennies;
+\item
+The player to move has at least $k$ pennies.
+\end{itemize}
+We claim then that
+the game terminates if and only if the number of players is a
+power of 2. First suppose the number of players is even; then after
+$m$ complete rounds, every other player, starting with the player who
+moved first, will have $m$ more pennies than initially, and the others
+will all have 0. Thus we are reduced to the situation with half as
+many players; by this process, we eventually reduce to the case where
+the number of players is odd. However, if there is more than one
+player, after two complete rounds everyone has as many pennies as they
+did before (here we need $m \geq 2$), so the game fails to terminate.
+This verifies the claim.
+
+Returning to the original game, note that after one complete round,
+$\lfloor \frac{n-1}{2} \rfloor$ players remain, each with 2 pennies
+except for the player to move, who has
+either 3 or 4 pennies. Thus by the above argument, the game terminates
+if and only if $\lfloor \frac{n-1}{2} \rfloor$ is a power of 2, that
+is, if and only if $n = 2^m + 1$ or $n = 2^m + 2$ for some $m$.
+
+\item[A--3]
+Note that the series on the left is simply $x \exp (-x^2/2)$.  By
+integration by parts,
+\[
+\int_0^\infty x^{2n+1} e^{-x^2/2} dx =
+2n \int_0^\infty x^{2n-1} e^{-x^2/2} dx
+\]
+and so by induction,
+\[
+\int_0^\infty x^{2n+1} e^{-x^2/2} dx =
+2 \times 4 \times \cdots \times 2n.
+\]
+Thus the desired
+integral is simply
+\[
+\sum_{n=0}^\infty \frac{1}{2^n n!} = \sqrt{e}.
+\]
+
+\item[A--4]
+In order to have $\psi(x) = a \phi(x)$ for all $x$, we must in
+particular have this for $x = e$, and so we take $a = \phi(e)^{-1}$.
+We first note that
+\[
+\phi(g) \phi(e) \phi(g^{-1}) = \phi(e) \phi(g) \phi(g^{-1})
+\]
+and so $\phi(g)$ commutes with $\phi(e)$ for all $g$. Next, we note that
+\[
+\phi(x) \phi(y) \phi(y^{-1}x^{-1}) = \phi(e) \phi(xy) \phi(y^{-1}x^{-1})
+\]
+and using the commutativity of $\phi(e)$, we deduce
+\[
+\phi(e)^{-1} \phi(x) \phi(e)^{-1} \phi(y) = \phi(e)^{-1} \phi(xy)
+\]
+or $\psi(xy) = \psi(x) \psi(y)$, as desired.
+
+\item[A--5]
+We may discard any solutions for which $a_1 \neq a_2$, since those come in
+pairs; so assume $a_1 = a_2$.  Similarly, we may assume that $a_3 = a_4$,
+$a_5 = a_6$, $a_7 = a_8$, $a_9=a_{10}$.  Thus we get the equation
+\[
+2/a_1 + 2/a_3 + 2/a_5 + 2/a_7 + 2/a_9 = 1.
+\]
+Again, we may assume $a_1 = a_3$ and $a_5 = a_7$, so we get $4/a_1 + 4/a_5
++ 2/a_9 = 1$; and $a_1 = a_5$, so $8/a_1 + 2/a_9 = 1$.  This implies that
+$(a_1-8)(a_9-2) = 16$, which by counting has 5 solutions.  Thus $N_{10}$
+is odd.
+
+\item[A--6]
+Clearly $x_{n+1}$ is a polynomial in $c$ of degree $n$,
+so it suffices to identify $n$ values of $c$ for which $x_{n+1} =
+0$. We claim these are $c = n-1-2r$ for $r=0,1,\dots, n-1$; in this
+case, $x_k$ is the coefficient of $t^{k-1}$ in the polynomial
+$f(t) = (1-t)^r (1+t)^{n-1-r}$. This can be verified by noticing that
+$f$ satisfies the differential equation
+\[
+\frac{f'(t)}{f(t)} = \frac{n-1-r}{1+t} - \frac{r}{1-t}
+\]
+(by logarithmic differentiation) or equivalently,
+\begin{align*}
+(1-t^2) f'(t) &= f(t) [(n-1-r)(1-t) - r(1+t)] \\
+&= f(t) [(n-1-2r)  - (n-1)t]
+\end{align*}
+and then taking the coefficient of $t^{k}$ on both sides:
+\begin{gather*}
+(k+1) x_{k+2} - (k-1) x_k = \\
+(n-1-2r) x_{k+1} - (n-1) x_{k}.
+\end{gather*}
+In particular, the largest such $c$ is $n-1$, and $x_k =
+\binom{n-1}{k-1}$ for $k= 1, 2, \dots, n$.
+
+Greg Kuperberg has suggested an alternate approach to show directly
+that $c=n-1$ is the largest root, without computing the others. Note
+that the condition $x_{n+1} = 0$ states that $(x_1, \dots, x_n)$ is an
+eigenvector of the matrix
+\[
+A_{ij} = \left\{ \begin{array}{cc} i & j = i + 1 \\ n-j & j=i-1 \\
+0&\mbox{otherwise} \end{array} \right.
+\]
+with eigenvalue $c$. By the Perron-Frobenius theorem, $A$ has a unique
+eigenvector with positive entries, whose eigenvalue has modulus
+greater than or equal to that of any other eigenvalue, which proves
+the claim.
+
+\item[B--1]
+It is trivial to check that $\frac{m}{6n}=\{\frac{m}{6n}\}\leq
+\{\frac{m}{3n}\}$ for $1\leq m\leq 2n$, that
+$1-\frac{m}{3n}=\{\frac{m}{3n}\}\leq \{\frac{m}{6n}\}$ for $2n\leq
+m\leq 3n$, that $\frac{m}{3n}-1=\{\frac{m}{3n}\}\leq \{\frac{m}{6n}\}$
+for $3n\leq m\leq 4n$, and that $1-\frac{m}{6n}=\{\frac{m}{6n}\}\leq
+\{\frac{m}{3n}\}$ for $4n\leq m\leq 6n$.  Therefore the desired sum is
+\begin{gather*}
+\sum_{m=1}^{2n-1} \frac{m}{6n}
+ +\sum_{m=2n}^{3n-1} \left(1-\frac{m}{3n} \right) \\
+ +\sum_{m=3n}^{4n-1} \left(\frac{m}{3n}-1 \right) + \sum_{m=4n}^{6n-1} \left(
+1-\frac{m}{6n} \right)
+=n.
+\end{gather*}
+
+\item[B--2]
+It suffices to show that $|f(x)|$ is bounded for $x \geq 0$, since $f(-x)$
+satisfies the same equation as $f(x)$.  But then
+\begin{align*}
+\frac{d}{dx}\left(
+(f(x))^2 + (f'(x))^2 \right) &= 2f'(x)(f(x)+f''(x)) \\
+&= -2xg(x)(f'(x))^2 \leq 0,
+\end{align*}
+so that $(f(x))^2 \leq (f(0))^2 + (f'(0))^2$ for $x\geq 0$.
+
+\item[B--3]
+The only such $n$ are the numbers 1--4, 20--24, 100--104, and
+120--124.  For the proof let
+\[H_n=\sum_{m=1}^n \frac{1}{m}\]
+and introduce the auxiliary function
+\[I_n=\sum_{1\leq m\leq n, (m,5)=1} \frac{1}{m}.\]
+It is immediate (e.g., by induction) that
+$I_n\equiv 1,-1,1,0,0$ (mod $5$) for $n\equiv  1,2,3,4,5$ (mod 5)
+respectively, and moreover, we have the equality
+\[\label{(*)}
+H_n= \sum_{m=0}^k \frac{1}{5^m} I_{\lfloor n/5^m \rfloor},\]
+where $k=k(n)$ denotes the largest integer such that $5^k\leq n$.
+We wish to determine those $n$ such that the above sum has nonnegative
+5--valuation.  (By the 5--valuation of a number $a$ we mean
+the largest integer $v$ such that $a/5^v$ is an integer.)
+
+If $\lfloor n/5^k \rfloor\leq 3$, then the last term in the above sum
+has 5--valuation $-k$, since $I_1$, $I_2$, $I_3$ each have valuation
+0; on the other hand, all other terms must have 5--valuation strictly
+larger than $-k$.  It follows that $H_n$ has 5--valuation exactly
+$-k$; in particular, $H_n$ has nonnegative 5--valuation in this case
+if and only if $k=0$, i.e., $n=1$, 2, or 3.
+
+Suppose now that $\lfloor n/5^k \rfloor=4$.  Then we must also have
+$20\leq \lfloor n/5^{k-1}\rfloor \leq 24$.  The former condition
+implies that the last term of the above sum is $I_4/5^k=1/(12\cdot
+5^{k-2})$, which has 5--valuation $-(k-2)$.
+
+It is clear that $I_{20}\equiv I_{24}\equiv 0$ (mod 25); hence if $\lfloor
+n/5^{k-1}\rfloor$ equals 20 or 24, then the second--to--last term of the
+above sum (if it exists) has valuation at least $-(k-3)$.  The
+third--to--last term (if it exists) is of the form $I_r/5^{k-2}$, so that
+the sum of the last term and the third to last term takes the form
+$(I_r+1/12)/5^{k-2}$.  Since $I_r$ can be congruent only to 0,1, or -1
+(mod 5), and $1/12\equiv 3$ (mod 5), we conclude that the sum of the
+last term and third--to--last term has valuation $-(k-2)$, while all other
+terms have valuation strictly higher.  Hence $H_n$ has nonnegative
+5--valuation in this case only when $k\leq 2$, leading to the values
+$n=4$ (arising from $k=0$), 20,24 (arising from $k=1$ and $\lfloor
+n/5^{k-1}\rfloor = 20$ and 24 resp.), 101, 102, 103, and 104 (arising
+from $k=2$, $\lfloor n/5^{k-1}\rfloor = 20$) and 120, 121, 122, 123,
+and 124 (arising from $k=2$, $\lfloor n/5^{k-1}\rfloor=24$).
+
+Finally, suppose $\lfloor n/5^k \rfloor=4$ and $\lfloor n/5^{k-1}
+\rfloor=21$, 22, or 23.  Then as before, the first condition
+implies that the last term of the sum in (*) has valuation $-(k-2)$,
+while the second condition implies that the second--to--last term in the
+same sum has valuation $-(k-1)$.  Hence all terms in the sum (*) have
+5--valuation strictly higher than $-(k-1)$, except for the
+second--to--last term, and therefore $H_n$ has 5--valuation $-(k-1)$ in
+this case.  In particular, $H_n$ is integral (mod 5) in this case if and
+only if  $k\leq 1$, which gives the additional values $n=21$, 22, and 23.
+
+\item[B--4]
+Let $s_k = \sum_i (-1)^{i} a_{k-1,i}$ be the given sum (note that
+$a_{k-1,i}$ is nonzero precisely for $i = 0, \dots, \lfloor
+\frac{2k}{3} \rfloor)$. Since
+\[
+a_{m+1,n} = a_{m,n} + a_{m,n-1} + a_{m,n-2},
+\]
+we have
+\begin{align*}
+s_k - s_{k-1} + s_{k+2}
+&= \sum_i (-1)^i (a_{n-i,i} + a_{n-i,i+1} + a_{n-i,i+2}) \\
+&= \sum_i (-1)^i a_{n-i+1,i+2} = s_{k+3}.
+\end{align*}
+By computing $s_0 = 1, s_1 = 1, s_2 = 0$, we may easily verify by
+induction that $s_{4j} = s_{4j+1} = 1$ and $s_{4j+2} = s_{4j+3} = 0$
+for all $j \geq 0$. (Alternate solution suggested by John Rickert:
+write $S(x,y) = \sum_{i=0}^\infty (y+xy^2+x^2y^3)^i$, and note
+note that $s_k$ is the coefficient of $y^k$ in $S(-1,y) = (1+y)/(1-y^4)$.)
+
+\item[B--5]
+Define the sequence $x_1 = 2$, $x_n = 2^{x_{n-1}}$ for $n > 1$. It
+suffices to show that for every $n$, $x_m \equiv x_{m+1} \equiv \cdots
+\pmod n$ for some $m < n$. We do this by induction on $n$, with $n=2$
+being obvious.
+
+Write $n = 2^a b$, where $b$ is odd. It suffices to show that $x_m
+\equiv \cdots$ modulo $2^a$ and modulo $b$, for some $m < n$. For the
+former, we only need $x_{n-1} \geq a$, but clearly
+$x_{n-1} \geq n$ by induction on $n$. For the latter, note that
+$x_m \equiv x_{m+1} \equiv \cdots
+\pmod b$ as long as $x_{m-1} \equiv x_m \equiv \cdots \pmod{\phi(b)}$,
+where $\phi(n)$ is the Euler totient function. By hypothesis, this
+occurs for some $m < \phi(b) + 1 \leq n$. (Thanks to Anoop Kulkarni
+for catching a lethal typo in an earlier version.)
+
+\item[B--6]
+The answer is $25/13$.  Place the triangle on the cartesian plane so
+that its vertices are at $C=(0,0), A=(0,3), B=(4,0)$.  Define also the points 
+$D=(20/13,24/13),$ and $E=(27/13,0)$. We then compute that
+\begin{align*}
+\frac{25}{13} &= AD=BE=DE\\
+\frac{27}{13} &= BC - CE = BE < BC \\
+\frac{39}{13} &= AC < \sqrt{AC^2 + CE^2} = AE \\
+\frac{40}{13} &= AB - AD = BD < AB
+\end{align*}
+and that $AD < CD$. In any dissection of the triangle into four parts, some two of $A,B,C,D,E$ must belong to the same part, forcing the least diameter to be at least $25/13$.
+
+We now exhibit a dissection with least diameter $25/13$. (Some
+variations of this dissection are possible.) Put $F = (15/13, 19/13)$,
+$G = (15/13, 0)$, $H = (0, 19/13)$, $J = (32/15, 15/13)$,
+and divide $ABC$ into the convex polygonal regions $ADFH$, $BEJ$, $CGFH$,
+$DFGEJ$. 
+To check that this dissection has least diameter $25/13$, it suffices (by the following remark) to check that the distances
+\begin{gather*}
+AD, AF, AH, BE, BJ, DE, CF, CG, CH, \\
+DF, DG, DH, DJ, EF, EG, EJ, FG, FH, FJ, GJ
+\end{gather*}
+are all at most $25/13$. This can be checked by a long numerical calculation, which we omit in favor of some shortcuts: note that $ADFH$ and $BEJ$ are contained in
+circular sectors centered at $A$ and $B$, respectively, of radius
+$25/13$ and angle less than $\pi/3$, while $CGFH$ is a rectangle with diameter $CF < 25/13$.
+
+\noindent
+\textbf{Remark.} The preceding argument uses implicitly the fact that for $P$ a simple closed polygon in the plane, if we let $S$ denote the set of points on or within $P$, then  the maximum distance between two points of $S$ occurs between some pair of vertices of $P$.
+This is an immediate consequence of the compactness of $S$ (which guarantees the existence of a maximum) and the convexity of the function taking $(x,y) \in S \times S$ to the squared distance between $x$ and $y$ (which is obvious in terms of Cartesian coordinates).
+
+\end{itemize}
+\end{document}
+
+
+

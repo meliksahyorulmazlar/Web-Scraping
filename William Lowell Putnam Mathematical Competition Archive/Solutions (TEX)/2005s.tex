@@ -1,0 +1,796 @@
+\documentclass[amssymb,twocolumn,pra,10pt,aps]{revtex4-1}
+\usepackage{mathptmx,amsmath}
+
+\newcommand{\RR}{\mathbb{R}}
+\newcommand{\CC}{\mathbb{C}}
+\DeclareMathOperator{\lcm}{lcm}
+\DeclareMathOperator{\sgn}{sgn}
+
+\begin{document}
+\title{Solutions to the 66th William Lowell Putnam Mathematical Competition \\
+    Saturday, December 3, 2005}
+\author{Manjul Bhargava, Kiran Kedlaya, and Lenny Ng}
+\noaffiliation
+\maketitle
+
+\begin{itemize}
+
+\item[A--1]
+We proceed by induction, with base case $1 = 2^0 3^0$. Suppose all
+integers less than $n-1$ can be represented. If $n$ is even, then
+we can take a representation of $n/2$ and multiply each term by 2 to
+obtain a representation of $n$. If $n$ is odd,
+put $m = \lfloor \log_3 n
+\rfloor$, so that $3^m \leq n < 3^{m+1}$. If $3^m = n$, we are done.
+Otherwise, choose a representation $(n-3^m)/2 = s_1 + \cdots + s_k$
+in the desired form. Then
+\[
+n = 3^m + 2s_1 + \cdots + 2s_k,
+\]
+and clearly none of the $2s_i$ divide each other or $3^m$. Moreover,
+since $2s_i \leq n-3^m < 3^{m+1} - 3^m$, we have $s_i < 3^m$,
+so $3^m$ cannot divide $2s_i$ either. Thus $n$ has a representation
+of the desired form in all cases, completing the induction.
+
+\textbf{Remarks:}
+This problem is originally due to Paul Erd\H{o}s.
+Note that the representations need not be unique: for instance,
+\[
+11 = 2+9 = 3+8.
+\]
+
+\item[A--2]
+We will assume $n \geq 2$ hereafter, since the answer is 0 for $n=1$.
+
+\textbf{First solution:}
+We show that the set of rook tours from $(1,1)$ to $(n,1)$ is in bijection with
+the set of subsets of $\{1,2,...,n\}$ that include $n$ and contain an even number
+of elements in total.  Since the latter set evidently contains $2^{n-2}$ elements,
+so does the former.
+
+We now construct the bijection.  Given a rook tour $P$ from $(1,1)$ to $(n,1)$,
+let $S=S(P)$ denote the set of all $i \in \{1,2,\ldots,n\}$ for which there is
+either a directed edge from $(i,1)$ to $(i,2)$ or from $(i,3)$ to $(i,2)$.  It
+is clear that this set $S$ includes $n$ and must contain an even number of
+elements.  Conversely, given a subset $S=\{a_1,a_2,\ldots,a_{2r}=n\}
+\subset \{1,2,\ldots,n\}$ of this type with $a_1<a_2<\cdots<a_{2r}$,
+we notice that there is a unique path $P$ containing
+$(a_i,2+(-1)^i),(a_1,2)$
+for $i=1,2,\ldots,2r$.  This establishes the desired bijection.
+
+
+\textbf{Second solution:}
+Let $A_n$ denote the set of rook tours beginning at $(1,1)$ and
+ending at $(n,1)$, and let $B_n$ denote the set of rook tours
+beginning at $(1,1)$ and ending at $(n,3)$.
+
+For $n \geq 2$, we construct a bijection between $A_n$ and $A_{n-1}
+\cup B_{n-1}$. Any path $P$ in $A_n$ contains either the line segment
+$P_1$ between $(n-1,1)$ and $(n,1)$, or the line segment $P_2$ between
+$(n,2)$ and $(n,1)$. In the former case, $P$ must also contain the
+subpath $P_1'$ which joins $(n-1,3)$, $(n,3)$, $(n,2)$, and $(n-1,2)$
+consecutively; then deleting $P_1$ and $P_1'$ from $P$ and adding the
+line segment joining $(n-1,3)$ to $(n-1,2)$ results in a path in
+$A_{n-1}$. (This construction is reversible, lengthening any path in
+$A_{n-1}$ to a path in $A_n$.) In the latter case, $P$ contains the
+subpath $P_2'$ which joins $(n-1,3)$, $(n,3)$, $(n,2)$, $(n,1)$
+consecutively; deleting $P_2'$ results in a path in $B_{n-1}$, and
+this construction is also reversible. The desired bijection follows.
+
+Similarly, there is a bijection between $B_n$ and $A_{n-1} \cup
+B_{n-1}$ for $n \geq 2$. It follows by induction that for $n \geq 2$,
+$|A_n| = |B_n| = 2^{n-2} (|A_1| + |B_1|)$. But $|A_1| = 0$ and $|B_1|
+= 1$, and hence the desired answer is $|A_n| = 2^{n-2}$.
+
+\textbf{Remarks:}
+Other bijective arguments are possible: for instance, Noam Elkies
+points out that each element of $A_n \cup B_n$
+contains a different one of the possible sets of
+segments of the form $(i,2),(i+1,2)$ for $i=1,\dots,n-1$.
+Richard Stanley provides the reference: K.L. Collins and L.B. Krompart,
+The number of Hamiltonian paths in a rectangular grid,
+\textit{Discrete Math.}  \textbf{169} (1997), 29--38. This problem
+is Theorem~1 of that paper; the cases of $4 \times n$ and $5 \times n$
+grids
+are also treated. The paper can also be found online at the URL
+\texttt{kcollins.web.wesleyan.edu/vita.htm}.
+
+\item[A--3]
+Note that it is implicit in the problem that $p$ is nonconstant,
+one may take any branch of the square root, and that $z=0$ should be
+ignored.
+
+\textbf{First solution:}
+Write $p(z) = c \prod_{j=1}^n (z-r_j)$, so that
+\[
+\frac{g'(z)}{g(z)} = \frac{1}{2z} \sum_{j=1}^n \frac{z+r_j}{z-r_j}.
+\]
+Now if $z\neq r_j$ for all $j$,then
+\[
+\frac{z+r_j}{z-r_j}
+= \frac{(z+r_j)(\overline{z}-\overline{r_j})}{|z-r_j|^2}
+= \frac{|z|^2-1+2 \mathrm{Im}(\overline{z} r_j)}{|z-r_j|^2},
+\]
+and so
+\[
+\mathrm{Re}\, \frac{z g'(z)}{g(z)} = \frac{|z|^2-1}{2} \left(
+\sum_j \frac{1}{|z-r_j|^2} \right).
+\]
+Since the quantity in parentheses
+is positive, $g'(z)/g(z)$ can be $0$ only if $|z|=1$. If on the other
+hand $z = r_j$ for some $j$, then $|z|=1$ anyway.
+
+\textbf{Second solution:}
+Write $p(z) = c\prod_{j=1}^n (z-r_j)$, so that
+\[
+\frac{g'(z)}{g(z)}
+= \sum_{j=1}^n \left( \frac{1}{z-r_j} - \frac{1}{2z} \right).
+\]
+We first check that $g'(z) \neq 0$ whenever $z$ is real and $z>1$.
+In this case, for $r_j = e^{i \theta_j}$, we have $z - r_j =
+(z - \cos (\theta_j)) + \sin(\theta_j) i$, so the real part of
+$\frac{1}{z-r_j} - \frac{1}{2z}$ is
+\[
+\frac{z - \cos(\theta_j)}{z^2 - 2z \cos(\theta_j) + 1} - \frac{1}{2z}
+= \frac{z^2-1}{2z(z^2 - 2z \cos(\theta_j) + 1)} > 0.
+\]
+Hence $g'(z)/g(z)$ has positive real part, so $g'(z)/g(z)$ and hence
+$g(z)$ are nonzero.
+
+Applying the same argument after replacing $p(z)$ by $p(e^{i \theta} z)$,
+we deduce that $g'$ cannot have any roots outside the unit circle.
+Applying the same argument after replacing $p(z)$ by $z^n p(1/z)$, we
+also deduce that $g'$ cannot have any roots inside the unit circle.
+Hence all roots of $g'$ have absolute value 1, as desired.
+
+\textbf{Third solution:}
+Write $p(z) = c \prod_{j=1}^n (z - r_j)$ and
+put $r_j = e^{2 i \theta_j}$. Note that $g(e^{2 i \theta})$
+is equal to a nonzero constant times
+\begin{align*}
+h(\theta) &= \prod_{j=1}^n \frac{e^{i (\theta + \theta_j)}
+- e^{-i(\theta + \theta_j)}}{2i} = \prod_{j=1}^n \sin(\theta +\theta_j).
+\end{align*}
+Since $h$ has at least $2n$ roots (counting multiplicity)
+in the interval $[0, 2\pi)$, $h'$ does also by repeated application of
+Rolle's theorem. Since $g'(e^{2 i \theta}) = 2i e^{2i \theta} h'(\theta)$,
+$g'(z^2)$ has at least $2n$ roots on the unit circle. Since $g'(z^2)$ is equal to
+$z^{-n-1}$ times a polynomial of degree $2n$, $g'(z^2)$ has all roots on the
+unit circle, as then does $g'(z)$.
+
+\textbf{Remarks:}
+The second solution imitates the proof of the Gauss-Lucas theorem:
+the roots of the derivative of a complex polynomial lie in the convex hull of
+the roots of the original polynomial.
+The second solution is close to problem B3 from the 2000 Putnam.
+A hybrid between the first and third solutions is to check that
+on the unit circle, $\mathrm{Re}(zg'(z)/g(z)) = 0$ while between any
+two roots of $p$, $\mathrm{Im}(zg'(z)/g(z))$ runs from $+\infty$ to $-\infty$
+and so must have a zero crossing. (This only works when $p$ has distinct roots,
+but the general case follows by the continuity of the roots of a polynomial
+as functions of the coefficients.)
+One can also construct a  solution using Rouch\'e's theorem.
+
+\item[A--4]
+\textbf{First solution:}
+Choose a set of $a$ rows $r_1, \dots, r_a$
+containing an $a \times b$ submatrix whose
+entries are all 1. Then for $i,j \in\{1, \dots, a\}$, we have
+$r_i \cdot r_j = n$ if $i=j$ and 0 otherwise. Hence
+\[
+\sum_{i,j=1}^a r_i \cdot r_j = an.
+\]
+On the other hand, the term on the left is the dot product of
+$r_1 + \cdots + r_a$ with itself, i.e., its squared length. Since
+this vector has $a$ in each of its first $b$ coordinates, the dot product
+is at least $a^2 b$. Hence $an \geq a^2 b$,
+whence $n \geq ab$ as desired.
+
+\textbf{Second solution:}
+(by Richard Stanley)
+Suppose without loss of generality that the $a \times b$ submatrix
+occupies the first $a$ rows and the first $b$ columns.
+Let $M$ be the submatrix occupying the first $a$ rows and the last
+$n-b$ columns. Then the hypothesis implies that the matrix
+$MM^T$ has $n-b$'s on the main diagonal and $-b$'s elsewhere.
+Hence the column vector $v$ of length $a$ consisting of all 1's
+satisfies $MM^T v = (n-ab)v$, so $n-ab$ is an eigenvalue of $MM^T$.
+But $MM^T$ is semidefinite, so its eigenvalues are all nonnegative
+real numbers. Hence $n-ab \geq 0$.
+
+\textbf{Remarks:}
+A matrix as in the problem is called a \emph{Hadamard matrix}, because
+it meets the equality condition of Hadamard's inequality:
+any $n \times n$ matrix with $\pm 1$ entries has absolute determinant
+at most $n^{n/2}$, with equality if and only if the rows are mutually
+orthogonal
+(from the interpretation of the determinant as the volume of a paralellepiped
+whose edges are parallel to the row vectors).
+Note that this implies  that the columns are also mutually orthogonal.
+A generalization of this problem, with a similar proof, is known
+as \emph{Lindsey's lemma}: the sum of the entries in any
+$a \times b$ submatrix of a Hadamard matrix is at most $\sqrt{abn}$.
+Stanley notes that Ryser (1981) asked for the smallest size of a Hadamard
+matrix containing an $r \times s$ submatrix of all 1's, and refers to
+the URL \texttt{www3.interscience.wiley.com/cgi-bin/ abstract/110550861/ABSTRACT} for more information.
+
+\item[A--5]
+\textbf{First solution:}
+We make the substitution $x = \tan \theta$, rewriting the desired integral as
+\[
+\int_0^{\pi/4} \log(\tan(\theta) + 1)\,d\theta.
+\]
+Write
+\[
+\log(\tan(\theta)+ 1) = \log(\sin(\theta) + \cos(\theta))-\log(\cos(\theta))
+\]
+and then note that $\sin(\theta) + \cos(\theta) = \sqrt{2} \cos
+(\pi/4 - \theta)$. We may thus rewrite the integrand as
+\[
+\frac12 \log(2) + \log(\cos(\pi/4 - \theta)) - \log(\cos(\theta)).
+\]
+But over the interval $[0, \pi/4]$, the integrals of
+$\log(\cos(\theta))$ and $\log(\cos(\pi/4 - \theta))$ are equal, so their
+contributions cancel out. The desired integral is then just the integral
+of $\frac{1}{2} \log(2)$ over the interval $[0,\pi/4]$, which is
+$\pi \log(2)/8$.
+
+\textbf{Second solution:}
+(by Roger Nelsen)
+Let $I$ denote the desired integral. We make the substitution
+$x = (1-u)/(1+u)$ to obtain
+\begin{align*}
+I &= \int_0^1 \frac{(1+u)^2\log(2/(1+u))}{2(1+u^2)} \frac{2\,du}{(1+u)^2} \\
+&= \int_0^1 \frac{\log(2) - \log(1+u)}{1+u^2}\,du \\
+&= \log(2) \int_0^1 \frac{du}{1+u^2} - I,
+\end{align*}
+yielding
+\[
+I = \frac{1}{2} \log(2) \int_0^1 \frac{du}{1+u^2} = \frac{\pi \log(2)}{8}.
+\]
+
+\textbf{Third solution:}
+(attributed to Steven Sivek)
+Define the function
+\[
+f(t) = \int_0^1 \frac{\log(xt+1)}{x^2+1}\,dx
+\]
+so that $f(0) = 0$ and
+the desired integral is $f(1)$. Then by differentiation under
+the integral,
+\[
+f'(t) = \int_0^1 \frac{x}{(xt+1)(x^2+1)}\,dx.
+\]
+By partial fractions, we obtain
+\begin{align*}
+f'(t) &= \left. \frac{2 t \arctan(x) - 2 \log(tx+1) + \log(x^2+1)}{2(t^2+1)}
+\right|_{x=0}^{x=1}
+\\ &= \frac{\pi t + 2 \log(2) - 4 \log(t+1)}{4(t^2+1)},
+\end{align*}
+whence
+\[
+f(t) = \frac{\log(2) \arctan(t)}{2} + \frac{\pi \log(t^2+1)}{8}
+- \int_0^t \frac{\log(t+1)}{t^2+1}\,dt
+\]
+and hence
+\[
+f(1) = \frac{\pi \log(2)}{4} - \int_0^1 \frac{\log(t+1)}{t^2+1}\,dt.
+\]
+But the integral on the right is again the desired integral $f(1)$, so
+we may move it to the left to obtain
+\[
+2f(1) = \frac{\pi \log(2)}{4}
+\]
+and hence $f(1) = \pi \log(2)/8$ as desired.
+
+\textbf{Fourth solution:} (by David Rusin)
+We have
+\[
+\int_0^1 \frac{\log(x+1)}{x^2+1}\,dx =
+\int_0^1 \left( \sum_{n=1}^\infty \frac{(-1)^{n-1} x^n}{n(x^2+1)} \right)\,dx.
+\]
+We next justify moving the sum  through the integral sign.
+Note that
+\[
+\sum_{n=1}^\infty \int_0^1 \frac{(-1)^{n-1} x^n\,dx}{n(x^2+1)}
+\]
+is an alternating series whose terms strictly decrease to zero, so it
+converges. Moreover, its partial sums alternately bound the previous
+integral above and below, so the sum of the series coincides with the integral.
+
+Put
+\[
+J_n = \int_0^1 \frac{x^n\,dx}{x^2+1};
+\]
+then $J_0 = \arctan(1) = \frac{\pi}{4}$
+and $J_1 = \frac{1}{2} \log(2)$. Moreover,
+\[
+J_{n} + J_{n+2} = \int_0^1 x^n\,dx = \frac{1}{n+1}.
+\]
+Write
+\begin{align*}
+A_m &= \sum_{i=1}^m \frac{(-1)^{i-1}}{2i-1} \\
+B_m &= \sum_{i=1}^m \frac{(-1)^{i-1}}{2i};
+\end{align*}
+then
+\begin{align*}
+J_{2n} &= (-1)^n (J_0 - A_n) \\
+J_{2n+1} &= (-1)^n (J_1 - B_{n}).
+\end{align*}
+Now the $2N$-th partial sum of our series equals
+\begin{multline*}
+\sum_{n=1}^{N} \left[\frac{J_{2n-1}}{2n-1} -  \frac{J_{2n}}{2n}\right] \\
+\begin{aligned}
+&= \sum_{n=1}^{N} \frac{(-1)^{n-1}}{2n-1} \left[(J_1 - B_{n-1})
+- \frac{(-1)^n}{2n}(J_0 - A_n)\right] \\
+&= A_{N}(J_1 - B_{N-1}) + B_N(J_0 - A_N) + A_N B_N.
+\end{aligned}
+\end{multline*}
+As $N \to \infty$, $A_N \to J_0$ and $B_N \to J_1$,
+so the sum tends to $J_0 J_1 = \pi \log(2)/8$.
+
+\textbf{Fifth solution:}
+(suggested by Alin Bostan)
+Note that
+\[
+\log(1+x) = \int_0^1 \frac{x\,dy}{1 + xy},
+\]
+so the desired integral $I$ may be written as
+\[
+I = \int_0^1 \int_0^1 \frac{x\,dy\,dx}{(1 + xy)(1+x^2)}.
+\]
+We may interchange $x$ and $y$ in this expression, then use Fubini's theorem to interchange
+the order of summation, to obtain
+\[
+I = \int_0^1 \int_0^1 \frac{y\,dy\,dx}{(1 + xy)(1+y^2)}.
+\]
+We then add these expressions to obtain
+\begin{align*}
+2I &= \int_0^1 \int_0^1 \left( \frac{x}{1+x^2} + \frac{y}{1+y^2}
+\right) \frac{dy\,dx}{1+xy} \\
+&= \int_0^1 \int_0^1  \frac{x+y+xy^2+x^2y}{(1+x^2)(1+y^2)} \frac{dy\,dx}{1+xy}  \\
+&= \int_0^1 \int_0^1  \frac{(x+y)\,dy\,dx}{(1+x^2)(1+y^2)}.
+\end{align*}
+By another symmetry argument, we have
+\[
+2I = 2 \int_0^1 \int_0^1 \frac{x\,dy\,dx}{(1+x^2)(1+y^2)},
+\]
+so
+\[
+I = \left(\int_0^1 \frac{x\,dx}{1+x^2} \right) \left( \int_0^1 \frac{1}{1+y^2} \right)
+= \log(2) \cdot \frac{\pi}{8}.
+\]
+
+\textbf{Remarks:}
+The first two solutions are related by the fact that if $x = \tan(\theta)$,
+then $1-x/(1+x) = \tan(\pi/4 - \theta)$.
+The strategy of the third solution (introducing a parameter then
+differentiating it) was a favorite of physics Nobelist (and Putnam Fellow)
+Richard Feynman.
+The fifth solution resembles Gauss's evaluation of $\int_{-\infty}^\infty \exp(-x^2)\,dx$.
+Noam Elkies notes that this integral is number 2.491\#8 in
+Gradshteyn and Ryzhik,
+\textit{Table of integrals, series, and products}.
+The \emph{Mathematica} computer algebra system (version 5.2)
+successfully computes
+this integral, but we do not know how.
+
+\item[A--6]
+\textbf{First solution:}
+The angle at a vertex $P$ is acute if and only if all of the other points
+lie on an open semicircle. We first deduce from this that if there are any
+two acute angles at all, they must occur consecutively. Suppose the contrary;
+label the vertices $Q_1, \dots, Q_n$ in counterclockwise order (starting anywhere),
+and suppose that the angles at $Q_1$ and $Q_i$ are acute for some $i$
+with $3 \leq i \leq n-1$.
+Then the open semicircle starting at $Q_2$ and proceeding counterclockwise
+must contain all of $Q_3, \dots, Q_n$, while the open semicircle starting at
+$Q_i$ and proceeding counterclockwise must contain $Q_{i+1}, \dots,
+Q_n, Q_1, \dots, Q_{i-1}$. Thus two open semicircles cover the entire circle,
+contradiction.
+
+It follows that if the polygon has at least one acute angle, then
+it has either one acute angle or two acute angles
+occurring consecutively. In particular, there
+is a unique pair of consecutive vertices $Q_1, Q_2$ in counterclockwise order
+for which $\angle Q_2$ is acute and $\angle Q_1$ is not acute.
+Then the remaining points all lie in the arc from the antipode of $Q_1$
+to $Q_1$, but $Q_2$ cannot lie in the arc, and the remaining points
+cannot all lie in the arc from the antipode of $Q_1$ to the antipode
+of $Q_2$. Given the choice of $Q_1, Q_2$, let $x$ be the measure of
+the counterclockwise arc from $Q_1$ to $Q_2$; then the probability that
+the other points fall into position is
+$2^{-n+2} - x^{n-2}$ if $x \leq 1/2$ and 0 otherwise.
+
+Hence the probability that the polygon has at least one acute angle with
+a \emph{given} choice of which two points will act as $Q_1$ and $Q_2$ is
+\[
+\int_0^{1/2} (2^{-n+2} - x^{n-2})\,dx
+= \frac{n-2}{n-1} 2^{-n+1}.
+\]
+Since there are $n(n-1)$ choices for which two points act as $Q_1$ and $Q_2$,
+the probability of at least one acute angle is $n(n-2) 2^{-n+1}$.
+
+\textbf{Second solution:}
+(by Calvin Lin)
+As in the first solution, we may compute the probability that for a
+particular one of the points $Q_1$, the angle at $Q_1$ is not acute but
+the following angle is, and then multiply by $n$.
+Imagine picking the points by first choosing $Q_1$, then
+picking $n-1$ \emph{pairs}
+of antipodal points and then picking one
+member of each pair. Let $R_2, \dots, R_n$ be the points of the pairs
+which lie in the semicircle, taken in order away from $Q_1$,
+and let $S_2, \dots, S_n$ be the antipodes of these. Then to
+get the desired situation,
+we must choose from the pairs to end up with all but one of the
+$S_i$, and we cannot take $R_n$ and the other $S_i$ or else $\angle Q_1$ will be
+acute. That gives us $(n-2)$ good choices out of $2^{n-1}$; since we could
+have chosen $Q_1$ to be any of the $n$ points, the probability is again
+$n(n-2) 2^{-n+1}$.
+
+\item[B--1]
+Take $P(x,y) = (y-2x)(y-2x-1)$.
+To see that this works, first note that if $m = \lfloor a \rfloor$,
+then $2m$ is an integer less than or equal to $2a$, so
+$2m \leq \lfloor 2a \rfloor$. On the other hand, $m+1$
+is an integer strictly greater than $a$, so $2m+2$ is an integer
+strictly greater than $2a$, so $\lfloor 2a \rfloor \leq 2m+1$.
+
+\item[B--2]
+By the arithmetic-harmonic mean inequality or the Cauchy-Schwarz inequality,
+\[
+(k_1 + \cdots + k_n)\left(\frac{1}{k_1} + \cdots + \frac{1}{k_n} \right)
+\geq n^2.
+\]
+We must thus have $5n-4 \geq n^2$, so $n \leq 4$. Without loss of generality,
+we may suppose that $k_1 \leq \cdots \leq k_n$.
+
+If $n=1$, we must have $k_1 = 1$, which works. Note that hereafter we cannot
+have $k_1 =1$.
+
+If $n = 2$, we have $(k_1,k_2) \in \{(2,4), (3,3)\}$, neither of which work.
+
+If $n=3$, we have $k_1 +k_2 +k_3 =11$, so $2 \leq k_1 \leq 3$.
+Hence
+\[
+(k_1,k_2,k_3) \in \{(2,2,7),(2,3,6),(2,4,5),(3,3,5),(3,4,4)\},
+\]
+and only $(2,3,6)$ works.
+
+If $n = 4$, we must have equality in the AM-HM inequality, which only
+happens when $k_1 = k_2 = k_3 = k_4 = 4$.
+
+Hence the solutions are $n = 1$ and $k_1 = 1$,
+$n=3$ and $(k_1,k_2,k_3)$ is a permutation of $(2,3,6)$,
+and $n=4$ and $(k_1,k_2,k_3,k_4) = (4,4,4,4)$.
+
+\textbf{Remark:}
+In the cases $n=2,3$, Greg Kuperberg suggests the alternate
+approach of
+enumerating the
+solutions of $1/k_1 + \cdots + 1/k_n = 1$ with $k_1 \leq \cdots \leq k_n$.
+This is easily done by
+proceeding in lexicographic order: one obtains $(2,2)$ for $n=2$, and
+$(2,3,6), (2,4,4), (3,3,3)$ for $n=3$, and only $(2,3,6)$ contributes
+to the final answer.
+
+\item[B--3]
+\textbf{First solution:}
+The functions are precisely $f(x) = cx^d$ for $c,d > 0$ arbitrary
+except that we must take $c=1$ in case $d=1$. To see that these work,
+note that $f'(a/x) = d c (a/x)^{d-1}$ and $x/f(x) = 1/(c x^{d-1})$,
+so the given equation holds if and only if $d c^2 a^{d-1} = 1$. If
+$d \neq 1$, we may solve for $a$ no matter what $c$ is; if
+$d=1$, we must have $c=1$. (Thanks to Brad Rodgers for pointing out
+the $d=1$ restriction.)
+
+To check that these are all solutions,
+put $b = \log(a)$ and $y = \log(a/x)$; rewrite the given equation as
+\[
+f(e^{b-y}) f'(e^y) = e^{b-y}.
+\]
+Put
+\[
+g(y) = \log f(e^y);
+\]
+then the given equation rewrites as
+\[
+g(b-y) + \log g'(y) + g(y) - y = b-y,
+\]
+or
+\[
+\log g'(y) = b -g(y) - g(b-y).
+\]
+By the symmetry of the right side,
+we have $g'(b-y) = g'(y)$. Hence the function
+$g(y) + g(b-y)$ has zero derivative and so is constant,
+as then is $g'(y)$.
+From this we deduce that $f(x) = cx^d$ for some $c,d$, both
+necessarily positive since $f'(x) > 0$ for all $x$.
+
+\textbf{Second solution:}
+(suggested by several people)
+Substitute $a/x$ for $x$ in the given equation:
+\[
+f'(x) = \frac{a}{xf(a/x)}.
+\]
+Differentiate:
+\[
+f''(x) = - \frac{a}{x^2 f(a/x)}
++ \frac{a^2 f'(a/x)}{x^3 f(a/x)^2}.
+\]
+Now substitute to eliminate evaluations at $a/x$:
+\[
+f''(x) = - \frac{f'(x)}{x}
++ \frac{f'(x)^2}{f(x)}.
+\]
+Clear denominators:
+\[
+x f(x) f''(x) + f(x) f'(x) = x f'(x)^2.
+\]
+Divide through by $f(x)^2$ and rearrange:
+\[
+0 = \frac{f'(x)}{f(x)} + \frac{x f''(x)}{f(x)} - \frac{x f'(x)^2}{f(x)^2}.
+\]
+The right side is the derivative of $x f'(x)/f(x)$, so that quantity
+is constant. That is, for some $d$,
+\[
+\frac{f'(x)}{f(x)} = \frac{d}{x}.
+\]
+Integrating yields $f(x) = cx^d$, as desired.
+
+\item[B--4]
+\textbf{First solution:}
+Define $f(m,n,k)$ as the number of $n$-tuples $(x_1, x_2,\dots,x_n)$
+of integers such that $|x_1| + \cdots + |x_n| \leq m$ and exactly
+$k$ of $x_1, \dots, x_n$ are nonzero. To choose such a tuple, we may choose
+the $k$ nonzero positions, the signs of those $k$ numbers, and
+then an ordered $k$-tuple of positive integers with sum $\leq m$.
+There are $\binom{n}{k}$ options for the first choice, and $2^k$ for the
+second. As for the third, we have
+$\binom{m}{k}$ options by a ``stars and bars'' argument: depict the
+$k$-tuple by drawing a number of stars for each term, separated by bars,
+and adding stars at the end to get a total of $m$ stars. Then each tuple
+corresponds to placing $k$ bars, each in a different position behind one
+of the $m$ fixed stars.
+
+We conclude that
+\[
+f(m,n,k) = 2^k\binom{m}{k} \binom{n}{k} = f(n,m,k);
+\]
+summing over $k$ gives $f(m,n) = f(n,m)$. (One may also extract easily a
+bijective interpretation of the equality.)
+
+\textbf{Second solution:}
+(by Greg Kuperberg)
+It will be convenient to extend the definition of $f(m,n)$ to $m,n \geq 0$,
+in which case we have $f(0,m) = f(n,0) = 1$.
+
+Let $S_{m,n}$ be the set of $n$-tuples $(x_1, \dots, x_n)$ of integers
+such that $|x_1| + \cdots + |x_n| \leq m$. Then elements of $S_{m,n}$
+can be classified into three types. Tuples with $|x_1| + \cdots + |x_n| < m$
+also belong to $S_{m-1,n}$. Tuples with $|x_1| + \cdots + |x_n| = m$
+and $x_n \geq 0$ correspond to elements of $S_{m,n-1}$ by dropping $x_n$.
+Tuples with $|x_1| + \cdots + |x_n| = m$ and $x_n < 0$ correspond to
+elements of $S_{m-1,n-1}$ by dropping $x_n$. It follows that
+\[
+f(m,n) = f(m-1,n) + f(m,n-1) + f(m-1,n-1),
+\]
+so $f$ satisfies a symmetric recurrence with symmetric boundary conditions
+$f(0,m) = f(n,0) = 1$. Hence $f$ is symmetric.
+
+\def\ZZ{\mathbb{Z}}
+\textbf{Third solution:}
+(by Greg Martin)
+As in the second solution,
+it is convenient to allow $f(m,0)=f(0,n)=1$. Define the generating function
+\[
+G(x,y) = \sum_{m=0}^\infty \sum_{n=0}^\infty f(m,n) x^m y^n.
+\]
+As equalities of formal power series (or convergent series on,
+say, the region $|x|,|y|<\frac13$), we have
+\begin{align*}
+G(x,y) &= \sum_{m\ge0} \sum_{n\ge0} x^m y^n \sum_{\substack{k_1,\,\dots,\,k_n \in \ZZ \\ |k_1| + \cdots + |k_n| \le m}} 1 \\
+&= \sum_{n\ge0} y^n \sum_{k_1,\,\dots,\,k_n \in \ZZ} \sum_{m\ge|k_1| + \cdots + |k_n|} x^m \\
+&= \sum_{n\ge0} y^n \sum_{k_1,\,\dots,\,k_n \in \ZZ} \frac{x^{|k_1| + \cdots + |k_n|}}{1-x} \\
+&= \frac1{1-x} \sum_{n\ge0} y^n \bigg( \sum_{k\in\ZZ} x^{|k|} \bigg)^n \\
+&= \frac1{1-x} \sum_{n\ge0} y^n \bigg( \frac{1+x}{1-x} \bigg)^n \\
+&= \frac1{1-x} \cdot \frac1{1-y(1+x)/(1-x)} \\
+&= \frac1{1-x-y-xy}.
+\end{align*}
+Since $G(x,y) = G(y,x)$, it follows that $f(m,n) = f(n,m)$ for all $m,n\ge0$.
+
+
+\item[B--5]
+\textbf{First solution:}
+Put $Q = x_1^2 + \cdots + x_n^2$. Since $Q$ is homogeneous, $P$ is divisible
+by $Q$ if and only if each of the homogeneous components of $P$ is divisible
+by $Q$. It is thus sufficient to solve the problem in case $P$ itself is
+homogeneous, say of degree $d$.
+
+Suppose that we have a factorization $P = Q^m R$ for some $m>0$, where
+$R$ is homogeneous
+of degree $d$ and not divisible by $Q$;
+note that the homogeneity implies that
+\[
+\sum_{i=1}^n x_i \frac{\partial R}{\partial x_i} = dR.
+\]
+Write $\nabla^2$ as shorthand for $\frac{\partial^2}{\partial
+x_1^2} + \cdots + \frac{\partial^2}{\partial x_n^2}$; then
+\begin{align*}
+0 &= \nabla^2 P \\
+&= 2mn Q^{m-1}R + Q^m \nabla^2 R + 2 \sum_{i=1}^n 2mx_i Q^{m-1}
+\frac{\partial R}{\partial
+x_i} \\
+&= Q^m \nabla^2 R + (2mn + 4md) Q^{m-1} R.
+\end{align*}
+Since $m>0$, this forces $R$ to be divisible by $Q$, contradiction.
+
+\textbf{Second solution:}
+(by Noam Elkies)
+Retain notation as in the first solution.
+Let $P_d$ be the set of homogeneous
+polynomials of degree $d$, and let $H_d$ be the subset of $P_d$
+of polynomials killed by $\nabla^2$, which has dimension
+$\geq \dim(P_d) - \dim(P_{d-2})$; the given problem amounts to showing
+that this inequality is actually an equality.
+
+Consider the operator $Q \nabla^2$ (i.e., apply $\nabla^2$ then multiply
+by $Q$) on $P_d$; its zero eigenspace is precisely $H_d$.
+By the calculation from the first solution, if $R \in P_d$, then
+\[
+\nabla^2 (QR) - Q \nabla^2 R = (2n+4d)R.
+\]
+Consequently, $Q^j H_{d-2j}$ is contained in the eigenspace of $Q \nabla^2$
+on $P_d$ of eigenvalue
+\[
+(2n+4(d-2j)) + \cdots + (2n+4(d-2)).
+\]
+In particular, the $Q^j H^{d-2j}$ lie in distinct eigenspaces, so are
+linearly independent within $P_d$. But by dimension counting,
+their total dimension is at least that of $P_d$.
+Hence they exhaust $P_d$, and the zero eigenspace cannot have dimension
+greater than $\dim(P_d) - \dim(P_{d-2})$, as desired.
+
+\textbf{Third solution:}
+(by Richard Stanley)
+Write $x = (x_1, \dots, x_n)$ and $\nabla = (\frac{\partial}{\partial x_1},
+\dots, \frac{\partial}{\partial x_n})$.
+Suppose that $P(x) = Q(x)(x_1^2 + \cdots + x_n^2)$. Then
+\[
+P(\nabla)P(x) = Q(\nabla)(\nabla^2)P(x) =0.
+\]
+On the other hand,
+if $P(x) = \sum_\alpha c_\alpha x^\alpha$ (where $\alpha = (\alpha_1,
+\dots, \alpha_n)$ and $x^\alpha = x_1^{\alpha_1} \cdots
+x_n^{\alpha_n}$), then the constant term of $P(\nabla)P(x)$
+is seen to be $\sum_\alpha c_\alpha^2$. Hence $c_\alpha = 0$ for all
+$\alpha$.
+
+\textbf{Remarks:}
+The first two solutions apply directly over any field of characteristic zero.
+(The result fails in characteristic $p>0$ because we may take
+$P = (x_1^2 + \cdots + x_n^2)^p = x_1^{2p} + \cdots + x_n^{2p}$.)
+The third solution can be extended to complex coefficients
+by replacing $P(\nabla)$ by its complex conjugate, and again the result
+may be deduced for any field of characteristic zero.
+Stanley also suggests
+Section 5 of the arXiv e-print \texttt{math.CO/0502363} for
+some  algebraic background for this problem.
+
+\item[B--6]
+\textbf{First solution:}
+Let $I$ be the identity matrix, and let
+$J_x$ be the matrix with $x$'s on the diagonal and 1's elsewhere.
+Note that $J_x - (x-1)I$, being the all 1's matrix, has rank 1 and trace $n$,
+so has $n-1$ eigenvalues equal to 0 and one equal to $n$.
+Hence $J_x$ has $n-1$ eigenvalues equal to $x-1$ and one equal to $x+n-1$,
+implying
+\[
+\det J_x = (x+n-1)(x-1)^{n-1}.
+\]
+On the other hand, we may expand the determinant as a sum indexed by
+permutations, in which case we get
+\[
+\det J_x = \sum_{\pi \in S_n} \sgn(\pi) x^{\nu(\pi)}.
+\]
+Integrating both sides from 0 to 1 (and substituting $y=1-x$) yields
+\begin{align*}
+\sum_{\pi \in S_n} \frac{\sgn(\pi)}{\nu(\pi) + 1}
+&= \int_0^1 (x+n-1)(x-1)^{n-1}\,dx \\
+&= \int_0^1 (-1)^{n+1} (n-y)y^{n-1}\,dy \\
+&= (-1)^{n+1} \frac{n}{n+1},
+\end{align*}
+as desired.
+
+\textbf{Second solution:}
+We start by recalling a form of the principle of inclusion-exclusion:
+if $f$ is a function on the power set of $\{1, \dots, n\}$, then
+\[
+f(S) = \sum_{T \supseteq S} (-1)^{|T|-|S|} \sum_{U \supseteq T} f(U).
+\]
+In this case we take $f(S)$ to be the sum of $\sigma(\pi)$
+over all permutations $\pi$ whose fixed points are exactly $S$.
+Then $\sum_{U \supseteq T} f(U) = 1$ if $|T| \geq n-1$
+and 0 otherwise (since a permutation group on 2 or more symbols has as many even and odd permutations), so
+\[
+f(S) = (-1)^{n-|S|}(1 - n + |S|).
+\]
+The desired sum can thus be written, by grouping over fixed point sets, as
+\begin{multline*}
+\sum_{i=0}^n \binom{n}{i} (-1)^{n-i} \frac{1-n+i}{i+1} \\
+\begin{aligned}
+&= \sum_{i=0}^n (-1)^{n-i} \binom{n}{i} - \sum_{i=0}^n (-1)^{n-i} \frac{n}{i+1}
+\binom{n}{i} \\
+&= 0 - \sum_{i=0}^n (-1)^{n-i} \frac{n}{n+1} \binom{n+1}{i+1} \\
+&= (-1)^{n+1} \frac{n}{n+1}.
+\end{aligned}
+\end{multline*}
+
+\textbf{Third solution:}
+(by Richard Stanley)
+The \emph{cycle indicator} of the symmetric group $S_n$ is defined by
+\[
+Z_n(x_1, \dots, x_n) = \sum_{\pi \in S_n} x_1^{c_1(\pi)} \cdots x_n^{c_n(\pi)},
+\]
+where $c_i(\pi)$ is the number of cycles of $\pi$ of length $i$.
+Put
+\[
+F_n = \sum_{\pi \in S_n} \sigma(\pi) x^{\nu(\pi)} =
+Z_n(x,-1,1,-1,1,\dots)
+\]
+and
+\[
+f(n) =  \sum_{\pi \in S_n} \frac{\sigma(\pi)}{\nu(\pi) + 1}
+= \int_0^1 F_n(x)\,dx.
+\]
+A standard argument in enumerative combinatorics (the
+Exponential Formula) gives
+\[
+\sum_{n=0}^\infty Z_n(x_1,\dots,x_n) \frac{t^n}{n!}
+= \exp \sum_{k=1}^{\infty} x_k \frac{t^k}{k},
+\]
+yielding
+\begin{align*}
+\sum_{n=0}^\infty
+f(n) \frac{t^n}{n!} &= \int_0^1 \exp \left( xt - \frac{t^2}{2}
++ \frac{t^3}{3} - \cdots \right)\,dx \\
+&= \int_0^1 e^{(x-1)t + \log(1+t)}\,dx \\
+&= \int_0^1 (1+t) e^{(x-1)t}\,dx \\
+&= \frac{1}{t} (1-e^{-t}) (1+t).
+\end{align*}
+Expanding the right side as a Taylor series and comparing coefficients
+yields the desired result.
+
+\textbf{Fourth solution (sketch):}
+(by David Savitt)
+We prove the identity of rational functions
+\[
+\sum_{\pi \in S_n} \frac{\sigma(\pi)}{\nu(\pi) + x}
+= \frac{(-1)^{n+1} n! (x+n-1)}{x(x+1)\cdots(x+n)}
+\]
+by induction on $n$, which for $x=1$ implies the desired result.
+(This can also be deduced as in the other solutions, but in this argument
+it is necessary to formulate the strong induction hypothesis.)
+
+Let $R(n,x)$ be the right hand side of the above equation. It is
+easy to verify that
+\begin{align*}
+R(x,n) &= R(x+1,n-1) + (n-1)! \frac{(-1)^{n+1}}{x} \\
+&\qquad + \sum_{l=2}^{n-1} (-1)^{l-1}  \frac{(n-1)!}{(n-l)!} R(x,n-l),
+\end{align*}
+since the sum telescopes. To prove the desired equality,
+it suffices to show that the left hand side satisfies the same
+recurrence. This follows because we can classify each $\pi \in S_n$
+as either fixing $n$, being an $n$-cycle, or having $n$ in an
+$l$-cycle for one of $l=2,\dots,n-1$; writing the sum
+over these classes gives the desired recurrence.
+
+\end{itemize}
+
+
+\end{document}
+
+
+

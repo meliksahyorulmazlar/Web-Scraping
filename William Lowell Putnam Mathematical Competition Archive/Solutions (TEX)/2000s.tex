@@ -1,0 +1,281 @@
+\documentclass[amssymb,twocolumn,pra,10pt,aps]{revtex4-1}
+\usepackage{mathptmx,amsmath}
+
+\newcommand{\RR}{\mathbb{R}}
+\newcommand{\CC}{\mathbb{C}}
+
+\begin{document}
+\title{Solutions to the 61st William Lowell Putnam Mathematical Competition \\
+    Saturday, December 2, 2000}
+\author{Manjul Bhargava, Kiran Kedlaya, and Lenny Ng}
+\noaffiliation
+\maketitle
+
+\begin{itemize}
+
+\item[A--1]
+The possible values comprise the interval $(0, A^2)$.
+
+To see that the values must lie in this interval, note that
+\[
+\left(\sum_{j=0}^m x_j\right)^2
+= \sum_{j=0}^m x_j^2 + \sum_{0\leq j<k\leq m} 2x_jx_k,
+\]
+so $\sum_{j=0}^m x_j^2 \leq A^2 - 2x_0x_1$. Letting $m \to \infty$,
+we have $\sum_{j=0}^\infty x_j^2 \leq A^2-2x_0x_1 < A^2$.
+
+To show that all values in $(0, A^2)$ can be obtained, we
+use geometric progressions with $x_1/x_0 = x_2/x_1 = \cdots = d$
+for variable $d$.
+Then $\sum_{j=0}^\infty x_j = x_0/(1-d)$ and
+\[
+\sum_{j=0}^\infty x_j^2 = \frac{x_0^2}{1-d^2} = \frac{1-d}{1+d} \left(
+\sum_{j=0}^\infty x_j \right)^2.
+\]
+As $d$ increases from 0 to 1, $(1-d)/(1+d)$ decreases from 1 to 0.
+Thus if we take geometric progressions with $\sum_{j=0}^\infty
+x_j = A$, $\sum_{j=0}^\infty x_j^2$ ranges from 0 to $A^2$.
+Thus the possible values are indeed those in the interval $(0, A^2)$,
+as claimed.
+
+\item[A--2]
+First solution:
+Let $a$ be an even integer such that $a^2+1$ is not prime. (For example,
+choose $a \equiv 2 \pmod{5}$, so that $a^2+1$ is divisible by 5.)
+Then we can write $a^2+1$ as a difference of squares $x^2-b^2$,
+by factoring $a^2+1$ as $rs$ with $r \geq s > 1$, and setting $x
+= (r+s)/2$, $b = (r-s)/2$.
+Finally, put $n=x^2-1$, so that $n=a^2+b^2$, $n+1 = x^2$, $n+2 = x^2+1$.
+
+Second solution:
+It is well-known that the equation $x^2-2y^2=1$ has infinitely
+many solutions (the so-called ``Pell'' equation).  Thus setting
+$n=2y^2$ (so that $n=y^2+y^2$, $n+1=x^2+0^2$, $n+2=x^2+1^2$)
+yields infinitely many $n$ with the desired property.
+
+Third solution:
+As in the first solution, it suffices to exhibit $x$ such that $x^2-1$
+is the sum of two squares. We will take $x=3^{2^n}$, and show that $x^2-1$
+is the sum of two squares by induction on $n$: if $3^{2^n}-1 = a^2+b^2$,
+then
+\begin{align*}
+(3^{2^{n+1}}-1) &= (3^{2^n} - 1)(3^{2^n}+1) \\
+&= (3^{2^{n-1}}a+b)^2 + (a-3^{2^{n-1}}b)^2.
+\end{align*}
+
+Fourth solution (by Jonathan Weinstein):
+Let $n=4k^4+4k^2=(2k^2)^2+(2k)^2$ for any integer $k$. Then $n+1=(2k^2+1)^2+0^2$ and $n+2=(2k^2+1)^2+1^2$.
+
+\item[A--3]
+
+The maximum area is $3 \sqrt{5}$.
+
+We deduce from the area of $P_1P_3P_5P_7$ that the radius of the circle
+is $\sqrt{5/2}$.  An easy calculation using the Pythagorean Theorem then
+shows that the rectangle $P_2P_4P_6P_8$ has sides $\sqrt{2}$ and
+$2\sqrt{2}$.
+For notational ease, denote the area of a polygon by putting brackets
+around the name of the polygon.
+
+By symmetry, the area of the octagon can be expressed as
+\[
+[P_2P_4P_6P_8] + 2[P_2P_3P_4] + 2[P_4P_5P_6].
+\]
+Note that $[P_2P_3P_4]$ is $\sqrt{2}$ times
+the distance from $P_3$ to $P_2P_4$, which is maximized when $P_3$
+lies on the midpoint of arc $P_2P_4$; similarly, $[P_4P_5P_6]$ is
+$\sqrt{2}/2$ times the distance from $P_5$ to $P_4P_6$, which is
+maximized when $P_5$ lies on the midpoint of arc $P_4P_6$. Thus the
+area of the octagon is maximized when $P_3$ is the
+midpoint of arc $P_2P_4$ and $P_5$ is the midpoint of arc $P_4P_6$.
+In this case, it is easy to calculate that $[P_2P_3P_4] = \sqrt{5}-1$
+and $[P_4P_5P_6] = \sqrt{5}/2-1$, and so the area of the octagon is
+$3\sqrt{5}$.
+
+\item[A--4]
+To avoid some improper integrals at 0, we may as well replace the left endpoint of integration by some $\epsilon > 0$. We now use integration by parts:
+\begin{align*}
+\int_\epsilon^B \sin x \sin x^2\,dx
+&= \int_\epsilon^B \frac{\sin x}{2x} \sin x^2 (2x\,dx) \\
+&= \left. -\frac{\sin x}{2x} \cos x^2 \right|_\epsilon^B \\
+&\mbox{} + \int_\epsilon^B \left( \frac{\cos x}{2x} - \frac{\sin x}{2x^2} \right) \cos x^2\,dx.
+\end{align*}
+Now $\frac{\sin x}{2x} \cos x^2$ tends to 0 as $B \to \infty$,
+and the integral of $\frac{\sin x}{2x^2} \cos x^2$ converges absolutely
+by comparison with $1/x^2$. Thus it suffices to note that
+\begin{align*}
+\int_\epsilon^B \frac{\cos x}{2x} \cos x^2\,dx &=
+\int_\epsilon^B \frac{\cos x}{4x^2} \cos x^2(2x\,dx) \\
+&= \left. \frac{\cos x}{4x^2} \sin x^2 \right|_\epsilon^B \\
+&\mbox{} - \int_\epsilon^B \frac{2x\cos x - \sin x}{4x^3} \sin x^2\,dx,
+\end{align*}
+and that the final integral converges absolutely by comparison to
+$1/x^3$.
+
+An alternate approach is to first rewrite $\sin x \sin x^2$ as
+$\frac{1}{2}(\cos (x^2-x) - \cos (x^2+x))$. Then
+\begin{align*}
+\int_\epsilon^B \cos(x^2+x)\,dx &=
+- \left. \frac{\sin (x^2+x)}{2x+1} \right|_\epsilon^B \\
+&\mbox{} - \int_\epsilon^B \frac{2\sin(x^2+x)}{(2x+1)^2}\,dx
+\end{align*}
+converges absolutely, and $\int_0^B \cos (x^2-x)$ can be
+treated similarly.
+
+
+\item[A--5]
+Let $a,b,c$ be the distances between the points. Then the area of the triangle
+with the three points as vertices
+is $abc/4r$. On the other hand, the area of a triangle whose vertices
+have integer coordinates is at least 1/2 (for example,
+by Pick's Theorem). Thus $abc/4r \geq 1/2$,
+and so
+\[
+\max\{a,b,c\} \geq (abc)^{1/3} \geq (2r)^{1/3} > r^{1/3}.
+\]
+
+
+\item[A--6]
+Recall that if $f(x)$ is a polynomial with integer coefficients,
+then $m-n$ divides $f(m)-f(n)$ for any integers $m$ and $n$. In particular,
+if we put $b_n = a_{n+1} - a_n$, then $b_n$ divides $b_{n+1}$ for all $n$.
+On the other hand, we are given that $a_0=a_m=0$, which implies that
+$a_1=a_{m+1}$ and so $b_0=b_m$. If $b_0=0$, then $a_0=a_1=\cdots=a_m$
+and we are done. Otherwise, $|b_0| = |b_1| = |b_2| = \cdots$, so
+$b_n = \pm b_0$ for all $n$.
+
+Now $b_0 + \cdots + b_{m-1} = a_m - a_0 = 0$, so half of the integers $b_0,
+\dots, b_{m-1}$ are positive and half are negative. In particular, there
+exists an integer $0<k<m$ such that $b_{k-1} = -b_k$, which is to say,
+$a_{k-1} = a_{k+1}$. From this it follows that $a_n = a_{n+2}$ for all
+$n \geq k-1$; in particular, for $m=n$, we have
+\[
+a_0 = a_m = a_{m+2} = f(f(a_0))
+= a_2.
+\]
+
+
+\item[B--1]
+Consider the seven triples $(a,b,c)$ with $a,b,c \in \{0,1\}$ not
+all zero. Notice that if $r_j, s_j, t_j$ are not all even, then four
+of the sums $ar_j + bs_j + ct_j$ with $a,b,c \in \{0,1\}$ are even
+and four are odd. Of course the sum with $a=b=c=0$ is even, so at
+least four of the seven triples with $a,b,c$ not all zero yield an odd
+sum. In other words, at least $4N$ of the tuples $(a,b,c,j)$ yield
+odd sums. By the pigeonhole principle, there is a triple $(a,b,c)$
+for which at least $4N/7$ of the sums are odd.
+
+
+
+\item[B--2]
+
+Since $\gcd(m,n)$ is an integer linear combination of $m$ and $n$,
+it follows that
+\[\frac{gcd(m,n)}{n}\binom{n}{m}\]
+is an integer linear combination of the integers
+\[\frac{m}{n}\binom{n}{m}=\binom{n-1}{m-1} \mbox{ and }
+\frac{n}{n}\binom{n}{m}=\binom{n}{m} \]
+and hence is itself an integer.
+
+\item[B--3]
+Put $f_k(t) = \frac{df^k}{dt^k}$.
+Recall Rolle's theorem: if $f(t)$ is differentiable, then between any
+two zeroes of $f(t)$ there exists a zero of $f'(t)$. This also applies
+when the zeroes are not all distinct: if $f$ has a zero of multiplicity
+$m$ at $t=x$, then $f'$ has a zero of multiplicity at least $m-1$ there.
+
+Therefore, if $0 \leq a_0 \leq a_1 \leq \cdots \leq a_r < 1$ are the roots
+of $f_k$ in $[0,1)$, then $f_{k+1}$ has a root
+in each of the intervals $(a_0, a_1), (a_1, a_2), \dots, (a_{r-1}, a_r)$,
+so long as we
+adopt the convention that the empty interval $(t,t)$ actually contains
+the point $t$ itself. There is also a root in the ``wraparound'' interval
+$(a_r, a_0)$. Thus $N_{k+1} \geq N_k$.
+
+Next, note that if we set $z = e^{2\pi i t}$; then
+\[
+f_{4k}(t) = \frac{1}{2i} \sum_{j=1}^N j^{4k} a_j (z^j - z^{-j})
+\]
+is equal to $z^{-N}$ times a polynomial of degree $2N$. Hence as a
+function of $z$, it has at most $2N$ roots; therefore $f_k(t)$ has
+at most $2N$ roots in $[0,1]$. That is, $N_k \leq 2N$ for all $N$.
+
+To establish that $N_k \to 2N$, we make precise the observation that
+\[
+f_k(t) = \sum_{j=1}^N j^{4k} a_j \sin(2\pi j t)
+\]
+is dominated by the term with $j=N$. At the points
+$t = (2i+1)/(2N)$ for $i=0,1, \dots, N-1$, we have
+$N^{4k} a_N \sin (2\pi N t) = \pm N^{4k} a_N$. If $k$ is chosen large enough
+so that
+\[
+|a_N| N^{4k} > |a_1| 1^{4k} + \cdots + |a_{N-1}| (N-1)^{4k},
+\]
+then $f_k((2i+1)/2N)$ has the same sign as $a_N \sin (2\pi N at)$,
+which is to say, the sequence $f_k(1/2N), f_k(3/2N), \dots$ alternates
+in sign. Thus
+between these points (again including the ``wraparound'' interval) we find
+$2N$ sign changes of $f_k$. Therefore $\lim_{k \to \infty} N_k = 2N$.
+
+
+\item[B--4]
+For $t$ real and not a multiple of $\pi$, write $g(t) =
+\frac{f(\cos t)}{\sin t}$.
+Then $g(t+\pi) = g(t)$; furthermore, the given equation implies that
+\[
+g(2t) = \frac{f(2\cos^2 t - 1)}{\sin (2t)} =
+\frac{2(\cos t) f(\cos t)}{\sin(2t)} = g(t).
+\]
+In particular, for any integer $n$ and $k$, we have
+\[
+g(1+n\pi/2^k) = g(2^k + n\pi) = g(2^k) = g(1).
+\]
+Since $f$ is continuous, $g$ is continuous where it is defined;
+but the set $\{1+n\pi/2^k | n,k\in{\mathbb{Z}}\}$ is dense
+in the reals, and so $g$ must be constant on its domain.
+Since $g(-t) = -g(t)$ for all $t$, we must have $g(t) = 0$
+when $t$ is not a multiple of $\pi$.
+Hence $f(x) = 0$ for $x \in (-1,1)$.  Finally,
+setting $x=0$ and $x=1$ in the given equation yields
+$f(-1) = f(1) = 0$.
+
+
+\item[B--5]
+
+We claim that all integers $N$ of the form $2^k$, with $k$ a positive
+integer and $N>\max\{S_0\}$, satisfy the desired conditions.
+
+It follows from the definition of $S_n$, and induction on $n$, that
+\begin{align*}
+\sum_{j \in S_n} x^j &\equiv (1+x) \sum_{j \in S_{n-1}} x^j \\
+&\equiv (1+x)^n \sum_{j \in S_0} x^j \pmod{2}.
+\end{align*}
+From the identity $(x+y)^2 \equiv x^2+y^2 \pmod{2}$ and induction
+on $n$, we have $(x+y)^{2^n} \equiv x^{2^n} + y^{2^n} \pmod{2}$.
+Hence if we choose $N$ to be a power of 2 greater than $\max\{S_0\}$, then
+\[
+\sum_{j \in S_n} \equiv (1+x^N) \sum_{j \in S_0} x^j
+\]
+and $S_N=S_0\cup\{N+a: a\in S_0\}$, as desired.
+
+
+\item[B--6]
+
+For each point $P$ in $B$, let $S_P$ be the set of points with
+all coordinates equal to $\pm 1$ which
+differ from $P$ in exactly one coordinate. Since there are more than
+$2^{n+1}/n$ points in $B$, and each $S_P$ has $n$ elements, the
+cardinalities of the sets $S_P$ add up to more than $2^{n+1}$, which
+is to say, more than twice the total number of points. By the
+pigeonhole principle, there must be a point in three of the
+sets, say $S_P, S_Q, S_R$. But then any two of $P, Q, R$ differ in
+exactly two coordinates, so $PQR$ is an equilateral triangle, as
+desired.
+
+
+\end{itemize}
+
+\end{document}
+
+
+

@@ -1,0 +1,423 @@
+\documentclass[amssymb,twocolumn,pra,10pt,aps]{revtex4-1}
+\usepackage{mathptmx,amsmath}
+
+\def\mymod#1{\,\,({\rm mod}\, #1)}
+
+\begin{document}
+\title{Solutions to the 57th William Lowell Putnam Mathematical Competition \\
+    Saturday, December 7, 1996}
+\author{Manjul Bhargava and Kiran Kedlaya}
+\noaffiliation
+\maketitle
+
+\begin{itemize}
+\item[A--1]
+If $x$ and $y$ are the sides of two squares with combined area 1, then
+$x^2 + y^2 = 1$. Suppose without loss of generality that $x \geq y$.
+Then the shorter side of a rectangle containing both squares without
+overlap must be at least $x$, and the longer side must be at least
+$x+y$. Hence the desired value of $A$ is the maximum of $x(x+y)$.
+
+To find this maximum, we let $x = \cos \theta, y = \sin \theta$ with
+$\theta \in [0, \pi/4]$. Then we are to maximize
+\begin{align*}
+\cos^2 \theta + \sin \theta \cos \theta
+&= \frac 12 (1 + \cos 2\theta + \sin 2\theta) \\
+&= \frac 12 + \frac{\sqrt{2}}{2} \cos (2\theta - \pi/4) \\
+&\leq \frac{1 + \sqrt{2}}{2},
+\end{align*}
+with equality for $\theta = \pi/8$. Hence this value is the desired
+value of $A$.
+
+\item[A--2]
+Let $O_1$ and $O_2$ be the centers of $C_1$ and $C_2$, respectively.
+(We are assuming $C_1$ has radius 1 and $C_2$ has radius 3.)
+Then the
+desired locus is an annulus centered at the midpoint of $O_1O_2$, with
+inner radius 1 and outer radius 2.
+
+For a fixed point $Q$ on $C_2$, the locus of the midpoints of the
+segments $PQ$ for $P$ lying on $C_1$ is the image of $C_1$ under a
+homothety centered at $Q$ of radius $1/2$, which is a circle of radius
+$1/2$. As $Q$ varies, the center of this smaller circle traces out a
+circle $C_3$ of radius $3/2$ (again by homothety). By considering the two
+positions of $Q$ on the line of centers of the circles, one sees that
+$C_3$ is centered at the midpoint of $O_1O_2$, and the locus is now
+clearly the specified annulus.
+
+\item[A--3]
+The claim is false. There are $\binom{6}{3} = 20$ ways to choose 3 of the
+6 courses; have each student choose a different set of 3 courses. Then
+each pair of courses is chosen by 4 students (corresponding to the
+four ways to complete this pair to a set of 3 courses) and is not
+chosen by 4 students (corresponding to the 3-element subsets of the
+remaining 4 courses).
+
+Note: Assuming that no two students choose the same courses,
+the above counterexample is unique (up to permuting students).
+This may be seen as follows: Given a group of students, suppose that
+for any pair of courses (among the six) there are at most 4 students
+taking both, and at most 4 taking neither.  Then there are at most
+$120=(4+4)\binom{6}{2}$ pairs $(s,p)$, where $s$ is a student, and $p$
+is a set of two courses of which $s$ is taking either both or none.
+On the other hand, if a student $s$ is taking $k$ courses, then he/she
+occurs in $f(k)=\binom{k}{2}+\binom{6-k}{2}$ such pairs $(s,p)$.  As
+$f(k)$ is minimized for $k=3$, it follows that every student occurs in
+at least $6=\binom{3}{2}+\binom{3}{2}$ such pairs $(s,p)$.  Hence
+there can be at most $120/6=20$ students, with equality only if each
+student takes 3 courses, and for each set of two courses, there are
+exactly 4 students who take both and exactly 4 who take neither.
+Since there are only 4 ways to complete a given pair of courses to a
+set of 3, and only 4 ways to choose 3 courses not containing the given
+pair, the only way for there to be 20 students (under our hypotheses)
+is if all sets of 3 courses are in fact taken.  This is the desired conclusion.
+
+However, Robin Chapman has pointed out that the solution is not unique
+in the problem as stated, because a given selection of courses may be
+made by more than one student. One alternate solution is to identify
+the 6 courses with pairs of antipodal vertices of an icosahedron, and
+have each student pick a different face and choose the three vertices
+touching that face. In this example, each of 10 selections is made by
+a pair of students.
+
+\item[A--4]
+In fact, we will show that such a function $g$ exists with the
+property that $(a,b,c) \in S$ if and only if $g(d) < g(e) < g(f)$ for
+some cyclic permutation $(d,e,f)$ of $(a,b,c)$. We proceed by
+induction on the number of elements in $A$. If $A =
+\{a,b,c\}$ and $(a,b,c) \in S$, then choose $g$ with $g(a) < g(b) <
+g(c)$, otherwise choose $g$ with $g(a) > g(b) > g(c)$.
+
+Now let $z$ be an element of $A$ and $B = A - \{z\}$.
+Let $a_{1}, \dots, a_{n}$ be the elements of $B$ labeled such that
+$g(a_{1}) < g(a_{2}) < \cdots < g(a_{n})$. We claim that there exists
+a unique $i \in \{1, \dots, n\}$ such that $(a_{i}, z, a_{i+1})
+\in S$, where hereafter $a_{n+k} = a_{k}$.
+
+We show existence first. Suppose no such $i$ exists; then for all
+$i,k \in \{1, \dots, n\}$, we have $(a_{i+k}, z, a_{i}) \notin S$.
+This holds by property 1 for $k=1$ and by induction on $k$ in
+general, noting that
+\begin{align*}
+(a_{i+k+1}, z, a_{i+k}), &(a_{i+k}, z, a_{i})  \in S \\
+&\Rightarrow (a_{i+k}, a_{i+k+1}, z), (z, a_{i}, a_{i+k}) \in S \\
+&\Rightarrow (a_{i+k+1},z,a_{i}) \in S.
+\end{align*}
+Applying this when $k=n$, we get $(a_{i-1}, z, a_{i}) \in S$,
+contradicting the fact that $(a_{i}, z, a_{i-1}) \in S$. Hence
+existence follows.
+
+Now we show uniqueness. Suppose $(a_{i}, z, a_{i+1}) \in S$; then for
+any $j \neq i-1, i, i+1$, we have $(a_{i}, a_{i+1}, a_{j}), (a_{j},
+a_{j+1}, a_{i}) \in S$ by the
+assumption on $G$. Therefore
+\begin{align*}
+(a_{i}, z, a_{i+1}), (a_{i+1}, a_{j}, a_{i}) \in S
+&\Rightarrow (a_{j}, a_{i}, z) \in S \\
+(a_{i}, z, a_{j}), (a_{j}, a_{j+1}, a_{i}) \in S
+&\Rightarrow (z, a_{j}, a_{j+1}),
+\end{align*}
+so $(a_{j}, z, a_{j+1}) \notin S$. The case $j =i+1$ is ruled out by
+\[
+(a_{i}, z, a_{i+1}), (a_{i+1}, a_{i+2}, a_{i}) \in S \Rightarrow (z,
+a_{i+1}, a_{i+2}) \in S
+\]
+and the case $j=i-1$ is similar.
+
+Finally, we put $g(z)$ in $(g(a_{n}), + \infty)$ if $i = n$, and
+$(g(a_{i}), g(a_{i+1}))$ otherwise; an analysis similar to that above
+shows that $g$ has the desired property.
+
+\item[A--5] (due to Lenny Ng)
+For $1 \leq n \leq p-1$, $p$ divides $\binom pn$ and
+\begin{align*}
+\frac{1}{p} \binom pn &= \frac{1}{n} \frac{p-1}{1} \frac{p-2}{2} \cdots
+\frac{p-n+1}{n-1} \\
+&\equiv \frac{(-1)^{n-1}}{n} \mymod{p},
+\end{align*}
+where the congruence $x \equiv y \mymod{p}$ means that $x-y$ is a
+rational number whose numerator, in reduced form, is divisible by $p$.
+Hence it suffices to show that
+\[
+\sum_{n=1}^k \frac{(-1)^{n-1}}{n} \equiv 0 \mymod{p}.
+\]
+We distinguish two cases based on $p \mymod{6}$. First suppose $p =
+6r+1$, so that $k = 4r$. Then
+\begin{align*}
+\sum_{n=1}^{4r} \frac{(-1)^{n-1}}{n}
+&= \sum_{n=1}^{4r} \frac{1}{n} - 2 \sum_{n=1}^{2r} \frac{1}{2n} \\
+&= \sum_{n=1}^{2r} \left( \frac{1}{n} - \frac{1}{n} \right)
++ \sum_{n=2r+1}^{3r} \left( \frac{1}{n} + \frac{1}{6r+1-n} \right) \\
+&= \sum_{n=2r+1}^{3r} \frac{p}{n(p-n)} \equiv 0 \mymod{p},
+\end{align*}
+since $p = 6r+1$.
+
+Now suppose $p = 6r+5$, so that $k = 4r + 3$. A similar argument gives
+\begin{align*}
+\sum_{n=1}^{4r+3}\ \frac{(-1)^{n-1}}{n}
+&= \sum_{n=1}^{4r+3} \frac{1}{n} + 2 \sum_{n=1}^{2r+1} \frac{1}{2n} \\
+&= \sum_{n=1}^{2r+1} \left( \frac{1}{n} - \frac{1}{n} \right)
++ \sum_{n=2r+2}^{3r+2} \left( \frac{1}{n} + \frac{1}{6r+5-n} \right) \\
+&= \sum_{n=2r+2}^{3r+2} \frac{p}{n(p-n)} \equiv 0 \mymod{p}.
+\end{align*}
+
+\item[A--6]
+We first consider the case $c \leq 1/4$; we shall show in this case
+$f$ must be constant. The relation
+\[
+f(x) = f(x^2 + c) = f((-x)^2 + c) = f(-x)
+\]
+proves that $f$ is an even function. Let $r_1 \leq r_2$ be the roots of
+$x^2 + c - x$, both of which are real. If $x > r_{2}$, define $x_{0} =
+x$ and $x_{n+1} = \sqrt{x_{n} - c}$ for each positive integer $x$. By
+induction on $n$, $r_{2} < x_{n+1} < x_{n}$ for all $n$, so the
+sequence $\{x_{n}\}$ tends to a limit $L$ which is a root of $x^{2} +
+c = x$ not less than $r_{2}$. Of course this means $L = r_{2}$.
+Since $f(x) = f(x_{n})$ for all $n$ and $x_{n} \to r_{2}$, we
+conclude $f(x) = f(r_{2})$, so $f$ is constant on $x \geq r_{2}$.
+
+If $r_{1} < x < r_{2}$ and $x_{n}$ is defined as before, then by
+induction, $x_{n} < x_{n+1} < r_{2}$. Note that the
+sequence can be defined because $r_{1} > c$; the latter follows by
+noting that the polynomial $x^{2} - x + c$ is positive at $x = c$ and
+has its minimum at $1/2 > c$, so both roots are greater than $c$. In
+any case, we deduce that $f(x)$ is also constant on $r_{1} \leq x \leq
+r_{2}$.
+
+Finally, suppose $x < r_{1}$. Now define $x_{0} = x, x_{n+1} =
+x_{n}^{2} + c$. Given that $x_{n} < r_{1}$, we have $x_{n+1} >
+x_{n}$. Thus if we had $x_{n} < r_{1}$ for all $n$, by the same argument as
+in the first case we deduce $x_{n} \to r_{1}$ and so $f(x) =
+f(r_{1})$. Actually, this doesn't happen; eventually we have $x_{n} >
+r_{1}$, in which case $f(x) = f(x_{n}) = f(r_{1})$ by what we have
+already shown. We conclude that $f$ is a constant function. (Thanks
+to Marshall Buck for catching an inaccuracy in a previous version of
+this solution.)
+
+Now suppose $c > 1/4$. Then the sequence $x_n$ defined by $x_0 = 0$
+and $x_{n+1} = x_n^2 + c$ is strictly increasing and has no limit
+point. Thus if we define $f$ on $[x_0, x_1]$ as any continuous
+function with equal values on the endpoints, and extend the definition
+from $[x_n, x_{n+1}]$ to $[x_{n+1}, x_{n+2}]$ by the relation $f(x) =
+f(x^2 + c)$, and extend the definition further to $x < 0$ by the
+relation $f(x) = f(-x)$, the resulting function has the desired
+property. Moreover, any function with that property clearly has this form.
+
+\item[B--1]
+Let $[n]$ denote the set $\{1,2,\ldots,n\}$, and let $f_n$ denote the
+number of minimal selfish subsets of $[n]$.  Then the number of
+minimal selfish subsets of $[n]$ not containing $n$ is equal to
+$f_{n-1}$.  On the other hand, for any minimal selfish subset of $[n]$
+containing $n$, by subtracting 1 from each element, and then taking
+away the element $n-1$ from the set, we obtain a minimal selfish
+subset of $[n-2]$ (since $1$ and $n$ cannot both occur in a selfish
+set).  Conversely, any minimal selfish subset of $[n-2]$ gives rise to
+a minimal selfish subset of $[n]$ containing $n$ by the inverse
+procedure.  Hence the number of minimal selfish subsets of $[n]$
+containing $n$ is $f_{n-2}$.  Thus we obtain $f_n=f_{n-1}+f_{n-2}$.
+Since $f_1=f_2=1$, we have $f_n=F_n$, where $F_n$ denotes the $n$th
+term of the Fibonacci sequence.
+
+\item[B--2]
+By estimating the area under the graph of $\ln x$ using upper and
+lower rectangles of width 2, we get
+\begin{align*}
+\int_1^{2n-1} \ln x\,dx &\leq 2(\ln(3) + \cdots + \ln(2n-1)) \\
+&\leq \int_3^{2n+1} \ln x\,dx.
+\end{align*}
+Since $\int \ln x\,dx = x \ln x - x + C$, we have, upon exponentiating
+and taking square roots,
+%\begin{align*}
+%\left( \frac{2n-1}{e} \right)^{\frac{2n-1}{2}}
+%< (2n-1)^{\frac{2n-1}{2}} e^{-n+1}
+%&\leq 1 \cdot 3 \cdots (2n-1) \\
+%&\leq (2n+1)^{\frac{2n+1}{2}} \frac{e^{-n+1}}{3^{3/2}}
+%< \left( \frac{2n+1}{e} \right)^{\frac{2n+1}{2}},
+%\end{align*}
+\begin{align*}
+\left( \frac{2n-1}{e} \right)^{\frac{2n-1}{2}}
+&< (2n-1)^{\frac{2n-1}{2}} e^{-n+1} \\
+& \leq 1 \cdot 3 \cdots (2n-1) \\
+& \leq (2n+1)^{\frac{2n+1}{2}} \frac{e^{-n+1}}{3^{3/2}} \\
+& < \left( \frac{2n+1}{e} \right)^{\frac{2n+1}{2}},
+\end{align*}
+using the fact that $1 < e < 3$.
+
+\item[B--3]
+View $x_1, \dots, x_n$ as an arrangement of the numbers $1, 2, \dots,
+n$ on a circle.
+We prove that the optimal arrangement is
+\[
+\dots, n-4, n-2, n, n-1, n-3, \dots
+\]
+To show this, note that if
+$a, b$ is a pair of adjacent numbers and $c,d$ is another pair (read
+in the same order around the circle) with $a < d$ and $b > c$, then
+the segment from $b$ to $c$ can be reversed, increasing the sum by
+\[
+ac + bd - ab - cd = (d-a)(b-c) > 0.
+\]
+Now relabel the numbers so they appear in order as follows:
+\[
+\dots, a_{n-4}, a_{n-2}, a_n = n, a_{n-1}, a_{n-3}, \dots
+\]
+where without loss of generality we assume $a_{n-1} > a_{n-2}$. By
+considering the pairs $a_{n-2}, a_n$ and $a_{n-1}, a_{n-3}$ and using
+the trivial fact $a_n > a_{n-1}$, we deduce $a_{n-2} > a_{n-3}$. We
+then compare the pairs $a_{n-4}, a_{n-2}$ and $a_{n-1}, a_{n-3}$, and
+using that $a_{n-1} > a_{n-2}$, we deduce $a_{n-3} > a_{n-4}$.
+Continuing in this
+fashion, we prove that $a_n > a_{n-1} > \dots > a_1$ and
+so $a_k = k$ for $k = 1, 2, \dots, n$, i.e.\ that the optimal
+arrangement is as claimed. In particular, the maximum value of the sum
+is
+\begin{multline*}
+1 \cdot 2 + (n-1)\cdot n + 1 \cdot 3 + 2 \cdot 4 + \cdots + (n-2)\cdot n \\
+\begin{aligned}
+&= 2 + n^2 - n + (1^2 - 1) + \cdots + [(n-1)^2 - 1] \\
+&= n^2 - n + 2 - (n-1) + \frac{(n-1)n(2n-1)}{6} \\
+&= \frac{2n^3 + 3n^2 - 11n + 18}{6}.
+\end{aligned}
+\end{multline*}
+
+Alternate solution: We prove by induction that the value given above
+is an upper bound; it is clearly a lower bound because of the
+arrangement given above. Assume this is the case for $n-1$. The optimal
+arrangement for $n$ is obtained from some arrangement for $n-1$ by
+inserting $n$ between some pair $x, y$ of adjacent terms. This
+operation increases the sum by $nx + ny - xy = n^2 - (n-x)(n-y)$,
+which is an increasing function of both $x$ and $y$. In particular,
+this difference is maximal when $x$ and $y$ equal $n-1$ and $n-2$.
+Fortunately, this yields precisely the difference between the claimed
+upper bound for $n$ and the assumed upper bound for $n-1$, completing
+the induction.
+
+\item[B--4]
+Suppose such a matrix $A$ exists.  If the eigenvalues of $A$ (over
+the complex numbers) are distinct, then there exists a complex
+matrix $C$ such that $B=CAC^{-1}$ is diagonal.  Consequently,
+$\sin B$ is diagonal.  But then $\sin A=C^{-1}(\sin B)C$ must
+be diagonalizable, a contradiction.  Hence the eigenvalues of $A$
+are the same, and $A$ has a conjugate $B=CAC^{-1}$ over
+the complex numbers of the form
+\[
+\left(
+\begin{array}{cc}
+x & y\\
+0 & x
+\end{array}
+\right).
+\]
+A direct computation shows that
+\[
+\sin B = \left(
+\begin{array}{cc}
+\sin x & y\cdot \cos x\\
+0 & \sin x
+\end{array}
+\right).
+\]
+Since $\sin A$ and $\sin B$ are conjugate, their eigenvalues
+must be the same, and so we must have $\sin x=1$.  This implies
+$\cos x=0$, so that $\sin B$ is the identity matrix, as must be $\sin
+A$, a contradiction.
+Thus $A$ cannot exist.
+
+Alternate solution (due to Craig Helfgott and Alex Popa):
+Define both $\sin A$ and $\cos A$ by the usual power series.
+Since $A$ commutes with itself, the power series identity
+\[
+\sin^2 A+\cos^2 A = I
+\]
+holds.  But if $\sin A$ is the given matrix, then by the
+above identity, $\cos^2 A$ must equal
+$\left(
+\begin{array}{cc}
+0 & -2\cdot 1996\\
+0 & 0
+\end{array}
+\right)$
+which is a nilpotent matrix.  Thus $\cos A$ is also nilpotent.
+However, the square of any $2\times 2$ nilpotent matrix must be zero
+(e.g., by the Cayley-Hamilton theorem).  This is a contradiction.
+
+\item[B--5]
+Consider a $1 \times n$ checkerboard, in which we write an $n$-letter
+string, one letter per square. If the string is balanced, we can cover
+each pair of adjacent squares containing the same letter with a $1
+\times 2$ domino, and these will not overlap (because no three in a
+row can be the same). Moreover, any domino is separated from the next
+by an even number of squares, since they must cover opposite letters,
+and the sequence must alternate in between.
+
+Conversely, any arrangement of dominoes where adjacent dominoes are
+separated by an even number of squares corresponds to a unique
+balanced string, once we choose whether the string starts with $X$ or
+$O$. In other words, the number of balanced strings is twice the
+number of acceptable domino arrangements.
+
+We count these arrangements by numbering the squares $0,1,\dots,n-1$
+and distinguishing whether the dominoes start on even or odd numbers.
+Once this is decided, one simply chooses whether or not to put a
+domino in each eligible position. Thus
+we have $2^{\lfloor n/2 \rfloor}$ arrangements in the first case and $2^{\lfloor
+(n-1)/2 \rfloor}$ in the second, but note that the case of no dominoes has
+been counted twice. Hence the number of balanced strings is
+\[
+2^{\lfloor (n+2)/2 \rfloor} + 2^{\lfloor (n+1)/2 \rfloor} - 2.
+\]
+
+\item[B--6]
+We will prove the claim assuming only that the convex hull of the
+points $(a_{i}, b_{i})$ contains the origin in its interior. (Thanks
+to Marshall Buck for pointing out that the last three words are
+necessary in the previous sentence!) Let $u = \log x, v = \log
+y$ so that the left-hand side of the given equation is
+\begin{multline}
+(a_1, b_1) \exp(a_1 u + b_1 v) + (a_2, b_2) \exp(a_2 u + b_2 v) + \\
+\cdots + (a_n, b_n) \exp(a_n u + b_n v).
+\end{multline}
+Now note that (1) is the gradient of the function
+\begin{gather*}
+f(u,v) = exp(a_1 u + b_1 v) +
+exp(a_2 u + b_2 v) + \\
+\cdots + exp(a_n u + b_n v),
+\end{gather*}
+and so it suffices to show $f$ has a critical point. We will in fact
+show $f$ has a global minimum.
+
+Clearly we have
+\[
+f(u,v) \geq \exp\left( \max_i (a_i u + b_i v) \right).
+\]
+Note that this maximum is positive for $(u,v) \neq (0,0)$:  if we had
+$a_i u + b_i v < 0$ for all $i$, then the subset $ur + vs < 0$ of the
+$rs$-plane would be a half-plane containing all of the points $(a_i,
+b_i)$, whose convex hull would then not contain the origin, a
+contradiction.
+
+The function $\max_{i} (a_{i}u + b_{i}v)$ is clearly
+continuous on the unit circle $u^{2} + v^{2} = 1$, which is compact.
+Hence it has a global minimum $M > 0$, and so for all $u,v$,
+\[
+\max_{i} (a_{i} u + b_{i} v) \geq M \sqrt{u^{2} + v^{2}}.
+\]
+In particular, $f \geq n+1$ on the disk of radius $\sqrt{(n+1)/M}$.
+Since $f(0,0) = n$, the infimum of $f$ is the same over the entire
+$uv$-plane as over this disk, which again is compact.
+Hence $f$ attains its infimal value at some point in the disk,
+which is the desired global minimum.
+
+Noam Elkies has suggested an alternate solution as follows: for $r >
+0$, draw the loop traced by (1) as $(u,v)$ travels
+counterclockwise around the circle $u^2 + v^2 = r^2$. For $r=0$, this
+of course has winding number 0 about any point, but for $r$ large, one
+can show this loop has winding number 1 about the origin, so somewhere in
+between the loop must pass through the origin. (Proving this latter
+fact is a little tricky.)
+
+\end{itemize}
+\end{document}
+
+
+
