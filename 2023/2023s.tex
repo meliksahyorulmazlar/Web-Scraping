@@ -1,0 +1,396 @@
+\documentclass[amssymb,twocolumn,pra,10pt,aps]{revtex4-1}
+\usepackage{mathptmx,amsmath,amsthm,hyperref}
+
+\newtheorem{lemma}{Lemma}
+\newtheorem{cor}[lemma]{Corollary}
+\newtheorem*{lemma*}{Lemma}
+\newcommand{\FF}{\mathbb{F}}
+\newcommand{\QQ}{\mathbb{Q}}
+\newcommand{\RR}{\mathbb{R}}
+\newcommand{\CC}{\mathbb{C}}
+\newcommand{\ZZ}{\mathbb{Z}}
+\DeclareMathOperator{\lcm}{lcm}
+\DeclareMathOperator{\sgn}{sgn}
+\DeclareMathOperator{\Trace}{Trace}
+\newcommand{\ee}{\ell}
+
+\begin{document}
+\title{Solutions to the 84th William Lowell Putnam Mathematical Competition \\
+    Saturday, December 2, 2023}
+\author{Manjul Bhargava, Kiran Kedlaya, and Lenny Ng}
+\noaffiliation
+\maketitle
+
+\begin{itemize}
+\item[A1]
+If we use the product rule to calculate $f_n''(x)$, the result is a sum of terms of two types: terms where two distinct factors $\cos(m_1x)$ and $\cos(m_2x)$ have each been differentiated once, and terms where a single factor $\cos(mx)$ has been differentiated twice. When we evaluate at $x=0$, all terms of the first type vanish since $\sin(0)=0$, while the term of the second type involving $(\cos(mx))''$ becomes $-m^2$. Thus 
+\[
+|f_n''(0)| = \left|-\sum_{m=1}^n m^2\right| = \frac{n(n+1)(2n+1)}{6}.
+\]
+The function $g(n) = \frac{n(n+1)(2n+1)}{6}$ is increasing for $n\in\mathbb{N}$ and satisfies $g(17)=1785$ and $g(18)=2109$. It follows that the answer is $n=18$.
+
+\item[A2]
+The only other real numbers with this property are $\pm 1/n!$.
+(Note that these are indeed \emph{other} values than $\pm 1, \dots, \pm n$ because $n>1$.)
+
+Define the polynomial $q(x) = x^{2n+2}-x^{2n}p(1/x) = x^{2n+2}-(a_0x^{2n}+\cdots+a_{2n-1}x+1)$. The statement that $p(1/x)=x^2$ is equivalent (for $x\neq 0$) to the statement that $x$ is a root of $q(x)$. Thus we know that $\pm 1,\pm 2,\ldots,\pm n$ are roots of $q(x)$, and we can write
+\[
+q(x) = (x^2+ax+b)(x^2-1)(x^2-4)\cdots (x^2-n^2)
+\]
+for some monic quadratic polynomial $x^2+ax+b$. Equating the coefficients of $x^{2n+1}$ and $x^0$ on both sides gives $0=a$ and $-1=(-1)^n(n!)^2 b$, respectively. Since $n$ is even, we have $x^2+ax+b = x^2-(n!)^{-2}$. We conclude that there are precisely two other real numbers $x$ such that $p(1/x)=x^2$, and they are $\pm 1/n!$.
+
+\item[A3]
+The answer is $r=\frac{\pi}{2}$, which manifestly is achieved by setting $f(x)=\cos x$ and $g(x)=\sin x$.
+
+\noindent
+\textbf{First solution.}
+Suppose by way of contradiction that there exist some $f,g$ satisfying the stated conditions for some $0 < r<\frac{\pi}{2}$. We first note that we can assume that $f(x) \neq 0$ for $x\in [0,r)$. Indeed, by continuity, $\{x\,|\,x\geq 0 \text{ and } f(x)=0\}$ is a closed subset of $[0,\infty)$ and thus has a minimum element $r'$ with $0<r'\leq r$. After replacing $r$ by $r'$, we now have $f(x)\neq 0$ for $x\in [0,r)$.
+
+Next we note that $f(r)=0$ implies $g(r) \neq 0$. Indeed, define the function $k :\thinspace \mathbb{R} \to \mathbb{R}$ by $k(x) = f(x)^2+g(x)^2$. Then $|k'(x)| = 2|f(x)f'(x)+g(x)g'(x))| \leq 4|f(x)g(x)| \leq 2k(x)$, where the last inequality follows from the AM-GM inequality. It follows that $\left|\frac{d}{dx} (\log k(x))\right| \leq 2$ for $x \in [0,r)$; since $k(x)$ is continuous at $x=r$, we conclude that $k(r) \neq 0$.
+
+Now define the function $h\colon [0,r) \to (-\pi/2,\pi/2)$ by $h(x) = \tan^{-1}(g(x)/f(x))$. We compute that
+\[
+h'(x) = \frac{f(x)g'(x)-g(x)f'(x)}{f(x)^2+g(x)^2}
+\]
+and thus
+\[
+|h'(x)| \leq \frac{|f(x)||g'(x)|+|g(x)||f'(x)|}{f(x)^2+g(x)^2} \leq \frac{|f(x)|^2+|g(x)|^2}{f(x)^2+g(x)^2} = 1.
+\]
+Since $h(0) = 0$, we have $|h(x)| \leq x<r$ for all $x\in [0,r)$. Since $r<\pi/2$ and $\tan^{-1}$ is increasing on $(-r,r)$, we conclude that $|g(x)/f(x)|$ is uniformly bounded above by $\tan r$ for all $x\in [0,r)$. But this contradicts the fact that $f(r)=0$ and $g(r) \neq 0$, since $\lim_{x\to r^-} g(x)/f(x) = \infty$. This contradiction shows that $r<\pi/2$ cannot be achieved.
+
+\noindent
+\textbf{Second solution.}
+(by Victor Lie)
+As in the first solution, we may assume $f(x) > 0$ 
+for $x \in [0,r)$.
+Combining our hypothesis with the fundamental theorem of calculus, for $x > 0$ we obtain
+\begin{align*}
+|f'(x)| &\leq |g(x)| \leq \left| \int_0^x g'(t)\,dt \right|  \\
+& \leq \int_0^x |g'(t)| \,dt \leq \int_0^x |f(t)|\,dt.
+\end{align*}
+Define $F(x) = \int_0^x f(t)\,dt$; we then have
+\[
+f'(x) + F(x) \geq 0 \qquad (x \in [0,r]).
+\]
+Now suppose by way of contradiction that $r < \frac{\pi}{2}$.
+Then $\cos x > 0$ for $x \in [0,r]$, so 
+\[
+f'(x) \cos x + F(x) \cos x \geq 0 \qquad (x \in [0,r]).
+\]
+The left-hand side is the derivative of $f(x) \cos x + F(x) \sin x $. Integrating from $x=y$ to $x=r$, we obtain
+\[
+F(r) \sin r \geq f(y) \cos y + F(y) \sin y \qquad (y \in [0,r]).
+\]
+We may rearrange to obtain
+\[
+F(r)\sin r \sec^2 y \geq f(y) \sec y + F(y) \sin y \sec^2 y \quad (y \in [0,r]).
+\]
+The two sides are the derivatives of $F(r) \sin r \tan y$ and $F(y) \sec y$, respectively.
+Integrating from $y=0$ to $y=r$ and multiplying by $\cos^2 r$, we obtain
+\[
+F(r) \sin^2 r \geq F(r)
+\]
+which is impossible because $F(r) > 0$ and $0 < \sin r < 1$.
+
+\item[A4]
+The assumption that all vertices of the icosahedron correspond to vectors of the same length forces the center of the icosahedron to lie at the origin, since the icosahedron is inscribed in a unique sphere.
+Since scaling the icosahedron does not change whether or not the stated conclusion is true, we may choose coordinates so that the vertices are the cyclic permutations of the vectors $(\pm \frac{1}{2}, \pm \frac{1}{2} \phi, 0)$ where
+$\phi = \frac{1+\sqrt{5}}{2}$ is the golden ratio. The subgroup of $\RR^3$ generated by these vectors contains $G \times G \times G$ where $G$ is the subgroup of $\RR$ generated by 1 and $\phi$. Since $\phi$ is irrational, it generates a dense subgroup of $\RR/\ZZ$; hence $G$ is dense in $\RR$, and so $G \times G \times G$ is dense in $\RR^3$,
+proving the claim.
+
+\item[A5]
+The complex numbers $z$ with this property are
+\[
+-\frac{3^{1010}-1}{2} \text{ and } -\frac{3^{1010}-1}{2}\pm\frac{\sqrt{9^{1010}-1}}{4}\,i.
+\]
+
+We begin by noting that for $n \geq 1$, we have the following equality of polynomials in a parameter $x$:
+\[
+\sum_{k=0}^{3^n-1} (-2)^{f(k)} x^k = \prod_{j=0}^{n-1} (x^{2\cdot 3^j}-2x^{3^j}+1).
+\]
+This is readily shown by induction on $n$, using the fact that for $0\leq k\leq 3^{n-1}-1$, $f(3^{n-1}+k)=f(k)+1$ and $f(2\cdot 3^{n-1}+k)=f(k)$.
+
+Now define a ``shift'' operator $S$ on polynomials in $z$ by $S(p(z))=p(z+1)$; then we can define $S^m$ for all $m\in\mathbb{Z}$ by $S^m(p(z))$, and in particular $S^0=I$ is the identity map. Write
+\[
+p_n(z) := \sum_{k=0}^{3^n-1}(-2)^{f(k)}(z+k)^{2n+3}
+\]
+for $n \geq 1$; it follows that 
+\begin{align*}
+p_n(z) &= \prod_{j=0}^{n-1}(S^{2\cdot 3^j}-2S^{3^j}+I) z^{2n+3}
+\\
+&= S^{(3^n-1)/2} \prod_{j=0}^{n-1}(S^{3^j}-2I+S^{-3^j}) z^{2n+3}.
+\end{align*}
+Next observe that for any $\ell$, the operator $S^\ell-2I+S^{-\ell}$ acts on polynomials in $z$ in a way that decreases degree by $2$. More precisely, for $m\geq 0$, we have
+\begin{align*}
+(S^\ell-2I+S^{-\ell})z^m &= (z+\ell)^m-2z^m+(z-\ell)^m \\
+&= 2{m\choose 2}\ell^2z^{m-2}+2{m\choose 4}\ell^4z^{m-4}+O(z^{m-6}).
+\end{align*}
+We use this general calculation to establish the following: for any $1\leq i\leq n$, there is a nonzero constant $C_i$ (depending on $n$ and $i$ but not $z$) such that
+\begin{gather}
+\nonumber
+\prod_{j=1}^{i} (S^{3^{n-j}}-2I+S^{-3^{n-j}}) z^{2n+3} \\
+\nonumber
+= C_i\left(z^{2n+3-2i}+\textstyle{\frac{(2n+3-2i)(n+1-i)}{6}}(\sum_{j=1}^i 9^{n-j})z^{2n+1-2i}\right) \\
++O(z^{2n-1-2i}).
+\label{eq:product}
+\end{gather}
+Proving \eqref{eq:product} is a straightforward induction on $i$: the induction step applies $S^{3^{n-i-1}}-2I+S^{-3^{n-i-1}}$ to the right hand side of \eqref{eq:product}, using the general formula for $(S^\ell-2I+S^{-\ell})z^m$.
+
+Now setting $i=n$ in \eqref{eq:product}, we find that for some $C_n$,
+\[
+\prod_{j=0}^{n-1}(S^{3^j}-2I+S^{-3^j}) z^{2n+3} = C_n\left(z^3+\frac{9^n-1}{16}z\right).
+\]
+The roots of this polynomial are $0$ and $\pm \frac{\sqrt{9^n-1}}{4} i$, and it follows that the roots of $p_n(z)$ are these three numbers minus $\frac{3^n-1}{2}$. In particular, when $n=1010$, we find that the roots of $p_{1010}(z)$ are as indicated above.
+
+\item[A6]
+(Communicated by Kai Wang)
+For all $n$, Bob has a winning strategy. Note that we can interpret the game play as building a permutation of $\{1,\dots,n\}$, and the number of times an integer $k$ is chosen on the $k$-th turn is exactly the number of fixed points of this permutation.
+
+For $n$ even, Bob selects the goal ``even''. Divide $\{1,\dots,n\}$ into the pairs $\{1,2\},\{3,4\},\dots$; each time Alice chooses an integer, Bob follows suit with the other integer in the same pair. For each pair $\{2k-1,2k\}$, we see that $2k-1$ is a fixed point if and only if $2k$ is, so the number of fixed points is even.
+
+For $n$ odd, Bob selects the goal ``odd''. On the first turn, if Alice chooses 1 or 2, then Bob chooses the other one to transpose into the strategy for $n-2$ (with no moves made). We may thus assume hereafter that Alice's first move is some $k > 2$, which Bob counters with 2; at this point there is exactly one fixed point. 
+
+Thereafter, as long as Alice chooses $j$ on the $j$-th turn (for $j \geq 3$ odd), either $j+1 < k$, in which case Bob can choose $j+1$
+to keep the number of fixed points odd; or $j+1=k$, in which case $k$ is even and Bob can choose 1 to transpose into the strategy for  $n-k$ (with no moves made).
+
+Otherwise, at some odd turn $j$, Alice does not choose $j$. At this point, the number of fixed points is odd, and on each subsequent turn Bob can ensure that neither his own move nor Alice's next move does not create a fixed point: on any turn $j$ for Bob, if $j+1$ is available Bob chooses it; otherwise, Bob has at least two choices available, so he can choose a value other than $j$.
+
+
+\item[B1]
+The number of such configurations is $\binom{m+n-2}{m-1}$.
+
+Initially the unoccupied squares form a path from $(1,n)$ to $(m,1)$ consisting of $m-1$ horizontal steps and $n-1$ vertical steps,
+and every move preserves this property. This yields an injective map from the set of reachable configurations to the set of paths of this form.
+
+Since the number of such paths is evidently $\binom{m+n-2}{m-1}$ (as one can arrange the horizontal and vertical steps in any order),
+it will suffice to show that the map we just wrote down is also surjective; that is, that one can reach any path of this form by a sequence of moves. 
+
+This is easiest to see by working backwards. Ending at a given path, if this path is not the initial path, then it contains at least one sequence of squares of the form $(i,j) \to (i,j-1) \to (i+1,j-1)$.
+In this case the square $(i+1,j)$ must be occupied, so we can undo a move by replacing this sequence with 
+$(i,j) \to (i+1,j) \to (i+1,j-1)$.
+
+\item[B2]
+The minimum is $3$. 
+
+\noindent
+\textbf{First solution.}
+
+We record the factorization $2023 = 7\cdot 17^2$. We first rule out $k(n)=1$ and $k(n)=2$. If $k(n)=1$, then $2023n = 2^a$ for some $a$, which clearly cannot happen. If $k(n)=2$, then $2023n=2^a+2^b=2^b(1+2^{a-b})$ for some $a>b$. Then $1+2^{a-b} \equiv 0\pmod{7}$; but $-1$ is not a power of $2$ mod $7$ since every power of $2$ is congruent to either $1$, $2$, or $4 \pmod{7}$.
+
+We now show that there is an $n$ such that $k(n)=3$. It suffices to find $a>b>0$ such that $2023$ divides $2^a+2^b+1$. First note that $2^2+2^1+1=7$ and $2^3 \equiv 1 \pmod{7}$; thus if $a \equiv 2\pmod{3}$ and $b\equiv 1\pmod{3}$ then $7$ divides $2^a+2^b+1$. Next, $2^8+2^5+1 = 17^2$ and $2^{16\cdot 17} \equiv 1 \pmod{17^2}$ by Euler's Theorem; thus if $a \equiv 8 \pmod{16\cdot 17}$ and $b\equiv 5 \pmod{16\cdot 17}$ then $17^2$ divides $2^a+2^b+1$.
+
+We have reduced the problem to finding $a,b$ such that $a\equiv 2\pmod{3}$, $a\equiv 8\pmod{16\cdot 17}$, $b\equiv 1\pmod{3}$, $b\equiv 5\pmod{16\cdot 17}$. But by the Chinese Remainder Theorem, integers $a$ and $b$ solving these equations exist and are unique mod $3\cdot 16\cdot 17$. Thus we can find $a,b$ satisfying these congruences; by adding appropriate multiples of $3\cdot 16\cdot 17$, we can also ensure that $a>b>1$.
+
+\noindent
+\textbf{Second solution.}
+We rule out $k(n) \leq 2$ as in the first solution.
+To force $k(n) = 3$, we first note that $2^4 \equiv -1 \pmod{17}$
+and deduce that $2^{68} \equiv -1 \pmod{17^2}$.
+(By writing $2^{68} = ((2^4+1) - 1)^{17}$ and expanding the binomial, we obtain $-1$ plus some terms each of which is divisible by 17.) Since $(2^8-1)^2$ is divisible by $17^2$,
+\begin{align*}
+0 &\equiv 2^{16} - 2\cdot 2^8 + 1 \equiv 2^{16} + 2\cdot 2^{68}\cdot 2^8 + 1 \\
+&= 2^{77} + 2^{16} + 1 \pmod{17^2}.
+\end{align*}
+On the other hand, since $2^3 \equiv -1 \pmod{7}$, 
+\[
+2^{77} + 2^{16} + 1 \equiv 2^2 + 2^1 + 1 \equiv 0 \pmod{7}.
+\]
+Hence $n = (2^{77}+2^{16}+1)/2023$ is an integer with $k(n) = 3$.
+
+\noindent
+\textbf{Remark.} 
+A short computer calculation shows that the value of $n$ with $k(n)=3$ found in the second solution is the smallest possible.
+For example, in SageMath, this reduces to a single command:
+\begin{verbatim}
+assert all((2^a+2^b+1) % 2023 != 0
+    for a in range(1,77) for b in range(1,a))
+\end{verbatim}
+
+\item[B3]
+The expected value is $\frac{2n+2}{3}$.
+
+Divide the sequence $X_1,\dots,X_n$ into alternating increasing and decreasing segments, with $N$ segments in all. Note that removing one term cannot increase $N$: if the removed term is interior to some segment then the number remains unchanged, whereas if it separates two segments then one of those decreases in length by 1 (and possibly disappears). From this it follows that $a(X_1,\dots,X_n) = N+1$: in one direction, the endpoints of the segments form a zigzag of length $N+1$; in the other, for any zigzag $X_{i_1},\dots, X_{i_m}$, we can view it as a sequence obtained from $X_1,\dots,X_n$ by removing terms, so its number of segments (which is manifestly $m-1$) cannot exceed $N$.
+
+For $n \geq 3$, $a(X_1,\dots,X_n) - a(X_2,\dots,X_{n})$
+is 0 if $X_1, X_2, X_3$ form a monotone sequence and 1 otherwise. Since the six possible orderings of $X_1,X_2,X_3$ are equally likely,
+\[
+\mathbf{E}(a(X_1,\dots,X_n) - a(X_1,\dots,X_{n-1})) = \frac{2}{3}.
+\]
+Moreover, we always have $a(X_1, X_2) = 2$ because any sequence of two distinct elements is a zigzag. By linearity of expectation plus induction on $n$, we obtain $\mathbf{E}(a(X_1,\dots,X_n)) = \frac{2n+2}{3}$ as claimed.
+
+\item[B4]
+The minimum value of $T$ is 29.
+
+Write $t_{n+1} = t_0+T$ and define $s_k = t_k-t_{k-1}$ for $1\leq k\leq n+1$. On $[t_{k-1},t_k]$, we have $f'(t) = k(t-t_{k-1})$ and so $f(t_k)-f(t_{k-1}) = \frac{k}{2} s_k^2$. Thus if we define
+\[
+g(s_1,\ldots,s_{n+1}) = \sum_{k=1}^{n+1} ks_k^2,
+\]
+then we want to minimize $\sum_{k=1}^{n+1} s_k = T$ (for all possible values of $n$) subject to the constraints that $g(s_1,\ldots,s_{n+1}) = 4045$ and $s_k \geq 1$ for $k \leq n$.
+
+We first note that a minimum value for $T$ is indeed achieved. To see this, note that the constraints $g(s_1,\ldots,s_{n+1}) = 4045$ and $s_k \geq 1$ place an upper bound on $n$. For fixed $n$, the constraint $g(s_1,\ldots,s_{n+1}) = 4045$ places an upper bound on each $s_k$, whence the set of $(s_1,\ldots,s_{n+1})$ on which we want to minimize $\sum s_k$ is a compact subset of $\mathbb{R}^{n+1}$.
+
+Now say that $T_0$ is the minimum value of $\sum_{k=1}^{n+1} s_k$ (over all $n$ and $s_1,\ldots,s_{n+1}$), achieved by $(s_1,\ldots,s_{n+1}) = (s_1^0,\ldots,s_{n+1}^0)$. Observe that there cannot be another $(s_1,\ldots,s_{n'+1})$ with the same sum, $\sum_{k=1}^{n'+1} s_k = T_0$, satisfying $g(s_1,\ldots,s_{n'+1}) > 4045$; otherwise, the function $f$ for $(s_1,\ldots,s_{n'+1})$ would satisfy $f(t_0+T_0) > 4045$ and there would be some $T<T_0$ such that $f(t_0+T) = 4045$ by the intermediate value theorem.
+
+We claim that $s_{n+1}^0 \geq 1$ and $s_k^0 = 1$ for $1\leq k\leq n$. If $s_{n+1}^0<1$ then
+\begin{align*}
+& g(s_1^0,\ldots,s_{n-1}^0,s_n^0+s_{n+1}^0)-g(s_1^0,\ldots,s_{n-1}^0,s_n^0,s_{n+1}^0) \\
+&\quad = s_{n+1}^0(2ns_n^0-s_{n+1}^0) > 0,
+\end{align*}
+contradicting our observation from the previous paragraph. Thus $s_{n+1}^0 \geq 1$. If $s_k^0>1$ for some $1\leq k\leq n$ then replacing $(s_k^0,s_{n+1}^0)$ by $(1,s_{n+1}^0+s_k^0-1)$ increases $g$:
+\begin{align*}
+&g(s_1^0,\ldots,1,\ldots,s_{n+1}^0+s_k^0-1)-g(s_1^0,\ldots,s_k^0,\ldots,s_{n+1}^0) \\
+&\quad= (s_k^0-1)((n+1-k)(s_k^0+1)+2(n+1)(s_{n+1}^0-1)) > 0,
+\end{align*}
+again contradicting the observation. This establishes the claim.
+
+Given that $s_k^0 = 1$ for $1 \leq k \leq n$, we have
+$T = s_{n+1}^0 + n$ and
+\[
+g(s_1^0,\dots,s_{n+1}^0) = \frac{n(n+1)}{2} + (n+1)(T-n)^2.
+\]
+Setting this equal to 4045 and solving for $T$ yields
+\[
+T = n+\sqrt{\frac{4045}{n+1} - \frac{n}{2}}.
+\]
+For $n=9$ this yields $T = 29$; it thus suffices to show that for all $n$, 
+\[
+n+\sqrt{\frac{4045}{n+1} - \frac{n}{2}} \geq 29.
+\]
+This is evident for $n \geq 30$. For $n \leq 29$, rewrite the claim as
+\[
+\sqrt{\frac{4045}{n+1} - \frac{n}{2}} \geq 29-n;
+\]
+we then obtain an equivalent inequality by squaring both sides:
+\[
+\frac{4045}{n+1} - \frac{n}{2} \geq n^2-58n+841.
+\]
+Clearing denominators, gathering all terms to one side, and factoring puts this in the form
+\[
+(9-n)(n^2 - \frac{95}{2} n + 356) \geq 0.
+\]
+The quadratic factor $Q(n)$ has a minimum at $\frac{95}{4} = 23.75$
+and satisfies $Q(8) = 40, Q(10) = -19$; it is thus positive for $n \leq 8$ and negative for $10 \leq n \leq 29$.
+
+\item[B5]
+The desired property holds if and only if $n = 1$ or $n \equiv 2 \pmod{4}$.
+
+Let $\sigma_{n,m}$ be the permutation of $\ZZ/n\ZZ$ induced by multiplication by $m$; the original problem asks for which $n$ does $\sigma_{n,m}$ always have a square root. For $n=1$, $\sigma_{n,m}$ is the identity permutation and hence has a square root.
+
+We next identify when a general permutation admits a square root.
+
+\begin{lemma} \label{lem:2023B5-2}
+A permutation $\sigma$ in $S_n$ can be written as the square of another permutation if and only if for every even positive integer $m$, the number of cycles of length $m$ in $\sigma$ is even.
+\end{lemma}
+\begin{proof}
+We first check the ``only if'' direction. Suppose that $\sigma = \tau^2$. Then every cycle of $\tau$ of length $m$ remains a cycle in $\sigma$ if $m$ is odd, and splits into two cycles of length $m/2$ if $m$ is even.
+
+We next check the ``if'' direction. We may partition the cycles of $\sigma$ into individual cycles of odd length and pairs of cycles of the same even length; then we may argue as above to write each partition as the square of another permutation.
+\end{proof}
+
+Suppose now that $n>1$ is odd. Write $n = p^e k$ where $p$ is an odd prime, $k$ is a positive integer, and $\gcd(p,k) = 1$. 
+By the Chinese remainder theorem, we have a ring isomorphism 
+\[
+\ZZ/n\ZZ \cong \ZZ/p^e \ZZ \times \ZZ/k \ZZ.
+\]
+Recall that the group $(\ZZ/p^e \ZZ)^\times$ is cyclic; choose $m \in \ZZ$ reducing to a generator of $(\ZZ/p^e \ZZ)^\times$ and to the identity in $(\ZZ/k\ZZ)^\times$. Then $\sigma_{n,m}$ consists of $k$ cycles (an odd number) of length $p^{e-1}(p-1)$ (an even number) plus some shorter cycles. By Lemma~\ref{lem:2023B5-2}, $\sigma_{n,m}$ does not have a square root.
+
+Suppose next that $n \equiv 2 \pmod{4}$. Write $n = 2k$ with $k$ odd, so that 
+\[
+\ZZ/n\ZZ \cong \ZZ/2\ZZ \times \ZZ/k\ZZ.
+\]
+Then $\sigma_{n,m}$ acts on $\{0\} \times \ZZ/k\ZZ$ and $\{1\} \times \ZZ/k\ZZ$ with the same cycle structure, so every cycle length occurs an even number of times. By Lemma~\ref{lem:2023B5-2}, $\sigma_{n,m}$ has a square root.
+
+Finally, suppose that $n$ is divisible by 4. For $m = -1$, $\sigma_{n,m}$ consists of two fixed points ($0$ and $n/2$) together with $n/2-1$ cycles (an odd number) of length 2 (an even number). 
+By Lemma~\ref{lem:2023B5-2}, $\sigma_{n,m}$ does not have a square root.
+
+\item[B6]
+The determinant equals $(-1)^{\lceil n/2 \rceil-1} 2 \lceil \frac{n}{2} \rceil$.
+
+To begin with, we read off the following features of $S$.
+\begin{itemize}
+\item
+$S$ is symmetric: $S_{ij} = S_{ji}$ for all $i,j$, corresponding to $(a,b) \mapsto (b,a)$).
+\item
+$S_{11} = n+1$, corresponding to $(a,b) = (0,n),(1,n-1),\dots,(n,0)$.
+\item
+If $n = 2m$ is even, then $S_{mj} = 3$ for $j=1,m$, corresponding to $(a,b) = (2,0),(1,\frac{n}{2j}),(0,\frac{n}{j})$.
+\item
+For $\frac{n}{2} < i \leq n$, $S_{ij} = \# (\ZZ \cap \{\frac{n-i}{j}, \frac{n}{j}\})$, corresponding to $(a,b) = (1, \frac{n-i}{j}), (0, \frac{n}{j})$.
+\end{itemize}
+
+Let $T$ be the matrix obtained from $S$ by performing row and column operations as follows: for $d=2,\dots,n-2$, 
+subtract $S_{nd}$ times row $n-1$ from row $d$ and subtract $S_{nd}$ times column $n-1$ from column $d$; then subtract 
+row $n-1$ from row $n$ and column $n-1$ from column $n$.
+Evidently $T$ is again symmetric and $\det(T) = \det(S)$.
+
+Let us examine row $i$ of $T$ for $\frac{n}{2} < i < n-1$:
+\begin{align*}
+T_{i1} &= S_{i1} - S_{in} S_{(n-1)1} = 2-1\cdot 2 = 0 \\
+T_{ij} &= S_{ij} - S_{in} S_{(n-1)j} - S_{nj}S_{i(n-1)}\\
+& =
+\begin{cases} 1 & \mbox{if $j$ divides $n-i$} \\
+0 & \mbox{otherwise}.
+\end{cases} \quad (1 < j < n-1) \\
+T_{i(n-1)} &= S_{i(n-1)} - S_{in} S_{(n-1)(n-1)} = 0-1\cdot0 = 0 \\
+T_{in} &= S_{in} - S_{in} S_{(n-1)n} - S_{i(n-1)}
+ = 1 - 1\cdot1 - 0 = 0.
+\end{align*}
+Now recall (e.g., from the expansion of a determinant in minors) 
+if a matrix contains an entry equal to 1 which is the unique nonzero entry in either its row or its column, then we may strike out this entry (meaning striking out the row and column containing it) at the expense of multiplying the determinant by a sign. To simplify notation, we do \emph{not} renumber rows and columns after performing this operation.
+
+We next verify that for the matrix $T$, for $i=2,\dots,\lfloor \frac{n}{2} \rfloor$ in turn, it is valid to strike out
+$(i,n-i)$ and $(n-i, i)$ at the cost of multiplying the determinant by -1. Namely, when we reach the entry $(n-i,i)$, the only other nonzero entries in this row have the form $(n-i,j)$ where $j>1$ divides $n-i$, and those entries are in previously struck columns. 
+
+We thus compute $\det(S) = \det(T)$ as:
+\begin{gather*}
+(-1)^{\lfloor n/2 \rfloor-1}
+\det \begin{pmatrix}
+n+1 & -1 & 0 \\
+-1 & 0 & 1 \\
+0 & 1  & 0
+\end{pmatrix} \mbox{for $n$ odd,} \\
+(-1)^{\lfloor n/2 \rfloor-1}
+ \det \begin{pmatrix}
+n+1 & -1 & 2 & 0 \\
+-1 & -1 & 1 & -1 \\
+2 & 1 & 0 & 1 \\
+0 & -1 & 1 & 0
+\end{pmatrix} \mbox{for $n$ even.}
+\end{gather*}
+In the odd case, we can strike the last two rows and columns (creating another negation) and then conclude at once. In the even case, the rows and columns are labeled $1, \frac{n}{2}, n-1, n$; by adding row/column $n-1$ to row/column $\frac{n}{2}$, we produce
+\[
+(-1)^{\lfloor n/2 \rfloor}
+ \det \begin{pmatrix}
+n+1 & 1 & 2 & 0 \\
+1 & 1 & 1 & 0 \\
+2 & 1 & 0 & 1 \\
+0 & 0 & 1 & 0
+\end{pmatrix}
+\]
+and we can again strike the last two rows and columns (creating another negation) and then read off the result.
+
+\noindent
+\textbf{Remark.}
+One can use a similar approach to compute some related determinants.
+For example, let $J$ be the matrix with $J_{ij} = 1$ for all $i,j$.
+In terms of an indeterminate $q$, define the matrix $T$ by 
+\[
+T_{ij} = q^{S_{ij}}.
+\]
+We then have
+\[
+\det(T-tJ) = (-1)^{\lceil n/2 \rceil-1} q^{2(\tau(n)-1)} (q-1)^{n-1}f_n(q,t)
+\]
+where $\tau(n)$ denotes the number of divisors of $n$
+and
+\[
+f_n(q,t) = \begin{cases} q^{n-1}t+q^2-2t & \mbox{for $n$ odd,} \\q^{n-1}t +q^2-qt-t & \mbox{for $n$ even.}
+\end{cases}
+\]
+Taking $t=1$ and then dividing by $(q-1)^n$, this yields a \emph{$q$-deformation} of the original matrix $S$.
+
+\end{itemize}
+\end{document}
+
+
+
