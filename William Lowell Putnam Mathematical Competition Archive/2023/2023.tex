@@ -1,0 +1,75 @@
+\documentclass[amssymb,twocolumn,pra,10pt,aps,nofootinbib]{revtex4-1}
+\usepackage{mathptmx,amsmath, multirow}
+
+\begin{document}
+\title{The 84th William Lowell Putnam Mathematical Competition \\
+    Saturday, December 2, 2023}
+\maketitle
+
+\begin{itemize}
+
+\item[A1]
+For a positive integer $n$, let $f_n(x) = \cos(x) \cos(2x) \cos(3x) \cdots \cos(nx)$. Find the smallest $n$ such that $|f_n''(0)| > 2023$.
+
+\item[A2]
+Let $n$ be an even positive integer. Let $p$ be a monic, real polynomial of degree $2n$; that is to say, $p(x) = x^{2n} + a_{2n-1} x^{2n-1} + \cdots + a_1 x + a_0$ for some real coefficients $a_0, \dots, a_{2n-1}$. Suppose that $p(1/k) = k^2$ for all integers $k$ such that $1 \leq |k| \leq n$. Find all other real numbers $x$ for which $p(1/x) = x^2$.
+
+\item[A3]
+Determine the smallest positive real number $r$ such that there exist differentiable functions $f\colon \mathbb{R} \to \mathbb{R}$ and
+$g\colon \mathbb{R} \to \mathbb{R}$ satisfying
+\begin{enumerate}
+\item[(a)] $f(0) > 0$,
+\item[(b)] $g(0) = 0$,
+\item[(c)] $|f'(x)| \leq |g(x)|$ for all $x$,
+\item[(d)] $|g'(x)| \leq |f(x)|$ for all $x$, and
+\item[(e)] $f(r) = 0$.
+\end{enumerate}
+
+\item[A4]
+Let $v_1, \dots, v_{12}$ be unit vectors in $\mathbb{R}^3$ from the origin to the vertices of a regular icosahedron. Show that for every vector $v \in \mathbb{R}^3$ and every $\varepsilon > 0$, there exist integers $a_1,\dots,a_{12}$ such that $\| a_1 v_1 + \cdots + a_{12} v_{12} - v \| < \varepsilon$.
+ 
+\item[A5]
+For a nonnegative integer $k$, let $f(k)$ be the number of ones in the base 3 representation of $k$. Find all complex numbers $z$ such that
+\[
+\sum_{k=0}^{3^{1010}-1} (-2)^{f(k)} (z+k)^{2023} = 0.
+\]
+
+\item[A6]
+Alice and Bob play a game in which they take turns choosing integers from $1$ to $n$. Before any integers are chosen, Bob selects a goal of ``odd'' or ``even''. On the first turn, Alice chooses one of the $n$ integers. On the second turn, Bob chooses one of the remaining integers. They continue alternately choosing one of the integers that has not yet been chosen, until the $n$th turn, which is forced and ends the game. Bob wins if the parity of $\{k\colon \mbox{the number $k$ was chosen on the $k$th turn}\}$ matches his goal. For which values of $n$ does Bob have a winning strategy?
+
+\item[B1]
+Consider an $m$-by-$n$ grid of unit squares, indexed by $(i,j)$ with $1 \leq i \leq m$ and $1 \leq j \leq n$. There are $(m-1)(n-1)$ coins, which are initially placed in the squares $(i,j)$ with $1 \leq i \leq m-1$ and $1 \leq j \leq n-1$. If a coin occupies the square $(i,j)$ with $i \leq m-1$ and $j \leq n-1$ and the squares $(i+1,j), (i,j+1)$, and $(i+1,j+1)$ are unoccupied, then a legal move is to slide the coin from $(i,j)$ to $(i+1,j+1)$. How many distinct configurations of coins can be reached starting from the initial configuration by a (possibly empty) sequence of legal moves?
+
+\item[B2]
+For each positive integer $n$, let $k(n)$ be the number of ones in the binary representation of $2023 \cdot n$. What is the minimum value of $k(n)$?
+
+\item[B3]
+A sequence $y_1,y_2,\dots,y_k$ of real numbers is called \emph{zigzag} if $k=1$, or if $y_2-y_1, y_3-y_2, \dots, y_k-y_{k-1}$ are nonzero and alternate in sign. Let $X_1,X_2,\dots,X_n$ be chosen independently from the uniform distribution on $[0,1]$. Let $a(X_1,X_2,\dots,X_n)$ be the largest value of $k$ for which there exists an increasing sequence of integers $i_1,i_2,\dots,i_k$ such that $X_{i_1},X_{i_2},\dots,X_{i_k}$ is zigzag. Find the expected value of $a(X_1,X_2,\dots,X_n)$ for $n \geq 2$.
+
+\item[B4]
+For a nonnegative integer $n$ and a strictly increasing sequence of real numbers $t_0,t_1,\dots,t_n$, let $f(t)$ be the corresponding real-valued function defined for $t \geq t_0$ by the following properties:
+\begin{enumerate}
+\item[(a)] $f(t)$ is continuous for $t \geq t_0$, and is twice differentiable for all $t>t_0$ other than $t_1,\dots,t_n$;
+\item[(b)] $f(t_0) = 1/2$;
+\item[(c)] $\lim_{t \to t_k^+} f'(t) = 0$ for $0 \leq k \leq n$;
+\item[(d)] For $0 \leq k \leq n-1$, we have $f''(t) = k+1$ when $t_k < t< t_{k+1}$, and $f''(t) = n+1$ when $t>t_n$.
+\end{enumerate}
+Considering all choices of $n$ and $t_0,t_1,\dots,t_n$ such that $t_k \geq t_{k-1}+1$ for $1 \leq k \leq n$, what is the least possible value of $T$ for which $f(t_0+T) = 2023$?
+
+\item[B5]
+Determine which positive integers $n$ have the following property:
+For all integers $m$ that are relatively prime to $n$, there exists a permutation $\pi\colon \{1,2,\dots,n\} \to \{1,2,\dots,n\}$ such that $\pi(\pi(k)) \equiv mk \pmod{n}$ for all $k \in \{1,2,\dots,n\}$.
+
+\item[B6]
+Let $n$ be a positive integer. For $i$ and $j$ in $\{1,2,\dots,n\}$, let $s(i,j)$ be the number of pairs $(a,b)$ of nonnegative integers satisfying $ai +bj=n$. Let $S$ be the $n$-by-$n$ matrix whose $(i,j)$ entry is $s(i,j)$. For example, when $n=5$, we have
+$S = \begin{bmatrix} 6 & 3 & 2 & 2 & 2 \\
+3 & 0 & 1 & 0 & 1 \\
+2 & 1 & 0 & 0 & 1 \\
+2 & 0 & 0 & 0 & 1 \\
+2 & 1 & 1 & 1 & 2
+\end{bmatrix}$. 
+Compute the determinant of $S$.
+
+\end{itemize}
+
+\end{document}
