@@ -218,7 +218,7 @@ class AzerbaijanLibrary:
                     newspaper_dictionary[newspaper] = [pdf_link]
 
                 with open("newspaper_results.json", "w") as f:
-                    json.dump(newspaper_dictionary, f, indent=4)
+                    json.dump(newspaper_dictionary, f, indent=4,ensure_ascii=False)
 
     #After some time if new newspapers have been added to a newspaper on the website's archive
     #You can use this method, and it will find the new newspapers that have been added
