@@ -1,0 +1,98 @@
+\documentclass[amssymb,twocolumn,pra,10pt,aps]{revtex4-1}
+\usepackage{mathptmx,amsmath}
+
+\begin{document}
+\title{The 73rd William Lowell Putnam Mathematical Competition \\
+    Saturday, December 1, 2012}
+\maketitle
+
+\newcommand{\FF}{\mathbb{F}}
+\newcommand{\RR}{\mathbb{R}}
+
+\begin{itemize}
+
+\item[A1] Let $d_1, d_2, \dots, d_{12}$ be real numbers in the open
+interval $(1, 12)$. Show that there exist distinct indices $i, j, k$
+such that $d_i, d_j, d_k$ are the side lengths of an acute triangle.
+
+\item[A2]
+Let $*$ be a commutative and associative binary operation on a set $S$. Assume that for every $x$
+and $y$ in $S$, there exists $z$ in $S$ such that $x * z = y$. (This $z$ may depend on $x$ and $y$.)
+Show that if $a,b,c$ are in $S$ and $a*c = b*c$, then $a=b$.
+
+\item[A3]
+Let $f: [-1, 1] \to \RR$ be a continuous function such that
+\begin{itemize}
+\item[(i)]
+$f(x) = \frac{2-x^2}{2} f \left( \frac{x^2}{2-x^2} \right)$ for every $x$ in $[-1, 1]$,
+\item[(ii)]
+$f(0) = 1$, and
+\item[(iii)]
+$\lim_{x \to 1^-} \frac{f(x)}{\sqrt{1-x}}$ exists and is finite.
+\end{itemize}
+Prove that $f$ is unique, and express $f(x)$ in closed form.
+
+\item[A4]
+Let $q$ and $r$ be integers with $q > 0$, and let $A$ and $B$ be intervals on the real line.
+Let $T$ be the set of all $b+mq$ where $b$ and $m$ are integers with $b$ in $B$,
+and let $S$ be the set of all integers $a$ in $A$ such that $ra$ is in $T$. Show that if the
+product of the lengths of $A$ and $B$ is less than $q$, then $S$ is the intersection of $A$
+with some arithmetic progression.
+
+\item[A5]
+Let $\FF_p$ denote the field of integers modulo a prime $p$, and let $n$ be a positive integer.
+Let $v$ be a fixed vector in $\FF_p^n$, let $M$ be an $n \times n$ matrix with entries of $\FF_p$,
+and define $G: \FF_p^n \to \FF_p^n$ by $G(x) = v + Mx$. Let $G^{(k)}$ denote the $k$-fold
+composition of $G$ with itself, that is, $G^{(1)}(x) = G(x)$ and $G^{(k+1)}(x) = G(G^{(k)}(x))$.
+Determine all pairs $p, n$ for which there exist $v$ and $M$ such that the $p^n$ vectors
+$G^{(k)}(0)$, $k=1,2,\dots,p^n$ are distinct.
+
+\item[A6]
+Let $f(x,y)$ be a continuous, real-valued function on $\RR^2$. Suppose that, for every
+rectangular region $R$ of area $1$, the double integral of $f(x,y)$ over $R$ equals $0$.
+Must $f(x,y)$ be identically 0?
+
+\item[B1]
+Let $S$ be a class of functions from $[0, \infty)$ to $[0, \infty)$ that satisfies:
+\begin{itemize}
+\item[(i)]
+The functions $f_1(x) = e^x - 1$ and $f_2(x) = \ln(x+1)$ are in $S$;
+\item[(ii)]
+If $f(x)$ and $g(x)$ are in $S$, the functions $f(x) + g(x)$ and $f(g(x))$ are in $S$;
+\item[(iii)]
+If $f(x)$ and $g(x)$ are in $S$ and $f(x) \geq g(x)$ for all $x \geq 0$, then the function
+$f(x) - g(x)$ is in $S$.
+\end{itemize}
+Prove that if $f(x)$ and $g(x)$ are in $S$, then the function $f(x) g(x)$ is also in $S$.
+
+\item[B2]
+Let $P$ be a given (non-degenerate) polyhedron. Prove that there is a constant $c(P) > 0$
+with the following property: If a collection of $n$ balls whose volumes sum to $V$ contains
+the entire surface of $P$, then $n > c(P) / V^2$.
+
+\item[B3]
+A round-robin tournament of $2n$ teams lasted for $2n-1$ days, as follows.
+On each day, every team played one game against another team, with one team winning
+and one team losing in each of the $n$ games. Over the course of the tournament,
+each team played every other team exactly once. Can one necessarily choose
+one winning team from each day without choosing any team more than once?
+
+\item[B4]
+Suppose that $a_0 = 1$ and that $a_{n+1} = a_n + e^{-a_n}$ for $n=0,1,2,\dots$. Does $a_n - \log n$
+have a finite limit as $n \to \infty$? (Here $\log n = \log_e n = \ln n$.)
+
+\item[B5]
+Prove that, for any two bounded functions $g_1, g_2: \RR \to [1, \infty)$,
+there exist functions $h_1, h_2: \RR \to \RR$ such that, for every $x \in \RR$,
+\[
+\sup_{s \in \RR} (g_1(s)^x g_2(s))  = \max_{t \in \RR} (x h_1(t) + h_2(t)).
+\]
+
+\item[B6]
+Let $p$ be an odd prime number such that $p \equiv 2 \pmod{3}$. Define a permutation $\pi$ of the
+residue classes modulo $p$ by $\pi(x) \equiv x^3 \pmod{p}$. Show that $\pi$ is an even permutation
+if and only if $p \equiv 3 \pmod{4}$.
+
+\end{itemize}
+
+\end{document}

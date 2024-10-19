@@ -1,0 +1,91 @@
+\documentclass[amssymb,twocolumn,pra,10pt,aps,nofootinbib]{revtex4-1}
+\usepackage{mathptmx,amsmath, multirow}
+
+\begin{document}
+\title{The 81st William Lowell Putnam Mathematical Competition \\
+    Saturday, February 20, 2021}
+\maketitle
+
+\begin{itemize}
+
+\item[A1]
+How many positive integers $N$ satisfy all of the following three conditions?
+\begin{enumerate}
+\item[(i)] $N$ is divisible by 2020.
+\item[(ii)] $N$ has at most 2020 decimal digits.
+\item[(iii)] The decimal digits of $N$ are a string of consecutive ones followed by a string of consecutive zeros.
+\end{enumerate}
+
+\item[A2]
+Let $k$ be a nonnegative integer. Evaluate
+\[
+\sum_{j=0}^k 2^{k-j} \binom{k+j}{j}.
+\]
+
+\item[A3]
+Let $a_0 = \pi/2$, and let $a_n = \sin(a_{n-1})$ for $n \geq 1$. Determine whether
+\[
+\sum_{n=1}^\infty a_n^2
+\]
+converges.
+
+\item[A4]
+Consider a horizontal strip of $N+2$ squares in which the first and the last square are black and the remaining $N$ squares are all white. Choose a white square uniformly at random, choose one of its two neighbors with equal probability,
+and color this neighboring square black if it is not already black. Repeat this process until all the remaining white squares have only black neighbors. Let $w(N)$ be the expected number of white squares remaining. Find
+\[
+\lim_{N \to \infty} \frac{w(N)}{N}.
+\]
+ 
+\item[A5]
+Let $a_n$ be the number of sets $S$ of positive integers for which
+\[
+\sum_{k \in S} F_k = n,
+\]
+where the Fibonacci sequence $(F_k)_{k \geq 1}$ satisfies $F_{k+2} = F_{k+1} + F_k$ and begins $F_1 = 1, F_2 = 1, F_3 = 2, F_4 = 3$. Find the largest integer $n$ such that $a_n = 2020$.
+
+\item[A6] 
+For a positive integer $N$, let $f_N$\footnote{Corrected from $F_N$ in the source.} be the function defined by 
+\[
+f_N(x) = \sum_{n=0}^N \frac{N+1/2-n}{(N+1)(2n+1)} \sin((2n+1)x).
+\]
+Determine the smallest constant $M$ such that $f_N(x) \leq M$ for all $N$ and all real $x$.
+
+\item[B1]
+For a positive integer $n$, define $d(n)$ to be the sum of the digits of $n$ when written in binary (for example, $d(13) = 1+1+0+1=3)$. Let
+\[
+S = \sum_{k=1}^{2020} (-1)^{d(k)} k^3.
+\]
+Determine $S$ modulo 2020.
+
+\item[B2]
+Let $k$ and $n$ be integers with $1 \leq k < n$. Alice and Bob play a game with $k$ pegs in a line of $n$ holes. At the beginning of the game, the pegs occupy the $k$ leftmost holes. A legal move consists of moving a single peg
+to any vacant hole that is further to the right. The players alternate moves, with Alice playing first. The game ends when the pegs are in the $k$ rightmost holes, so whoever is next to play cannot move and therefore loses. For what values
+of $n$ and $k$ does Alice have a winning strategy?
+
+\item[B3]
+Let $x_0 = 1$, and let $\delta$ be some constant satisfying $0 < \delta < 1$. Iteratively, for $n=0,1,2,\dots$, a point $x_{n+1}$ is chosen uniformly from the interval $[0, x_n]$. Let $Z$ be the smallest value of $n$ for which $x_n < \delta$.
+Find the expected value of $Z$, as a function of $\delta$.
+
+\item[B4]
+Let $n$ be a positive integer, and let $V_n$ be the set of integer $(2n+1)$-tuples $\mathbf{v} = (s_0, s_1, \cdots, s_{2n-1}, s_{2n})$ for which $s_0 = s_{2n} = 0$ and $|s_j - s_{j-1}| = 1$ for $j=1,2,\cdots,2n$. Define
+\[
+q(\mathbf{v}) = 1 + \sum_{j=1}^{2n-1} 3^{s_j},
+\]
+and let $M(n)$ be the average of $\frac{1}{q(\mathbf{v})}$ over all $\mathbf{v} \in V_n$. Evaluate $M(2020)$.
+
+\item[B5]
+For $j \in \{1, 2, 3, 4\}$, let $z_j$ be a complex number with $|z_j| = 1$ and $z_j \neq 1$. Prove that
+\[
+3 - z_1 - z_2 - z_3 - z_4 + z_1 z_2 z_3 z_4 \neq 0.
+\]
+
+\item[B6]
+Let $n$ be a positive integer. Prove that
+\[
+\sum_{k=1}^n (-1)^{\lfloor k(\sqrt{2}-1) \rfloor} \geq 0.
+\]
+(As usual, $\lfloor x \rfloor$ denotes the greatest integer less than or equal to $x$.)
+
+\end{itemize}
+
+\end{document}

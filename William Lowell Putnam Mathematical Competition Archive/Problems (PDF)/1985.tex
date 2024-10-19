@@ -1,0 +1,115 @@
+\documentclass[amssymb,twocolumn,pra,10pt,aps]{revtex4-1}
+\usepackage{mathptmx,amsmath}
+
+\begin{document}
+\title{The Forty-Sixth Annual William Lowell Putnam Competition \\
+    Saturday, December 7, 1985}
+\maketitle
+
+\begin{itemize}
+\item[A--1]
+Determine, with proof, the number of ordered triples $(A_1, A_2, A_3)$
+of sets which have the property that
+\begin{enumerate}
+\item[(i)] $A_1 \cup A_2 \cup A_3 = \{1,2,3,4,5,6,7,8,9,10\}$, and
+\item[(ii)] $A_1 \cap A_2 \cap A_3 = \emptyset$.
+\end{enumerate}
+Express your answer in the form $2^a 3^b 5^c 7^d$, where $a,b,c,d$
+are nonnegative integers.
+
+\item[A--2]
+Let $T$ be an acute triangle. Inscribe a rectangle $R$ in $T$ with one
+side along a side of $T$. Then inscribe a rectangle $S$ in the triangle
+formed by the side of $R$ opposite the side on the boundary of $T$,
+and the other two sides of $T$, with one side along the side of
+$R$. For any polygon $X$, let $A(X)$ denote the area of $X$. Find the
+maximum value, or show that no maximum exists, of
+$\frac{A(R)+A(S)}{A(T)}$, where $T$ ranges over all triangles and
+$R,S$ over all rectangles as above.
+
+\item[A--3]
+Let $d$ be a real number. For each integer $m \geq 0$, define a
+sequence $\{a_m(j)\}$, $j=0,1,2,\dots$ by the condition
+\begin{align*}
+a_m(0) &= d/2^m, \\
+a_m(j+1) &= (a_m(j))^2 + 2a_m(j), \qquad j \geq 0.
+\end{align*}
+Evaluate $\lim_{n \to \infty} a_n(n)$.
+
+\item[A--4]
+Define a sequence $\{a_i\}$ by $a_1=3$ and $a_{i+1}=3^{a_i}$ for
+$i\geq 1$. Which integers between 00 and 99 inclusive occur as the
+last two digits in the decimal expansion of infinitely many $a_i$?
+
+\item[A--5]
+Let $I_m = \int_0^{2\pi} \cos(x)\cos(2x)\cdots \cos(mx)\,dx$. For
+which integers $m$, $1 \leq m \leq 10$ is $I_m \neq 0$?
+
+\item[A--6]
+If $p(x)= a_0 + a_1 x + \cdots + a_m x^m$ is a polynomial with real
+coefficients $a_i$, then set
+\[
+\Gamma(p(x)) = a_0^2 + a_1^2 + \cdots + a_m^2.
+\]
+Let $F(x) = 3x^2+7x+2$. Find, with proof, a polynomial $g(x)$ with
+real coefficients such that
+\begin{enumerate}
+\item[(i)] $g(0)=1$, and
+\item[(ii)] $\Gamma(f(x)^n) = \Gamma(g(x)^n)$
+\end{enumerate}
+for every integer $n \geq 1$.
+
+\item[B--1]
+Let $k$ be the smallest positive integer for which there exist
+distinct integers $m_1, m_2, m_3, m_4, m_5$ such that the polynomial
+\[
+p(x) = (x-m_1)(x-m_2)(x-m_3)(x-m_4)(x-m_5)
+\]
+has exactly $k$ nonzero coefficients. Find, with proof, a set of
+integers $m_1, m_2, m_3, m_4, m_5$ for which this minimum $k$ is achieved.
+
+\item[B--2]
+Define polynomials $f_n(x)$ for $n \geq 0$ by $f_0(x)=1$, $f_n(0)=0$
+for $n \geq 1$, and
+\[
+\frac{d}{dx} f_{n+1}(x) = (n+1)f_n(x+1)
+\]
+for $n \geq 0$. Find, with proof, the explicit factorization of
+$f_{100}(1)$ into powers of distinct primes.
+
+\item[B--3]
+Let
+\[
+\begin{array}{cccc} a_{1,1} & a_{1,2} & a_{1,3} & \dots \\
+a_{2,1} & a_{2,2} & a_{2,3} & \dots \\
+a_{3,1} & a_{3,2} & a_{3,3} & \dots \\
+\vdots & \vdots & \vdots & \ddots
+\end{array}
+\]
+be a doubly infinite array of positive integers, and suppose each
+positive integer appears exactly eight times in the array. Prove that
+$a_{m,n} > mn$ for some pair of positive integers $(m,n)$.
+
+\item[B--4]
+Let $C$ be the unit circle $x^2+y^2=1$. A point $p$ is chosen randomly
+on the circumference $C$ and another point $q$ is chosen randomly from
+the interior of $C$ (these points are chosen independently and
+uniformly over their domains). Let $R$ be the rectangle with sides
+parallel to the $x$ and $y$-axes with diagonal $pq$. What is the
+probability that no point of $R$ lies outside of $C$?
+
+\item[B--5]
+Evaluate $\int_0^\infty t^{-1/2}e^{-1985(t+t^{-1})}\,dt$. You may
+assume that $\int_{-\infty}^\infty e^{-x^2}\,dx = \sqrt{\pi}$.
+
+\item[B--6]
+Let $G$ be a finite set of real $n\times n$ matrices $\{M_i\}$, $1
+\leq i \leq r$, which form a group under matrix
+multiplication. Suppose that $\sum_{i=1}^r \mathrm{tr}(M_i)=0$, where
+$\mathrm{tr}(A)$
+denotes the trace of the matrix $A$. Prove that $\sum_{i=1}^r M_i$ is
+the $n \times n$ zero matrix.
+
+\end{itemize}
+
+\end{document}

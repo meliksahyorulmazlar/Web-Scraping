@@ -1,0 +1,169 @@
+\documentclass[amssymb,twocolumn,pra,10pt,aps]{revtex4-1}
+\usepackage{mathptmx,amsmath, multirow}
+
+\begin{document}
+\title{The 74th William Lowell Putnam Mathematical Competition \\
+    Saturday, December 7, 2013}
+\maketitle
+
+\newcommand{\FF}{\mathbb{F}}
+\newcommand{\RR}{\mathbb{R}}
+
+\begin{itemize}
+
+\item[A1] 
+Recall that a regular icosahedron is a convex polyhedron
+having 12 vertices and 20 faces;
+the faces are congruent equilateral triangles.
+On each face of a regular icosahedron is written a nonnegative integer
+such that the sum of all 20 integers is 39. Show that there are 
+two faces that share a vertex and have the same integer written on them.
+
+\item[A2]
+Let $S$ be the set of all positive integers that are \emph{not} perfect squares. For $n$ in $S$, consider choices of integers
+$a_1, a_2, \dots, a_r$ such that $n < a_1<  a_2 < \cdots < a_r$
+and $n \cdot a_1 \cdot a_2 \cdots a_r$ is a perfect square, and
+let $f(n)$ be the minumum of $a_r$ over all such choices. For example,
+$2 \cdot 3 \cdot 6$ is a perfect square, while $2 \cdot 3$, $2 \cdot 4$, 
+$2 \cdot 5$, $2 \cdot 3 \cdot 4$, $2 \cdot 3 \cdot 5$, $2 \cdot 4 \cdot 5$, and $2 \cdot 3 \cdot 4 \cdot 5$ are not, and so $f(2) = 6$.
+Show that the function $f$ from $S$ to the integers is one-to-one.
+
+\item[A3]
+Suppose that the real numbers $a_0, a_1, \dots, a_n$ and
+$x$, with $0 < x < 1$, satisfy
+\[
+\frac{a_0}{1-x} + \frac{a_1}{1-x^2} + \cdots + \frac{a_n}{1 - x^{n+1}} = 0.
+\]
+Prove that there exists a real number $y$ with $0 < y < 1$ such that
+\[
+a_0 + a_1 y + \cdots + a_n y^n = 0.
+\]
+
+\item[A4]
+A finite collection of digits $0$ and $1$ is written around a circle.
+An \emph{arc} of length $L \geq 0$ consists of $L$ consecutive digits around the circle. For each arc $w$, let $Z(w)$ and $N(w)$ denote the number of $0$'s in $w$ and the number of $1$'s in $w$, respectively.
+Assume that $\left| Z(w) - Z(w') \right| \leq 1$ for any two arcs $w, w'$ of the same length. Suppose that some arcs $w_1,\dots,w_k$ have the property that
+\[
+Z = \frac{1}{k} \sum_{j=1}^k Z(w_j) \mbox{ and }
+N = \frac{1}{k} \sum_{j=1}^k N(w_j)
+\]
+are both integers. Prove that there exists an arc $w$ with $Z(w) = Z$
+and $N(w) = N$.
+
+\item[A5]
+For $m \geq 3$, a list of $\binom{m}{3}$ real numbers $a_{ijk}$ ($1 \leq i < < j < k \leq m$) is said to be \emph{area definite} for $\mathbb{R}^n$ if the inequality
+\[
+\sum_{1 \leq i < j < k \leq m} a_{ijk} \cdot \mathrm{Area}(\Delta A_i A_j A_k) \geq 0
+\]
+holds for every choice of $m$ points $A_1,\dots,A_m$ in $\mathbb{R}^n$.
+For example, the list of four numbers $a_{123} = a_{124} = a_{134} = 1$, $a_{234} = -1$ is area definite for $\mathbb{R}^2$. Prove that if a list of $\binom{m}{3}$ numbers is area definite for $\mathbb{R}^2$,
+then it is area definite for $\mathbb{R}^3$.
+
+\item[A6]
+Define a function $w: \mathbb{Z} \times \mathbb{Z} \to \mathbb{Z}$
+as follows. For $\left| a \right|, \left| b \right| \leq 2$,
+let $w(a,b)$ be as in the table shown; otherwise, let $w(a,b) = 0$.
+\begin{center}
+\begin{tabular}{|cc|r|r|r|r|r|}
+\hline
+\multicolumn{2}{|c|}{\multirow{2}{*}{$w(a,b)$}} & \multicolumn{5}{|c|}{$b$} \\
+&  & -2 & -1 & 0 & 1 & 2 \\
+\hline
+& -2 & -1 & -2 & 2 & -2 & -1 \\
+& -1 & -2 & 4 & -4 & 4 & -2 \\
+$a$ & 0 & 2 & -4 & 12 & -4 & 2 \\
+& 1 & -2 & 4 & -4 & 4 & -2 \\ 
+& 2 &  -1 & -2 & 2 & -2 & -1 \\
+\hline
+\end{tabular}
+\end{center}
+For every finite subset $S$ of $\mathbb{Z} \times \mathbb{Z}$,
+define
+\[
+A(S) = \sum_{(\mathbf{s}, \mathbf{s}') \in S \times S} w(\mathbf{s} - \mathbf{s}').
+\]
+Prove that if $S$ is any finite nonempty subset of $\mathbb{Z} \times \mathbb{Z}$, then $A(S) > 0$.
+(For example, if $S = \{(0,1), (0,2), (2,0), (3,1)\}$, then the terms in $A(S)$ are $12, 12, 12, 12, 4, 4, 0, 0, 0,0,-1,-1,-2,-2,-4,-4$.)
+
+\item[B1]
+For positive integers $n$, let the numbers $c(n)$ be determined by 
+the rules $c(1) = 1$, $c(2n) = c(n)$, and $c(2n+1) = (-1)^n c(n)$.
+Find the value of 
+\[
+\sum_{n=1}^{2013} c(n) c(n+2).
+\]
+
+\item[B2]
+Let $C = \bigcup_{N=1}^\infty C_N$, where $C_N$ denotes the set of those `cosine polynomials' of the form
+\[
+f(x) = 1 + \sum_{n=1}^N a_n \cos(2 \pi n x)
+\]
+for which:
+\begin{enumerate}
+\item[(i)]
+$f(x) \geq 0$ for all real $x$, and
+\item[(ii)]
+$a_n = 0$ whenever $n$ is a multiple of $3$.
+\end{enumerate}
+Determine the maximum value of $f(0)$ as $f$ ranges through $C$, and 
+prove that this maximum is attained.
+
+\item[B3]
+Let $\mathcal{P}$ be a nonempty collection of subsets of $\{1,\dots, n\}$ such that:
+\begin{enumerate}
+\item[(i)]
+if $S, S' \in \mathcal{P}$, then $S \cup S' \in \mathcal{P}$ and $S \cap S' \in \mathcal{P}$, and
+\item[(ii)]
+if $S \in \mathcal{P}$ and $S \neq \emptyset$, then there is a subset $T \subset S$
+such that $T \in \mathcal{P}$ and $T$ contains exactly one fewer element than $S$.
+\end{enumerate}
+Suppose that $f: \mathcal{P} \to \mathbb{R}$ is a function such that
+$f(\emptyset) = 0$ and
+\[
+f(S \cup S') = f(S) + f(S') - f(S \cap S') \mbox{ for all $S,S' \in \mathcal{P}$.}
+\]
+Must there exist real numbers $f_1,\dots,f_n$ such that
+\[
+f(S) = \sum_{i \in S} f_i
+\]
+for every $S \in \mathcal{P}$?
+
+\item[B4]
+For any continuous real-valued function $f$ defined on the interval $[0,1]$, let
+\begin{gather*}
+\mu(f) = \int_0^1 f(x)\,dx, \,
+\mathrm{Var}(f) = \int_0^1 (f(x) - \mu(f))^2\,dx, \\
+M(f) = \max_{0 \leq x \leq 1} \left| f(x) \right|.
+\end{gather*}
+Show that if $f$ and $g$ are continuous real-valued functions
+defined on the interval $[0,1]$,
+then
+\[
+\mathrm{Var}(fg) \leq 2 \mathrm{Var}(f) M(g)^2 + 2 \mathrm{Var}(g) M(f)^2.
+\]
+
+\item[B5]
+Let $X = \{1, 2, \dots, n\}$, and let $k \in X$. Show that there are exactly $k \cdot n^{n-1}$ functions $f: X \to X$ such that for every $x \in X$ there is a $j \geq 0$ such that $f^{(j)}(x) \leq k$.
+[Here $f^{(j)}$ denotes the $j$\textsuperscript{th} iterate of $f$, so that $f^{(0)}(x) = x$ and $f^{(j+1)}(x) = f(f^{(j)}(x))$.]
+
+\item[B6]
+Let $n \geq 1$ be an odd integer. Alice and Bob play the following game,
+taking alternating turns, with Alice playing first. 
+The playing area consists of $n$ spaces, arranged in a line.
+Initially all spaces are empty.
+At each turn, a player either
+\begin{itemize}
+\item
+places a stone in an empty space, or
+\item
+removes a stone from a nonempty space $s$, 
+places a stone in the nearest empty space to the left of $s$
+(if such a space exists),
+and places a stone in the nearest empty space to the right of $s$
+(if such a space exists).
+\end{itemize}
+Furthermore, a move is permitted only if the resulting position has not occurred previously in the game. A player loses if he or she is unable to move. Assuming that both players play optimally throughout the game, what moves may Alice make on her first turn?
+
+\end{itemize}
+
+\end{document}

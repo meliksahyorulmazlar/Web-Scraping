@@ -1,0 +1,135 @@
+\documentclass[amssymb,twocolumn,pra,10pt,aps]{revtex4-1}
+\usepackage{mathptmx,amsmath}
+
+\begin{document}
+\title{The Forty-Eighth Annual William Lowell Putnam Competition \\
+    Saturday, December 5, 1987 \vspace{-2\baselineskip}}
+\maketitle
+
+\begin{itemize}
+\item[A--1]
+Curves $A,B,C$ and $D$ are defined in the plane as follows:
+\begin{align*}
+A &= \left\{ (x,y): x^2-y^2 = \frac{x}{x^2+y^2} \right\}, \\
+B &= \left\{ (x,y): 2xy + \frac{y}{x^2+y^2} = 3 \right\}, \\
+C &= \left\{ (x,y): x^3-3xy^2+3y=1 \right\}, \\
+D &= \left\{ (x,y): 3x^2 y - 3x - y^3 = 0\right\}.
+\end{align*}
+Prove that $A \cap B = C \cap D$.
+
+\item[A--2]
+The sequence of digits
+\[
+1 2 3 4 5 6 7 8 9 1 0 1 1 1 2 1 3 1 4 1 5 1 6 1 7 1 8 1 9 2 0 2 1 \dots
+\]
+is obtained by writing the positive integers in order. If the
+$10^n$-th digit in this sequence occurs in the part of the sequence in
+which the $m$-digit numbers are placed, define $f(n)$ to be $m$. For
+example, $f(2)=2$ because the 100th digit enters the sequence in the
+placement of the two-digit integer 55. Find, with proof, $f(1987)$.
+
+\item[A--3]
+For all real $x$, the real-valued function $y=f(x)$ satisfies
+\[
+y''-2y'+y=2e^x.
+\]
+\begin{enumerate}
+\item[(a)] If $f(x)>0$ for all real $x$, must $f'(x) > 0$ for all real
+$x$? Explain.
+\item[(b)] If $f'(x)>0$ for all real $x$, must $f(x) > 0$ for all real
+$x$? Explain.
+\end{enumerate}
+
+\item[A--4]
+Let $P$ be a polynomial, with real coefficients, in three variables
+and $F$ be a function of two variables such that
+\[
+P(ux, uy, uz) = u^2 F(y-x,z-x) \quad \mbox{for all real $x,y,z,u$},
+\]
+and such that $P(1,0,0)=4$, $P(0,1,0)=5$, and $P(0,0,1)=6$. Also let
+$A,B,C$ be complex numbers with $P(A,B,C)=0$ and $|B-A|=10$. Find $|C-A|$.
+
+\item[A--5]
+Let
+\[
+\vec{G}(x,y) = \left( \frac{-y}{x^2+4y^2}, \frac{x}{x^2+4y^2},0
+\right).
+\]
+Prove or disprove that there is a vector-valued function
+\[
+\vec{F}(x,y,z) = (M(x,y,z), N(x,y,z), P(x,y,z))
+\]
+with the following properties:
+\begin{enumerate}
+\item[(i)] $M,N,P$ have continuous partial derivatives for all
+$(x,y,z) \neq (0,0,0)$;
+\item[(ii)] $\mathrm{Curl}\,\vec{F} = \vec{0}$ for all $(x,y,z) \neq (0,0,0)$;
+\item[(iii)] $\vec{F}(x,y,0) = \vec{G}(x,y)$.
+\end{enumerate}
+
+\item[A--6]
+For each positive integer $n$, let $a(n)$ be the number of zeroes in
+the base 3 representation of $n$. For which positive real numbers $x$
+does the series
+\[
+\sum_{n=1}^\infty \frac{x^{a(n)}}{n^3}
+\]
+converge?
+
+\item[B--1]
+Evaluate
+\[
+\int_2^4 \frac{\sqrt{\ln(9-x)}\,dx}{\sqrt{\ln(9-x)}+\sqrt{\ln(x+3)}}.
+\]
+
+\item[B--2]
+Let $r,s$ and $t$ be integers with $0 \leq r$, $0 \leq s$ and $r+s
+\leq t$. Prove that
+\[
+\frac{\binom s0}{\binom tr}
++ \frac{\binom s1}{\binom{t}{r+1}} + \cdots
++ \frac{\binom ss}{\binom{t}{r+s}}
+= \frac{t+1}{(t+1-s)\binom{t-s}{r}}.
+\]
+
+\item[B--3]
+Let $F$ be a field in which $1+1 \neq 0$. Show that the set of
+solutions to the equation $x^2+y^2=1$ with $x$ and $y$ in $F$ is given
+by $(x,y)=(1,0)$ and
+\[
+(x,y) = \left( \frac{r^2-1}{r^2+1}, \frac{2r}{r^2+1} \right)
+\]
+where $r$ runs through the elements of $F$ such that $r^2\neq -1$.
+
+\item[B--4]
+Let $(x_1,y_1) = (0.8, 0.6)$ and let $x_{n+1} = x_n \cos y_n - y_n
+\sin y_n$ and $y_{n+1}= x_n \sin y_n + y_n \cos y_n$ for
+$n=1,2,3,\dots$. For each of $\lim_{n\to \infty} x_n$ and $\lim_{n \to
+\infty} y_n$, prove that the limit exists and find it or prove that
+the limit does not exist.
+
+\item[B--5]
+Let $O_n$ be the $n$-dimensional vector $(0,0,\cdots, 0)$. Let $M$ be
+a $2n \times n$ matrix of complex numbers such that whenever $(z_1,
+z_2, \dots, z_{2n})M = O_n$, with complex $z_i$, not all zero, then at
+least one of the $z_i$ is not real. Prove that for arbitrary real
+numbers $r_1, r_2, \dots, r_{2n}$, there are complex numbers $w_1,
+w_2, \dots, w_n$ such that
+\[
+\mathrm{re}\left[ M \left( \begin{array}{c} w_1 \\ \vdots \\ w_n \end{array}
+\right) \right] = \left( \begin{array}{c} r_1 \\ \vdots \\ r_n
+\end{array} \right).
+\]
+(Note: if $C$ is a matrix of complex numbers, $\mathrm{re}(C)$ is the matrix
+whose entries are the real parts of the entries of $C$.)
+
+\item[B--6]
+Let $F$ be the field of $p^2$ elements, where $p$ is an odd
+prime. Suppose $S$ is a set of $(p^2-1)/2$ distinct nonzero elements
+of $F$ with the property that for each $a\neq 0$ in $F$, exactly one
+of $a$ and $-a$ is in $S$. Let $N$ be the number of elements in the
+intersection $S \cap \{2a: a \in S\}$. Prove that $N$ is even.
+
+\end{itemize}
+
+\end{document}

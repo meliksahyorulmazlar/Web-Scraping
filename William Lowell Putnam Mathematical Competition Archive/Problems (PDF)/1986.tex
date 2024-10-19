@@ -1,0 +1,129 @@
+\documentclass[amssymb,twocolumn,pra,10pt,aps]{revtex4-1}
+\usepackage{mathptmx,amsmath}
+
+\begin{document}
+\title{The Forty-Seventh Annual William Lowell Putnam Competition \\
+    Saturday, December 6, 1986}
+\maketitle
+
+\begin{itemize}
+\item[A--1]
+Find, with explanation, the maximum value of $f(x)=x^3-3x$ on the
+set of all real numbers $x$ satisfying $x^4+36\leq 13x^2$.
+
+\item[A--2]
+What is the units (i.e., rightmost) digit of
+\[
+\left\lfloor \frac{10^{20000}}{10^{100}+3}\right\rfloor ?
+\]
+%Here $\lfloor x \rfloor$ is the greatest integer less than or equal to
+%$x$.
+
+\item[A--3]
+Evaluate $\sum_{n=0}^\infty \mathrm{Arccot}(n^2+n+1)$, where
+$\mathrm{Arccot}\,t$ for $t \geq 0$ denotes the number $\theta$ in the
+interval $0 < \theta \leq \pi/2$ with $\cot \theta = t$.
+
+\item[A--4]
+A \emph{transversal} of an $n\times n$ matrix $A$ consists of $n$
+entries of $A$, no two in the same row or column. Let $f(n)$ be the
+number of $n \times n$ matrices $A$ satisfying the following two
+conditions:
+\begin{enumerate}
+\item[(a)] Each entry $\alpha_{i,j}$ of $A$ is in the set
+$\{-1,0,1\}$.
+\item[(b)] The sum of the $n$ entries of a transversal is the same for
+all transversals of $A$.
+\end{enumerate}
+An example of such a matrix $A$ is
+\[
+A = \left( \begin{array}{ccc} -1 & 0 & -1 \\ 0 & 1 & 0 \\ 0 & 1 & 0
+\end{array}
+\right).
+\]
+Determine with proof a formula for $f(n)$ of the form
+\[
+f(n) = a_1 b_1^n + a_2 b_2^n + a_3 b_3^n + a_4,
+\]
+where the $a_i$'s and $b_i$'s are rational numbers.
+
+\item[A--5]
+Suppose $f_1(x), f_2(x), \dots, f_n(x)$ are functions of $n$ real
+variables $x = (x_1, \dots, x_n)$ with continuous second-order partial
+derivatives everywhere on $\mathbb{R}^n$. Suppose further that there are
+constants $c_{ij}$ such that
+\[
+\frac{\partial f_i}{\partial x_j} - \frac{\partial f_j}{\partial x_i}
+= c_{ij}
+\]
+for all $i$ and $j$, $1\leq i \leq n$, $1 \leq j \leq n$. Prove that
+there is a function $g(x)$ on $\mathbb{R}^n$ such that $f_i + \partial
+g/\partial x_i$ is linear for all $i$, $1 \leq i \leq n$. (A linear
+function is one of the form
+\[
+a_0 + a_1 x_1 + a_2 x_2 + \cdots + a_n x_n.)
+\]
+
+\item[A--6]
+Let $a_1, a_2, \dots, a_n$ be real numbers, and let $b_1, b_2, \dots,
+b_n$ be distinct positive integers. Suppose that there is a polynomial
+$f(x)$ satisfying the identity
+\[
+(1-x)^n f(x) = 1 + \sum_{i=1}^n a_i x^{b_i}.
+\]
+Find a simple expression (not involving any sums) for $f(1)$ in terms
+of $b_1, b_2, \dots, b_n$ and $n$ (but independent of $a_1, a_2,
+\dots, a_n$).
+
+\item[B--1]
+Inscribe a rectangle of base $b$ and height $h$ in a circle of radius
+one, and inscribe an isosceles triangle in the region of the circle
+cut off by one base of the rectangle (with that side as the base of
+the triangle).
+For what
+value of $h$ do the rectangle and triangle have the same area?
+
+\item[B--2]
+Prove that there are only a finite number of possibilities for the
+ordered triple $T=(x-y,y-z,z-x)$, where $x,y,z$ are complex numbers
+satisfying the simultaneous equations
+\[
+x(x-1)+2yz = y(y-1)+2zx = z(z-1)+2xy,
+\]
+and list all such triples $T$.
+
+\item[B--3]
+Let $\Gamma$ consist of all polynomials in $x$ with integer
+coefficients. For $f$ and $g$ in $\Gamma$ and $m$ a positive integer,
+let $f \equiv g \pmod{m}$ mean that every coefficient of $f-g$ is an
+integral multiple of $m$. Let $n$ and $p$ be positive integers with
+$p$ prime. Given that $f,g,h,r$ and $s$ are in $\Gamma$ with
+$rf+sg\equiv 1 \pmod{p}$ and $fg \equiv h \pmod{p}$, prove that there
+exist $F$ and $G$ in $\Gamma$ with $F \equiv f \pmod{p}$, $G \equiv g
+\pmod{p}$, and $FG \equiv h \pmod{p^n}$.
+
+\item[B--4]
+For a positive real number $r$, let $G(r)$ be the minimum value of $|r
+- \sqrt{m^2+2n^2}|$ for all integers $m$ and $n$. Prove or disprove
+the assertion that $\lim_{r\to \infty}G(r)$ exists and equals 0.
+
+\item[B--5]
+Let $f(x,y,z) = x^2+y^2+z^2+xyz$. Let $p(x,y,z), q(x,y,z)$, $r(x,y,z)$
+be polynomials with real coefficients satisfying
+\[
+f(p(x,y,z), q(x,y,z), r(x,y,z)) = f(x,y,z).
+\]
+Prove or disprove the assertion that the sequence $p,q,r$ consists of
+some permutation of $\pm x, \pm y, \pm z$, where the number of minus
+signs is 0 or 2.
+
+\item[B--6]
+Suppose $A,B,C,D$ are $n \times n$ matrices with entries in a field
+$F$, satisfying the conditions that $AB^T$ and $CD^T$ are symmetric and
+$AD^T - BC^T = I$. Here $I$ is the $n \times n$ identity matrix, and
+if $M$ is an $n \times n$ matrix, $M^T$ is its transpose. Prove that
+$A^T D - C^T B = I$.
+
+\end{itemize}
+
+\end{document}

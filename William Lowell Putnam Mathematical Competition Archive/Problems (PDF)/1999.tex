@@ -1,0 +1,83 @@
+\documentclass[amssymb,twocolumn,pra,10pt,aps]{revtex4-1}
+\usepackage{mathptmx,amsmath}
+
+\begin{document}
+\title{The 60th William Lowell Putnam Mathematical Competition \\
+    Saturday, December 4, 1999}
+\maketitle
+
+\begin{itemize}
+\item[A--1]
+Find polynomials $f(x)$,$g(x)$, and $h(x)$, if they exist, such
+that for all $x$,
+\[
+|f(x)|-|g(x)|+h(x) = \begin{cases} -1 & \mbox{if $x<-1$} \\
+                     3x+2 & \mbox{if $-1 \leq x \leq 0$} \\
+                     -2x+2 & \mbox{if $x>0$.}
+                     \end{cases}
+\]
+
+\item[A--2]
+Let $p(x)$ be a polynomial that is nonnegative for all real $x$.  Prove that
+for some $k$, there are polynomials $f_1(x),\dots,f_k(x$) such that
+\[p(x) =  \sum_{j=1}^k (f_j(x))^2.\]
+
+\item[A--3]
+Consider the power series expansion
+\[\frac{1}{1-2x-x^2} = \sum_{n=0}^\infty a_n x^n.\]
+Prove that, for each integer $n\geq 0$, there is an integer $m$ such that
+\[a_n^2 + a_{n+1}^2 = a_m .\]
+
+\item[A--4]
+Sum the series
+\[\sum_{m=1}^\infty \sum_{n=1}^\infty \frac{m^2 n}{3^m(n3^m+m3^n)}.\]
+
+\item[A--5]
+Prove that there is a constant $C$ such that, if $p(x)$ is a polynomial
+of degree 1999, then
+\[|p(0)|\leq C \int_{-1}^1 |p(x)|\,dx.\]
+
+\item[A--6]
+The sequence $(a_n)_{n\geq 1}$ is defined by $a_1=1, a_2=2, a_3=24,$ and, for $n\geq 4$,
+\[a_n = \frac{6a_{n-1}^2a_{n-3} -
+8a_{n-1}a_{n-2}^2}{a_{n-2}a_{n-3}}.\]
+Show that, for all n, $a_n$ is an integer multiple of $n$.
+
+\item[B--1]
+Right triangle $ABC$ has right angle at $C$ and $\angle BAC =\theta$;
+the point $D$ is chosen on $AB$ so that $|AC|=|AD|=1$; the point $E$
+is chosen on $BC$ so that $\angle CDE = \theta$.  The perpendicular
+to $BC$ at $E$ meets $AB$ at $F$.  Evaluate $\lim_{\theta\rightarrow 0}
+|EF|$.
+
+\item[B--2]
+Let $P(x)$ be a polynomial of degree $n$ such that $P(x)=Q(x)P''(x)$,
+where $Q(x)$ is a quadratic polynomial and $P''(x)$ is the second
+derivative of $P(x)$.  Show that if $P(x)$ has at least two distinct
+roots then it must have $n$ distinct roots.
+
+\item[B--3]
+Let $A=\{(x,y):0\leq x,y<1\}$.  For $(x,y)\in A$, let
+\[S(x,y) = \sum_{\frac{1}{2}\leq \frac{m}{n}\leq 2} x^m y^n,\]
+where the sum ranges over all pairs $(m,n)$ of positive integers
+satisfying the indicated inequalities.  Evaluate
+\[\lim_{(x,y)\rightarrow (1,1), (x,y)\in A} (1-xy^2)(1-x^2y)S(x,y).\]
+
+\item[B--4]
+Let $f$ be a real function with a continuous third derivative such that $f(x),
+f'(x), f''(x), f'''(x)$ are positive for all $x$.  Suppose that
+$f'''(x)\leq f(x)$ for all $x$.  Show that $f'(x)<2f(x)$ for all $x$.
+
+\item[B--5]
+For an integer $n\geq 3$, let $\theta=2\pi/n$.  Evaluate the determinant of the
+$n\times n$ matrix $I+A$, where $I$ is the $n\times n$ identity matrix and
+$A=(a_{jk})$ has entries $a_{jk}=\cos(j\theta+k\theta)$ for all $j,k$.
+
+\item[B--6]
+Let $S$ be a finite set of integers, each greater than 1.  Suppose that
+for each integer $n$ there is some $s\in S$ such that $\gcd(s,n)=1$ or
+$\gcd(s,n)=s$.  Show that there exist $s,t\in S$ such that $\gcd(s,t)$
+is prime.
+
+\end{itemize}
+\end{document}

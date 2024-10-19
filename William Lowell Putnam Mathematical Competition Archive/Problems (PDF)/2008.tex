@@ -1,0 +1,100 @@
+\documentclass[amssymb,twocolumn,pra,10pt,aps]{revtex4-1}
+\usepackage{mathptmx,amsmath}
+
+\begin{document}
+\title{The 69th William Lowell Putnam Mathematical Competition \\
+    Saturday, December 6, 2008}
+\maketitle
+
+\begin{itemize}
+
+\item[A1]
+Let $f: \mathbb{R}^2 \to \mathbb{R}$ be a function such that $f(x,y) + f(y,z)
++ f(z,x) = 0$ for all real numbers $x$, $y$, and $z$. Prove that there exists
+a function $g: \mathbb{R} \to \mathbb{R}$ such that $f(x,y) = g(x) - g(y)$
+for all real numbers $x$ and $y$.
+
+\item[A2]
+Alan and Barbara play a game in which they take turns filling entries of
+an initially empty $2008 \times 2008$ array. Alan plays first. At each
+turn, a player chooses a real number and places it in a vacant entry.
+The game ends when all the entries are filled. Alan wins if the
+determinant of the resulting matrix is nonzero; Barbara wins if it is zero.
+Which player has a winning strategy?
+
+\item[A3]
+Start with a finite sequence $a_1, a_2, \dots, a_n$ of positive integers.
+If possible, choose two indices $j < k$ such that $a_j$ does not divide
+$a_k$, and replace $a_j$ and $a_k$ by $\mathrm{gcd}(a_j, a_k)$
+and $\mathrm{lcm}(a_j, a_k)$, respectively. Prove that if this process is
+repeated, it must eventually stop and the final sequence does not depend
+on the choices made. (Note: gcd means greatest common divisor and lcm
+means least common multiple.)
+
+\item[A4]
+Define $f: \mathbb{R} \to \mathbb{R}$ by
+\[
+f(x) = \begin{cases} x & \mbox{if $x \leq e$} \\ x f(\ln x) &
+\mbox{if $x > e$.} \end{cases}
+\]
+Does $\sum_{n=1}^\infty \frac{1}{f(n)}$ converge?
+
+\item[A5]
+Let $n \geq 3$ be an integer. Let $f(x)$ and $g(x)$ be polynomials
+with real coefficients such that the points
+$(f(1), g(1)), (f(2), g(2)), \dots, (f(n), g(n))$
+in $\mathbb{R}^2$ are the vertices of a regular $n$-gon in
+counterclockwise order. Prove that at least one of $f(x)$
+and $g(x)$ has degree greater than or equal to $n-1$.
+
+\item[A6]
+Prove that there exists a constant $c>0$ such that in every
+nontrivial finite group $G$ there exists a sequence of length
+at most $c \log |G|$ with the property that each element of $G$
+equals the product of some subsequence. (The elements of $G$ in the
+sequence are not required to be distinct. A \emph{subsequence}
+of a sequence is obtained by selecting some of the terms,
+not necessarily consecutive, without reordering them; for
+example, $4, 4, 2$ is a subsequence of $2, 4, 6, 4, 2$, but
+$2, 2, 4$ is not.)
+
+\item[B1]
+What is the maximum number of rational points that can lie on a circle
+in $\mathbb{R}^2$ whose center is not a rational point? (A \emph{rational
+point} is a point both of whose coordinates are rational numbers.)
+
+\item[B2]
+Let $F_0(x) = \ln x$. For $n \geq 0$ and $x > 0$, let
+$F_{n+1}(x) = \int_0^x F_n(t)\,dt$. Evaluate
+\[
+\lim_{n \to \infty} \frac{n! F_n(1)}{\ln n}.
+\]
+
+\item[B3]
+What is the largest possible radius of a circle contained in a 4-dimensional
+hypercube of side length 1?
+
+\item[B4]
+Let $p$ be a prime number. Let $h(x)$ be a polynomial with integer coefficients
+such that $h(0), h(1), \dots, h(p^2-1)$ are distinct modulo $p^2$.
+Show that $h(0), h(1), \dots, h(p^3-1)$ are distinct modulo $p^3$.
+
+\item[B5]
+Find all continuously differentiable functions $f: \mathbb{R} \to \mathbb{R}$
+such that for every rational number $q$, the number $f(q)$ is rational
+and has the same denominator as $q$. (The denominator of a rational number
+$q$ is the unique positive integer $b$ such that $q = a/b$
+for some integer $a$ with $\mathrm{gcd}(a,b) = 1$.)
+(Note: gcd means greatest common
+divisor.)
+
+\item[B6]
+Let $n$ and $k$ be positive integers. Say that a permutation $\sigma$
+of $\{1,2,\dots,n\}$ is \emph{$k$-limited} if $|\sigma(i) - i| \leq k$
+for all $i$. Prove that the number of $k$-limited permutations of
+$\{1,2,\dots,n\}$ is odd if and only if $n \equiv 0$ or $1$
+(mod $2k+1$).
+
+\end{itemize}
+
+\end{document}
