@@ -1,0 +1,266 @@
+\documentclass[amssymb,twocolumn,pra,10pt,aps]{revtex4-1}
+\usepackage{mathptmx,amsmath}
+
+\begin{document}
+\title{Solutions to the 56th William Lowell Putnam Mathematical Competition \\
+    Saturday, December 2, 1995}
+\author{Kiran Kedlaya}
+\noaffiliation
+\maketitle
+
+\begin{itemize}
+\item[A--1]
+Suppose on the contrary that there exist $t_{1}, t_{2} \in T$
+with $t_{1}t_{2} \in U$ and $u_{1}, u_{2} \in U$ with $u_{1}u_{2} \in
+T$. Then $(t_{1}t_{2})u_{1}u_{2} \in U$ while
+$t_{1}t_{2}(u_{1}u_{2}) \in T$, contradiction.
+
+\item[A--2]
+The integral converges iff $a=b$. The easiest proof uses
+``big-O'' notation and the fact that $(1+x)^{1/2} = 1 + x/2 +
+O(x^{2})$ for $|x|<1$. (Here $O(x^{2})$ means bounded by a constant
+times $x^{2}$.)
+
+So
+\begin{align*}
+\sqrt{x+a}-\sqrt{x} &= x^{1/2}(\sqrt{1+a/x} - 1) \\
+&= x^{1/2}(1 + a/2x + O(x^{-2})),
+\end{align*}
+hence
+\[
+\sqrt{\sqrt{x+a} - \sqrt{x}} = x^{1/4} (a/4x + O(x^{-2}))
+\]
+and similarly
+\[
+\sqrt{\sqrt{x} - \sqrt{x-b}} = x^{1/4} (b/4x + O(x^{-2})).
+\]
+Hence the integral we're looking at is
+\[
+\int_{b}^{\infty} x^{1/4} ((a-b)/4x + O(x^{-2}))\,dx.
+\]
+The term $x^{1/4} O(x^{-2})$ is bounded by a constant times
+$x^{-7/4}$, whose integral converges. Thus we only have to decide
+whether $x^{-3/4} (a-b)/4$ converges. But $x^{-3/4}$ has divergent
+integral, so we get convergence if and only if $a=b$ (in which case
+the integral telescopes anyway).
+
+\item[A--3]
+Let $D$ and $E$ be the numbers $d_{1}\dots d_{9}$ and $e_{1}\dots
+e_{9}$, respectively. We are given that $(e_{i} - d_{i})10^{9-i} + D
+\equiv 0 \pmod 7$ and $(f_{i} - e_{i})10^{9-i} + E \equiv 0 \pmod 7$
+for $i=1, \dots, 9$. Sum the first relation over $i=1,\dots,9$ and we
+get $E - D + 9D \equiv 0 \pmod 7$, or $E + D \equiv 0 \pmod 7$. Now
+add the first and second relations for any particular value of $i$
+and we get $(f_{i} - d_{i})10^{9-i} + E + D \equiv 0 \pmod 7$. But we
+know $E+D$ is divisible by 7, and 10 is coprime to 7, so $d_{i} -
+f_{i} \equiv 0 \pmod 7$.
+
+\item[A--4]
+Let $s_{k} = x_{1} + \cdots + x_{k} - k(n-1)/n$, so that $s_{n} =
+s_{0} = 0$. These form a cyclic sequence that doesn't change when you
+rotate the necklace, except that the entire sequence gets translated
+by a constant. In particular, it makes sense to choose $x_{i}$ for
+which $s_{i}$ is maximum and make that one $x_{n}$; this way $s_{i}
+\leq 0$ for all $i$, which gives $x_{1} + \cdots + x_{i} \leq
+i(n-1)/n$, but the right side may be replaced by $i-1$ since the left
+side is an integer.
+
+\item[A--5]
+Everyone (presumably) knows that the set of solutions of a system of
+linear first-order differential equations with constant coefficients
+is $n$-dimensional, with basis vectors of the form $f_{i}(t)
+\vec{v}_{i}$ (i.e.\ a function times a constant vector), where the
+$\vec{v}_{i}$ are linearly independent. In
+particular, our solution $\vec{x}(t)$ can be written as $\sum_{i=1}^{n}
+c_{i}f_{i}(t) \vec{v}_{1}$.
+
+Choose a vector $\vec{w}$ orthogonal to $\vec{v}_{2}, \dots,
+\vec{v}_{n}$ but not to $\vec{v}_1$. Since $\vec{x}(t) \to 0$ as $t
+\to \infty$, the same is true of $\vec{w} \cdot \vec{x}$; but that is
+simply $(\vec{w} \cdot \vec{v}_{1}) c_{1} f_{1}(t)$. In other words,
+if $c_{i} \neq 0$, then $f_{i}(t)$ must also go to 0.
+
+However, it is easy to exhibit a solution which does not go to 0. The
+sum of the eigenvalues of the matrix $A = (a_{ij})$, also known as the
+trace of $A$, being the sum of the diagonal entries of $A$, is
+nonnegative, so $A$ has an eigenvalue $\lambda$ with nonnegative real
+part, and a corresponding eigenvector $\vec{v}$. Then $e^{\lambda t}
+\vec{v}$ is a solution that does not go to 0. (If $\lambda$ is not
+real, add this solution to its complex conjugate to get a real
+solution, which still doesn't go to 0.)
+
+Hence one of the $c_{i}$, say $c_{1}$, is zero, in which case
+$\vec{x}(t) \cdot \vec{w} = 0$ for all $t$.
+
+\item[A--6]
+View this as a random walk/Markov process with states $(i,j,k)$ the
+triples of integers with sum 0, corresponding to the difference
+between the first, second and third rows with their average (twice
+the number of columns). Adding a new column adds on a random
+permutation of the vector $(1,0,-1)$. I prefer to identify the
+triple $(i,j,k)$ with the point $(i-j) + (j-k)\omega +
+(k-i)\omega^{2}$ in the plane, where $\omega$ is a cube root of
+unity. Then adding a new column corresponds to moving to one of the
+six neighbors of the current position in a triangular lattice.
+
+What we'd like to argue is that for large enough $n$, the ratio of
+the probabilities of being in any two particular states goes to 1.
+Then in fact, we'll see that eventually, about six times as many
+matrices have $a=b-1,b=c-1$ than $a=b=c$. This is a pain to prove,
+though, and in fact is way more than we actually need.
+
+Let $C_{n}$ and $A_{n}$ be the probability that we are at the origin,
+or at a particular point adjacent to the origin, respectively. Then
+$C_{n+1} = A_{n}$. (In fact, $C_{n+1}$ is $1/6$ times the sum of the
+probabilities of being at each neighbor of the origin at time $n$, but
+these are all $A_{n}$.) So the desired result, which is that
+$C_{n}/A_{n} \geq 2/3$ for some large $n$, is equivalent to
+$A_{n+1}/A_{n} \geq 2/3$.
+
+Suppose on the contrary that this is not the case; then $A_{n} < c
+(2/3)^{n}$ for some constant $n$. However, if $n=6m$, the probability
+that we chose each of the six types of moves $m$ times is already
+$(6m)!/[m!^{6} 6^{6m}]$, which by Stirling's approximation is
+asymptotic to a constant times $m^{-5/2}$. This term alone is bigger
+than $c (2/3)^{n}$, so we must have $A_{n+1}/A_{n} \geq 2/3$ for
+some $n$. (In fact, we must have $A_{n+1}/A_{n} \geq 1-\epsilon$ for
+any $\epsilon>0$.)
+
+\item[B--1]  For a given $\pi$, no more than three different values of $\pi(x)$
+are possible (four would require one part each of size at least
+1,2,3,4, and that's already more than 9 elements). If no such $x, y$
+exist, each pair $(\pi(x), \pi'(x))$ occurs for at most 1 element of
+$x$, and
+since there are only $3 \times 3$ possible pairs, each must occur
+exactly once. In particular, each value of $\pi(x)$ must occur 3
+times. However, clearly any given value of $\pi(x)$ occurs $k\pi(x)$
+times, where $k$ is the number of distinct partitions of that size.
+Thus $\pi(x)$ can occur 3 times only if it equals 1 or 3, but we have
+three distinct values for which it occurs, contradiction.
+
+\item[B--2]
+For those who haven't taken enough physics, ``rolling without
+slipping'' means that the perimeter of the ellipse and the curve pass
+at the same rate, so all we're saying is that the perimeter of the
+ellipse equals the length of one period of the sine curve. So set up
+the integrals:
+\begin{multline*}
+\int_{0}^{2\pi} \sqrt{(-a \sin \theta)^{2} + (b \cos \theta)^{2}}\,
+d\theta\\
+ = \int_{0}^{2\pi a} \sqrt{1 + (c/a \cos x/a)^{2}}\,dx.
+\end{multline*}
+Let $\theta = x/a$ in the second integral and write 1 as $\sin^{2}
+\theta + \cos^{2} \theta$ and you get
+\begin{multline*}
+\int_{0}^{2\pi} \sqrt{a^{2} \sin^{2} \theta + b^{2} \cos^{2}
+\theta}\,d\theta\\
+ = \int_{0}^{2\pi} \sqrt{a^{2} \sin^{2} \theta +
+(a^{2} + c^{2}) \cos^{2} \theta}\,d\theta.
+\end{multline*}
+Since the left side is increasing as a function of $b$, we have
+equality if and only if $b^{2} = a^{2} + c^{2}$.
+
+\item[B--3]
+For $n=1$ we obviously get 45, while for $n=3$ the answer is 0
+because it both changes sign (because determinants are alternating)
+and remains unchanged (by symmetry) when you switch any two rows other
+than the first one. So only $n=2$ is left. By the multilinearity of
+the determinant, the answer is the determinant of the matrix whose
+first (resp. second) row is the sum of all possible first (resp.
+second) rows. There are 90 first rows whose sum is the vector $(450,
+405)$, and 100 second rows whose sum is $(450, 450)$. Thus the answer
+is $450\times 450 - 450 \times 405 = 45 \times 450 = 20250.$
+
+\item[B--4]
+The infinite continued fraction is defined as the limit of the
+sequence $L_{0} = 2207, L_{n+1} = 2207-1/L_{n}$. Notice that the
+sequence is strictly decreasing (by induction) and thus indeed has a
+limit $L$, which satisfies $L = 2207 - 1/L$, or rewriting, $L^{2} -
+2207L + 1 = 0$. Moreover, we want the greater of the two roots.
+
+Now how to compute the eighth root of $L$? Notice that if $x$
+satisfies the quadratic $x^{2} - ax + 1 = 0$, then we have
+\begin{align*}
+0 &= (x^{2} - ax + 1)(x^{2} + ax + 1) \\
+&= x^{4} - (a^{2} - 2)x^{2} + 1.
+\end{align*}
+Clearly, then, the positive square roots of the quadratic $x^{2} -
+bx + 1$ satisfy the quadratic $x^{2} - (b^{2}+2)^{1/2}x + 1 = 0$. Thus
+we compute that $L^{1/2}$ is the greater root of $x^{2} - 47x + 1 =
+0$, $L^{1/4}$ is the greater root of $x^{2} - 7x+ 1 =0$, and
+$L^{1/8}$ is the greater root of $x^{2} - 3x + 1 = 0$, otherwise
+known as $(3 + \sqrt{5})/2$.
+
+\item[B--5]
+This problem is dumb if you know the Sprague-Grundy theory of normal
+impartial games (see Conway, Berlekamp and Guy, {\it Winning Ways},
+for details). I'll describe how it applies here. To each position you
+assign a {\em nim-value} as follows. A position with no moves (in
+which case the person to move has just lost) takes value 0. Any other
+position is assigned the smallest number not assigned to a valid move
+from that position.
+
+For a single pile, one sees that an empty pile has value 0, a pile of
+2 has value 1, a pile of 3 has value 2, a pile of 4 has value 0, a
+pile of 5 has value 1, and a pile of 6 has value 0.
+
+You add piles just like in standard Nim: the nim-value of the
+composite of two games (where at every turn you pick a game and make
+a move there) is the ``base 2 addition without carries'' (i.e.\
+exclusive OR) of the nim-values of the constituents. So our starting
+position, with piles of 3, 4, 5, 6, has nim-value $2 \oplus 0 \oplus
+1 \oplus 0 = 3$.
+
+A position is a win for the player to move if and only if it has a
+nonzero value, in which case the winning strategy is to always move to
+a 0 position. (This is always possible from a nonzero position and
+never from a zero position, which is precisely the condition that
+defines the set of winning positions.) In this case, the winning move
+is to reduce the pile of 3 down to 2, and you can easily describe the
+entire strategy if you so desire.
+
+\item[B--6]
+Obviously $\alpha, \beta, \gamma$ have to be greater than 1, and no
+two can both be rational, so without loss of generality assume that
+$\alpha$ and $\beta$ are irrational.
+Let $\{x\} = x - \lfloor x \rfloor$ denote the fractional part of $x$.
+Then $m \in S(\alpha)$ if and only if $f(m/\alpha) \in (1-1/\alpha,1)
+\cup \{0\}$. In particular, this means that $S(\alpha) \cap \{1,
+\dots, n\}$ contains $\lceil (n+1)/\alpha \rceil -1$ elements, and
+similarly. Hence for every integer $n$,
+\[
+n = \left\lceil \frac{n+1}\alpha \right\rceil +
+ \left\lceil \frac{n+1}\beta \right\rceil +
+ \left\lceil \frac{n+1}\gamma \right\rceil -3.
+\]
+Dividing through by $n$ and taking the limit as $n \to \infty$ shows
+that $1/\alpha + 1/\beta + 1/\gamma = 1$. That in turn implies that
+for all $n$,
+\[
+\left\{ - \frac{n+1}{\alpha} \right\} +
+\left\{ - \frac{n+1}{\beta} \right\} +
+\left\{ - \frac{n+1}{\gamma} \right\} = 2.
+\]
+Our desired contradiction is equivalent to showing that the left side actually
+takes the value 1 for some $n$. Since the left side is
+an integer, it suffices to show that $\{ -(n+1)/\alpha\} +
+\{-(n+1)/\beta\} < 1$ for some $n$.
+
+A result in ergodic theory (the two-dimensional version of the Weil
+equidistribution theorem) states that if $1,r,s$ are linearly
+independent over the rationals, then the set of points $(\{nr\},
+\{ns\}$ is dense (and in fact equidistributed) in the unit square. In
+particular, our claim definitely holds unless $a/\alpha + b/\beta =
+c$ for some integers $a,b,c$.
+
+On the other hand, suppose that such a relation does hold. Since
+$\alpha$ and $\beta$ are irrational, by the one-dimensional Weil
+theorem, the set of points $(\{-n/\alpha\}, \{-n/\beta\}$ is dense in
+the set of $(x,y)$ in the unit square such that $ax + by$ is an integer.
+It is simple enough to show that this set meets the region $\{(x,y)
+\in [0,1]^{2}: x+y<1\}$ unless $a+b$ is an integer, and that would
+imply that $1/\alpha + 1/\beta$, a quantity between 0 and 1, is an
+integer. We have our desired contradiction.
+
+\end{itemize}
+\end{document}

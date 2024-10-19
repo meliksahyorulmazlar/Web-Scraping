@@ -1,0 +1,597 @@
+\documentclass[amssymb,twocolumn,pra,10pt,aps]{revtex4-1}
+\usepackage{mathptmx,amsmath}
+
+\newcommand{\RR}{\mathbb{R}}
+\newcommand{\CC}{\mathbb{C}}
+\DeclareMathOperator{\lcm}{lcm}
+\DeclareMathOperator{\sgn}{sgn}
+
+\begin{document}
+\title{Solutions to the 65th William Lowell Putnam Mathematical Competition \\
+    Saturday, December 4, 2004}
+\author{Kiran Kedlaya and Lenny Ng}
+\noaffiliation
+\maketitle
+
+\begin{itemize}
+
+\item[A--1]
+Yes. Suppose otherwise. Then there would be an $N$ such that $S(N) < .8N$
+and $S(N+1) > .8(N+1)$; that is, O'Keal's free throw percentage is under $80\%$
+at some point, and after one subsequent free throw (necessarily made),
+her percentage is over $80\%$. If she makes $m$ of her first $N$ free
+throws, then $m/N < 4/5$ and $(m+1)/(N+1) > 4/5$. This means that $5m <
+4n < 5m+1$, which is impossible since then $4n$ is an integer between the
+consecutive integers $5m$ and $5m+1$.
+
+\textbf{Remark:}
+This same argument works for any fraction of the form
+$(n-1)/n$ for some integer $n>1$, but not for any other real number
+between $0$ and $1$.
+
+\item[A--2]
+\textbf{First solution:} (partly due to Ravi Vakil)
+Yes, it does follow.
+For $i=1,2$,
+let $P_i, Q_i, R_i$ be the vertices of $T_i$ opposide the sides of length
+$a_i, b_i, c_i$, respectively.
+
+We first check the case where $a_1 = a_2$ (or $b_1 = b_2$ or $c_1 = c_2$,
+by the same argument after relabeling).
+Imagine $T_2$ as being drawn with the base $Q_2R_2$
+horizontal and the point $P_2$ above the line $Q_2R_2$. We may then
+position $T_1$ so that $Q_1 = Q_2$, $R_1 = R_2$, and $P_1$ lies above the line
+$Q_1R_1 = Q_2R_2$. Then $P_1$ also lies inside the region bounded by the
+circles through $P_2$ centered at $Q_2$ and $R_2$. Since $\angle Q_2$
+and $\angle R_2$ are acute, the part of this region above the line
+$Q_2R_2$ lies within $T_2$. In particular, the
+distance from $P_1$ to the line $Q_2R_2$ is less than or equal to the
+distance from $P_2$ to the line $Q_2R_2$; hence $A_1 \leq A_2$.
+
+To deduce the general case, put
+\[
+r = \max\{a_1/a_2, b_1/b_2, c_1/c_2\}.
+\]
+Let $T_3$ be the triangle with sides $ra_2, rb_2, rc_2$, which
+has area $r^2 A_2$. Applying the special case to $T_1$ and $T_3$,
+we deduce that $A_1 \leq r^2 A_2$; since $r \leq 1$ by hypothesis,
+we have $A_1 \leq A_2$ as desired.
+
+\textbf{Remark:}
+Another geometric argument in the case $a_1 = a_2$
+is that since angles $\angle Q_2$ and $\angle R_2$
+are acute, the perpendicular to $Q_2R_2$ through $P_2$ separates $Q_2$ from
+$R_2$. If $A_1 > A_2$, then $P_1$ lies above the parallel to $Q_2R_2$
+through $P_2$; if then it lies on or to the left of the vertical line
+through $P_2$, we have $c_1 > c_2$ because the inequality holds
+for both horizontal and vertical components (possibly with equality for one,
+but not both). Similarly, if $P_1$ lies to the right of the vertical,
+then $b_1 > b_2$.
+
+\textbf{Second solution:} (attribution unknown)
+Retain notation as in the first paragraph of the first solution.
+Since the angle measures in any triangle add up to $\pi$, some angle
+of $T_1$ must have measure less than or equal to its counterpart in
+$T_2$. Without loss of generality assume that $\angle P_1 \leq \angle
+P_2$. Since the latter is acute (because $T_2$ is acute), we have
+$\sin \angle P_1 \leq \sin \angle P_2$. By the Law of Sines,
+\[
+A_1 = \frac{1}{2} b_1 c_1 \sin \angle P_1 \leq \frac{1}{2}
+b_2 c_2 \sin \angle P_2 = A_2.
+\]
+
+\textbf{Remark:} Many other solutions are possible; for instance,
+one uses Heron's formula for the area of a triangle in terms of
+its side lengths.
+
+\item[A--3]
+Define a sequence $v_n$ by $v_n = (n-1)(n-3)\cdots(4)(2)$ if $n$ is
+odd and $v_n = (n-1)(n-3)\cdots(3)(1)$ if $n$ is even; it suffices to
+prove that $u_n = v_n$ for all $n \geq 2$. Now $v_{n+3} v_n =
+(n+2)(n)(n-1)!$ and $v_{n+2}v_{n+1} = (n+1)!$, and so $v_{n+3} v_n -
+v_{n+2} v_{n+1} = n!$. Since we can check that $u_n = v_n$ for
+$n=2,3,4$, and $u_n$ and $v_n$ satisfy the same recurrence, it
+follows by induction that $u_n = v_n$ for all $n\geq 2$, as desired.
+
+\item[A--4]
+It suffices to verify that
+\[
+x_1 \cdots x_n = \frac{1}{2^n n!} \sum_{e_i \in \{-1,1\}}
+(e_1\cdots e_n) (e_1 x_1 + \cdots + e_n x_n)^n.
+\]
+To check this, first note that the right side vanishes identically
+for $x_1 = 0$, because each term cancels the corresponding term with $e_1$
+flipped. Hence the right side, as a polynomial, is divisible by $x_1$;
+similarly it is divisible by $x_2, \dots, x_n$. Thus the right side
+is equal to $x_1\cdots x_n$ times a scalar. (Another way to see this:
+the right side is clearly odd as a polynomial in each individual variable,
+but the only degree $n$ monomial in $x_1, \dots, x_n$ with that property
+is $x_1 \cdots x_n$.) Since each summand
+contributes $\frac{1}{2^n} x_1 \cdots x_n$ to the sum, the scalar factor is
+1 and we are done.
+
+\textbf{Remark:} Several variants on the above construction
+are possible; for instance,
+\[
+x_1 \cdots x_n = \frac{1}{n!}
+\sum_{e_i \in \{0,1\}} (-1)^{n - e_1 - \cdots - e_n}
+(e_1 x_1 + \cdots + e_n x_n)^n
+\]
+by the same argument as above.
+
+\textbf{Remark:} These construction work over any field of characteristic
+greater than $n$ (at least for $n>1$).
+On the other hand, no construction is possible over
+a field of characteristic $p \leq n$, since the coefficient of
+$x_1\cdots x_n$ in the expansion of
+$(e_1 x_1 + \cdots + e_n x_n)^n$ is zero for any $e_i$.
+
+\textbf{Remark:} Richard Stanley asks whether one can use fewer than
+$2^n$ terms, and what the smallest possible number is.
+
+\item[A--5]
+\textbf{First solution:}
+First recall that any graph with $n$ vertices and $e$ edges has at
+least $n-e$ connected components (add each edge one at a time, and note
+that it reduces the number of components by at most 1). Now
+imagine the squares of the checkerboard as a graph, whose vertices are
+connected if the corresponding squares share a side and are
+the same color. Let
+$A$ be the number of edges in the graph, and let $B$ be the number of
+4-cycles (formed by monochromatic $2 \times 2$ squares).
+If we remove the bottom edge of each 4-cycle, the resulting graph has
+the same number of connected components as the original one;
+hence this number is at least
+\[
+mn - A+B.
+\]
+By the linearity of expectation, the expected number of connected
+components is at least
+\[
+mn - E(A) + E(B).
+\]
+Moreover, we may compute $E(A)$ by summing over the individual
+pairs of adjacent squares, and we may compute $E(B)$ by summing over
+the individual $2 \times 2$ squares. Thus
+\begin{align*}
+E(A) &= \frac{1}{2}(m(n-1) + (m-1)n), \\
+E(B) &= \frac{1}{8}(m-1)(n-1),
+\end{align*}
+and so the expected number of components is at least
+\begin{align*}
+& mn - \frac{1}{2}(m(n-1)+(m-1)n) + \frac{1}{8}(m-1)(n-1) \\
+&= \frac{mn + 3m + 3n + 1}{8} >
+\frac{mn}{8}.
+\end{align*}
+
+\textbf{Remark:}
+A ``dual'' approach is to consider
+the graph whose vertices are the corners of the squares of the checkerboard,
+with two vertices joined if they are adjacent and the edge between then
+does not separate two squares of the same color. In this approach,
+the 4-cycles become isolated vertices, and the bound on components
+is replaced by a call to Euler's formula relating the vertices, edges
+and faces of a planar figure. (One must be careful, however, to correctly
+handle faces which are not simply connected.)
+
+\textbf{Second solution:} (by Noam Elkies)
+Number the squares of the checkerboard $1, \dots, mn$ by numbering the
+first row from left to right, then the second row, and so on. We prove
+by induction on $i$ that if we just consider the figure formed by the
+first $i$ squares, its expected number of monochromatic components is
+at least $i/8$. For $i=1$, this is clear.
+
+Suppose the $i$-th square does not abut the left edge or the top row
+of the board.
+Then we may divide into three cases.
+\begin{itemize}
+\item
+With probability $1/4$, the $i$-th square is opposite in color from
+the adjacent squares directly above and to the left of it. In this case
+adding the $i$-th square adds one component.
+\item
+With probability $1/8$, the $i$-th square is the same in color as the
+adjacent squares directly above and to the left of it, but opposite in
+color from its diagonal neighbor above and to the left. In this case,
+adding the $i$-th square either removes a component or leaves the number
+unchanged.
+\item
+In all other cases, the number of components remains unchanged upon
+adding the $i$-th square.
+\end{itemize}
+Hence adding the $i$-th square increases the expected number of components
+by $1/4 - 1/8 = 1/8$.
+
+If the $i$-th square does abut the left edge of the board, the situation
+is even simpler: if the $i$-th square differs in color from the square
+above it, one component is added, otherwise the number does not change. Hence
+adding the $i$-th square increases the expected number of components
+by $1/2$; likewise if the $i$-th square abuts the top edge of the board.
+Thus the expected number of components is at least $i/8$ by induction,
+as desired.
+
+\textbf{Remark:} Some solvers attempted to consider adding one row
+at a time, rather than one square; this must be handled with great
+care, as it is possible that the number of components can drop
+rather precipitously upon adding an entire row.
+
+\item[A--6]
+By approximating each integral with a Riemann sum, we may reduce to
+proving the discrete analogue: for $x_{ij} \in \RR$ for
+$i,j=1, \dots, n$,
+\begin{multline*}
+n \sum_{i=1}^n \left( \sum_{j=1}^n x_{ij} \right)^2
++ n \sum_{j=1}^n \left( \sum_{i=1}^n x_{ij} \right)^2 \\
+\leq \left( \sum_{i=1}^n \sum_{j=1}^n x_{ij} \right)^2
++ n^2 \sum_{i=1}^n \sum_{j=1}^n x_{ij}^2.
+\end{multline*}
+The difference between the right side and the left side is
+\[
+\frac{1}{4} \sum_{i,j,k,l=1}^n (x_{ij} + x_{kl} - x_{il} - x_{kj})^2,
+\]
+which is evidently nonnegative. If you prefer not to discretize,
+you may rewrite the original inequality as
+\[
+\int_0^1 \int_0^1 \int_0^1 \int_0^1 F(x,y,z,w)^2
+\,dx\,dy\,dz\,dw \geq 0
+\]
+for
+\[
+F(x,y,z,w) = f(x,y) + f(z,w) - f(x,w) - f(z,y).
+\]
+
+\textbf{Remark:} (by Po-Ning Chen)
+The discrete inequality can be arrived at more systematically
+by repeatedly applying the following identity: for
+any real $a_1, \dots, a_n$,
+\[
+\sum_{1 \leq i < j \leq n} (x_i - x_j)^2
+= n \sum_{i=1}^n x_i^2 - \left( \sum_{i=1}^n x_i \right)^2.
+\]
+
+\textbf{Remark:} (by David Savitt)
+The discrete inequality can also be interpreted as follows.
+For $c,d \in \{1, \dots, n-1\}$ and $\zeta_n = e^{2\pi i/n}$, put
+\[
+z_{c,d} = \sum_{i,j} \zeta_n^{c i + d j} x_{ij}.
+\]
+Then the given inequality is equivalent to
+\[
+\sum_{c,d=1}^{n-1} |z_{c,d}|^2 \geq 0.
+\]
+
+\item[B--1]
+Let $k$ be an integer, $0\leq k\leq n-1$. Since $P(r)/r^k = 0$, we
+have
+\begin{multline*}
+c_n r^{n-k} + c_{n-1} r^{n-k+1} + \dots + c_{k+1} r \\
+= - (c_k + c_{k-1} r^{-1} + \dots + c_0 r^{-k}).
+\end{multline*}
+Write $r = p/q$ where $p$ and $q$ are relatively prime. Then the
+left hand side of the above equation can be written as a fraction
+with denominator $q^{n-k}$, while the right hand side is a fraction
+with denominator $p^k$. Since $p$ and $q$ are relatively prime, both
+sides of the equation must be an integer, and the result follows.
+
+\textbf{Remark:}
+If we write $r = a/b$ in lowest terms, then $P(x)$ factors as $(bx-a)Q(x)$,
+where the polynomial $Q$ has integer coefficients because you can
+either do the long division from the left and get denominators divisible only
+by primes dividing $b$, or do it from the right and get denominators
+divisible only by primes dividing $a$. The numbers given in the problem
+are none other than $a$ times the coefficients of $Q$.
+More generally, if $P(x)$ is divisible,
+as a polynomial over the rationals, by a polynomial $R(x)$ with integer
+coefficients, then $P/R$ also has integer coefficients; this is known
+as ``Gauss's lemma'' and holds in any unique factorization domain.
+
+\item[B--2]
+\textbf{First solution:}
+We have
+\[
+(m+n)^{m+n} > \binom{m+n}{m} m^m n^n
+\]
+because the binomial expansion of $(m+n)^{m+n}$ includes the term on
+the right as well as some others. Rearranging this inequality yields
+the claim.
+
+\textbf{Remark:}
+One can also interpret this argument combinatorially.
+Suppose that we choose $m+n$ times (with replacement) uniformly
+randomly from a set of $m+n$ balls, of which $m$ are red and $n$ are
+blue. Then the probability of picking each ball exactly once is
+$(m+n)!/(m+n)^{m+n}$. On the other hand, if $p$ is the probability
+of picking exactly $m$ red balls, then $p<1$ and the probability
+of picking each ball exactly once is $p (m^m/m!)(n^n/n!)$.
+
+\textbf{Second solution:} (by David Savitt)
+Define
+\[
+S_k = \{i/k: i=1, \dots, k\}
+\]
+and rewrite the desired inequality as
+\[
+\prod_{x \in S_m} x \prod_{y \in S_n} y > \prod_{z \in S_{m+n}} z.
+\]
+To prove this, it suffices to check that if we sort the multiplicands
+on both sides into increasing order, the $i$-th term on the left
+side is greater than or equal to the $i$-th term on the right side.
+(The equality is strict already for $i=1$, so you do get a strict inequality
+above.)
+
+Another way to say this is that for
+any $i$, the number of factors on the left side which are less than
+$i/(m+n)$ is less than $i$. But since $j/m < i/(m+n)$ is equivalent to
+$j < im/(m+n)$, that number is
+\begin{align*}
+&\left\lceil \frac{im}{m+n} \right\rceil -1 +
+\left\lceil \frac{in}{m+n} \right\rceil -1 \\
+&\leq \frac{im}{m+n} + \frac{in}{m+n} - 1 = i-1.
+\end{align*}
+
+\textbf{Third solution:}
+Put $f(x) = x (\log (x+1) - \log x)$; then for $x>0$,
+\begin{align*}
+f'(x) &= \log(1 + 1/x) - \frac{1}{x+1} \\
+f''(x) &= - \frac{1}{x(x+1)^2}.
+\end{align*}
+Hence $f''(x) < 0$ for all $x$; since $f'(x) \to 0$ as $x \to \infty$,
+we have $f'(x) > 0$ for $x>0$, so $f$ is strictly increasing.
+
+Put $g(m) = m \log m - \log(m!)$; then $g(m+1) - g(m) = f(m)$,
+so $g(m+1)-g(m)$ increases with $m$. By induction,
+$g(m+n) - g(m)$ increases with $n$ for any positive integer $n$,
+so in particular
+\begin{align*}
+g(m+n) - g(m) &> g(n) - g(1) + f(m) \\
+&\geq g(n)
+\end{align*}
+since $g(1) = 0$. Exponentiating yields the desired inequality.
+
+\textbf{Fourth solution:} (by W.G. Boskoff and Bogdan Suceav\u{a})
+We prove the claim by induction on $m+n$. The base case is $m=n=1$, in which case
+the desired inequality is obviously true: $2!/2^2 = 1/2 < 1 = (1!/1^1)(1!/1^1)$.
+To prove the induction step, suppose $m+n > 2$; we must then have $m>1$ or $n>1$ or both.
+Because the desired result is symmetric in $m$ and $n$, we may as well assume $n > 1$.
+By the induction hypothesis, we have
+\[
+\frac{(m+n-1)!}{(m+n-1)^{m+n-1}} < \frac{m!}{m^m} \frac{(n-1)!}{(n-1)^{n-1}}.
+\]
+To obtain the desired inequality, it will suffice to check that
+\[
+\frac{(m+n-1)^{m+n-1}}{(m+n-1)!} \frac{(m+n)!}{(m+n)^{m+n}}< \frac{(n-1)^{n-1}}{(n-1)!} \frac{n!}{(n)^{n}}
+\]
+or in other words
+\[
+\left( 1 - \frac{1}{m+n} \right)^{m+n-1} < \left(1 - \frac{1}{n} \right)^{n-1}.
+\]
+To show this, we check that the function $f(x) = (1 - 1/x)^{x-1}$
+is strictly decreasing for $x>1$; while this can be achieved using the weighted arithmetic-geometric mean
+inequality, we give a simple calculus proof instead. The derivative of $\log f(x)$ is
+$\log (1-1/x) + 1/x$, so it is enough to check that this is negative for $x>1$.
+An equivalent statement is that $\log (1-x) + x < 0$ for $0 < x < 1$;
+this in turn holds because the function $g(x) = \log(1-x) + x$ tends to 0 as $x \to 0^+$
+and has derivative $1 - \frac{1}{1-x} < 0$ for $0 < x < 1$.
+
+\item[B--3]
+The answer is $\{a\,|\,a>2\}$. If $a>2$, then the function $f(x) =
+2a/(a-2)$ has the desired property; both perimeter and area of $R$
+in this case are $2a^2/(a-2)$. Now suppose that $a\leq 2$, and let
+$f(x)$ be a nonnegative continuous function on $[0,a]$. Let
+$P=(x_0,y_0)$ be a point on the graph of $f(x)$ with maximal
+$y$-coordinate; then the area of $R$ is at most $ay_0$ since it lies
+below the line $y=y_0$. On the other hand, the points $(0,0)$,
+$(a,0)$, and $P$ divide the boundary of $R$ into three sections. The
+length of the section between $(0,0)$ and $P$ is at least the
+distance between $(0,0)$ and $P$, which is at least $y_0$; the
+length of the section between $P$ and $(a,0)$ is similarly at least
+$y_0$; and the length of the section between $(0,0)$ and $(a,0)$ is
+$a$. Since $a\leq 2$, we have $2y_0 + a > ay_0$ and hence the
+perimeter of $R$ is strictly greater than the area of $R$.
+
+\item[B--4]
+\textbf{First solution:}
+Identify the $xy$-plane with the complex plane $\mathbb{C}$, so that
+$P_k$ is the real number $k$. If $z$ is sent to $z'$ by a
+counterclockwise rotation by $\theta$ about $P_k$, then $z'-k =
+e^{i\theta} (z-k)$; hence the rotation $R_k$ sends $z$ to $\zeta z +
+k (1-\zeta)$, where $\zeta = e^{2\pi i/n}$. It follows that $R_1$
+followed by $R_2$ sends $z$ to $\zeta(\zeta z +(1-\zeta)) + 2
+(1-\zeta) = \zeta^2 z + (1-\zeta)(\zeta + 2)$, and so forth; an easy
+induction shows that $R$ sends $z$ to
+\[
+\zeta^n z + (1-\zeta)(\zeta^{n-1} + 2 \zeta^{n-2} + \dots + (n-1)
+\zeta + n).
+\]
+Expanding the product $(1-\zeta)(\zeta^{n-1} + 2 \zeta^{n-2} + \dots
++ (n-1) \zeta + n)$ yields $-\zeta^n - \zeta^{n-1} - \dots - \zeta +
+n = n$. Thus $R$ sends $z$ to $z+n$; in cartesian coordinates,
+$R(x,y) = (x+n,y)$.
+
+\textbf{Second solution:}
+(by Andy Lutomirski, via Ravi Vakil)
+Imagine a regular $n$-gon of side length 1 placed with its top edge
+on the $x$-axis and the left endpoint of that edge
+at the origin. Then the rotations
+correspond to rolling this $n$-gon along the $x$-axis; after the
+$n$ rotations, it clearly ends up in its original rotation and translated
+$n$ units to the right. Hence the whole plane must do so as well.
+
+\textbf{Third solution:} (attribution unknown)
+Viewing each $R_k$ as a function of a complex number $z$ as in the
+first solution, the function $R_n \circ R_{n-1} \circ \cdots \circ
+R_1(z)$ is linear in $z$ with slope $\zeta^n = 1$. It thus equals
+$z + T$ for some $T \in \CC$. Since $f_1(1) = 1$, we can write
+$1+T = R_n \circ \cdots \circ R_2(1)$. However, we also have
+\[
+R_n \circ \cdots \circ R_2(1) = R_{n-1} \circ R_1(0) + 1
+\]
+by the symmetry in how the $R_i$ are defined. Hence
+\[
+R_n(1+T) = R_n \circ R_1(0) + R_n(1) = T + R_n(1);
+\]
+that is, $R_n(T) = T$. Hence $T = n$, as desired.
+
+\item[B--5]
+\textbf{First solution:}
+By taking logarithms, we see that the desired limit is $\exp(L)$,
+where $L = \lim_{x\to 1^-} \sum_{n=0}^{\infty} x^n \left(
+\ln(1+x^{n+1}) - \ln(1+x^n) \right)$. Now
+\begin{align*}
+&\sum_{n=0}^N x^n \left( \ln(1+x^{n+1}) - \ln(1+x^n) \right) \\
+& = 1/x
+\sum_{n=0}^N x^{n+1} \ln(1+x^{n+1}) - \sum_{n=0}^N x^n\ln(1+x^n) \\
+&=
+x^N \ln(1+x^{N+1}) - \ln 2 + (1/x-1) \sum_{n=1}^N x^n\ln(1+x^n);
+\end{align*}
+since $\lim_{N\to\infty} (x^N\ln(1+x^{N+1})) = 0$ for $0<x<1$, we
+conclude that $L = - \ln 2 + \lim_{x\to 1^-} f(x)$, where
+\begin{align*}
+f(x) &= (1/x-1) \sum_{n=1}^{\infty} x^n\ln(1+x^n) \\
+&= (1/x-1)
+\sum_{n=1}^\infty \sum_{m=1}^\infty (-1)^{m+1} x^{n+mn}/m.
+\end{align*}
+This final double sum converges absolutely when $0<x<1$, since
+\begin{align*}
+\sum_{n=1}^\infty \sum_{m=1}^\infty x^{n+mn}/m &= \sum_{n=1}^\infty
+x^n (-\ln(1-x^n)) \\
+&< \sum_{n=1}^\infty x^n (-\ln(1-x)),
+\end{align*}
+which converges. (Note that $-\ln(1-x)$ and $-\ln(1-x^n)$ are
+positive.) Hence we may interchange the summations in $f(x)$ to
+obtain
+\begin{align*}
+f(x) &= (1/x-1) \sum_{m=1}^\infty \sum_{n=1}^\infty \frac{(-1)^{m+1}
+x^{(m+1)n}}{m} \\
+&= (1/x-1) \sum_{m=1}^\infty \frac{(-1)^{m+1}}
+{m}\left(\frac{x^m(1-x)}{1-x^{m+1}}\right).
+\end{align*}
+This last sum converges absolutely uniformly in $x$, so it is legitimate
+to take limits term by term.
+Since $\lim_{x\to 1^-} \frac{x^m{1-x}}{1-x^{m+1}} = \frac{1}{m+1}$
+for fixed $m$, we have
+\begin{align*}
+\lim_{x\to 1^-} f(x) &= \sum_{m=1}^\infty \frac{(-1)^{m+1}}{m(m+1)} \\
+&= \sum_{m=1}^\infty (-1)^{m+1}\left( \frac{1}{m}-\frac{1}{m+1} \right) \\
+&= 2 \left( \sum_{m=1}^\infty \frac{(-1)^{m+1}}{m} \right) - 1 \\ &= 2
+\ln 2 - 1,
+\end{align*}
+and hence $L = \ln 2 - 1$ and the desired limit is $2/e$.
+
+\textbf{Remark:} Note that the last series is not absolutely convergent,
+so the recombination must be done without rearranging terms.
+
+\textbf{Second solution:}
+(by Greg Price, via Tony Zhang and Anders Kaseorg)
+Put $t_n(x) = \ln(1 + x^n)$;
+we can then write $x^n = \exp(t_n(x)) - 1$, and
+\[
+L = \lim_{x \to 1^-} \sum_{n=0}^\infty (t_n(x) - t_{n+1}(x))(1 - \exp(t_n(x))).
+\]
+The expression on the right is a Riemann sum approximating the
+integral $\int_0^{\ln 2} (1-e^t)\,dt$, over the subdivision of $[0,\ln(2))$
+given by the $t_n(x)$. As $x \to 1^-$, the maximum difference between
+consecutive $t_n(x)$ tends to 0, so the Riemann sum tends to the value
+of the integral. Hence $L = \int_0^{\ln 2}(1 - e^t)\,dt = \ln 2 - 1$, as
+desired.
+
+\def\calA{\mathcal{A}}
+\def\calB{\mathcal{B}}
+
+\item[B--6]
+\textbf{First solution:}
+(based on a solution of Dan Bernstein)
+Note that for any $b$, the condition that $b \notin \calB$ already
+forces $\limsup N(x)/x$ to be at most 1/2: pair off $2mb + n$ with
+$(2m+1)b+n$ for $n=1,\dots, b$, and note that at most one member of each
+pair may belong to $\calA$.
+The idea of the proof is to do something
+similar with pairs replaced by larger clumps, using long runs of
+excluded elements of $B$.
+
+Suppose we have positive integers
+$b_0 = 1, b_1, \dots, b_n$ with
+the following properties:
+\begin{enumerate}
+\item[(a)] For $i=1, \dots, n$,
+$c_i = b_i/(2b_{i-1})$ is an integer.
+\item[(b)] For $e_i \in \{-1,0,1\}$,
+$|e_1b_1 + \cdots + e_n b_n| \notin \calB$.
+\end{enumerate}
+Each nonnegative integer $a$ has a unique ``base expansion''
+\[
+a = a_0 b_0 + \cdots + a_{n-1} b_{n-1} + m b_n \qquad (0 \leq a_i < 2c_i);
+\]
+if two integers have expansions with the same value of $m$, and values
+of $a_i$ differing by at most 1 for $i=0, \dots, n-1$, then their
+difference is not in $\calB$, so at most one of them lies in $\calA$.
+In particular,
+for any $d_i \in \{0, \dots, c_i - 1\}$, any $m_0 \in \{0, 2c_0 - 1\}$
+and any $m_n$, the set
+\begin{multline*}
+\{m_0 b_0 + (2d_1 +e_1)b_0 + \cdots \\
++ (2d_{n-1} + e_{n-1})b_{n-1} + (2m_n + e_n)b_n\},
+\end{multline*}
+where each $e_i$ runs over $\{0,1\}$,
+contains at most one element of $\calA$; consequently,
+$\limsup N(x)/x \leq 1/2^{n}$.
+
+We now produce such $b_i$ recursively, starting with $b_0 = 1$ (and both
+(a) and (b) holding vacuously).  Given $b_0, \dots, b_n$ satisfying (a)
+and (b), note that $b_0 + \cdots + b_{n-1} < b_n$ by induction on $n$.
+By the hypotheses of the problem, we can find a set $S_n$ of $6b_n$
+consecutive integers, none of which belongs to $\calB$. Let $b_{n+1}$
+be the second-smallest multiple of $2b_n$ in $S_n$; then $b_{n+1} + x \in
+S_n$ for $-2b_n \leq x \leq 0$ clearly, and also for $0 \leq x \leq 2b_n$
+because there are most $4b_n-1$ elements of $S_n$ preceding $b_{n+1}$.
+In particular, the analogue of (b) with $n$ replaced by $n+1$ holds for
+$e_{n+1} \neq 0$; of course it holds for $e_{n+1} = 0$ because (b) was
+already known. Since the analogue of (a) holds by construction, we have
+completed this step of the construction and the recursion may continue.
+
+Since we can construct $b_0, \dots, b_n$ satisfying (a) and (b) for any $n$,
+we have $\limsup N(x)/x \leq 1/2^n$ for any $n$, yielding $\lim N(x)/x =
+0$ as desired.
+
+\textbf{Second solution:} (by Paul Pollack)
+Let $S$ be the set of possible values of $\limsup N(x)/x$;
+since $S \subseteq [0,1]$ is bounded, it has a least upper bound $L$.
+Suppose by way of contradiction that $L>0$;
+we can then choose $\calA, \calB$ satisfying the conditions of the problem such
+that $\limsup N(x)/x > 3L/4$.
+
+To begin with, we can
+certainly find some positive integer $m \notin \calB$, so that
+$\calA$ is disjoint from $\calA + m = \{a +m: a \in \calA\}$.
+Put $\calA' = \calA \cup (\calA + m)$ and let
+$N'(x)$ be the size of $\calA' \cap \{1, \dots, x\}$; then
+$\limsup N'(x)/x = 3L/2 > L$, so $\calA'$ cannot obey the conditions
+of the problem statement. That is, if we let $\calB'$ be the set of positive
+integers that occur as differences between elements of $\calA'$,
+then there exists an integer $n$ such that among any $n$ consecutive
+integers, at least one lies in $\calB'$.
+But
+\[
+\calB' \subseteq \{b + em: b \in \calB, e \in \{-1,0,1\}\},
+\]
+so among any $n+2m$ consecutive integers, at least one lies in $\calB$.
+This contradicts the condition of the problem statement.
+
+We conclude that it is impossible to have $L>0$, so $L = 0$
+and $\lim N(x)/x = 0$ as desired.
+
+\textbf{Remark:} A hybrid between these two arguments is to
+note that if we can produce $c_1, \dots, c_n$ such that
+$|c_i - c_j| \notin \calB$ for $i,j = 1, \dots, n$, then
+the translates $\calA + c_1, \dots, \calA + c_n$ are disjoint
+and so $\limsup N(x)/x \leq 1/n$. Given $c_1 \leq \dots \leq c_n$
+as above, we can then choose $c_{n+1}$ to be the largest element of a
+run of $c_n+1$ consecutive integers, none of which lie in $\calB$.
+
+\end{itemize}
+
+
+\end{document}
+
+
+

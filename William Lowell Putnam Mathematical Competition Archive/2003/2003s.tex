@@ -1,0 +1,909 @@
+\documentclass[amssymb,twocolumn,pra,10pt,aps]{revtex4-1}
+\usepackage{mathptmx,amsmath}
+
+\newcommand{\RR}{\mathbb{R}}
+\newcommand{\CC}{\mathbb{C}}
+\DeclareMathOperator{\lcm}{lcm}
+\DeclareMathOperator{\sgn}{sgn}
+
+\begin{document}
+\title{Solutions to the 64th William Lowell Putnam Mathematical Competition \\
+    Saturday, December 6, 2003}
+\author{Manjul Bhargava, Kiran Kedlaya, and Lenny Ng}
+\noaffiliation
+\maketitle
+
+\begin{itemize}
+
+\item[A1]
+There are $n$ such sums. More precisely, there is exactly one such sum
+with $k$ terms for each of $k=1, \dots, n$ (and clearly no others).
+To see this, note that if $n = a_1 + a_2 + \cdots + a_k$ with
+$a_1 \leq a_2 \leq \cdots \leq a_k \leq a_1 + 1$, then
+\begin{align*}
+ka_1 &= a_1 + a_1 + \cdots + a_1 \\
+&\leq n \leq a_1 + (a_1 + 1) + \cdots + (a_1 + 1) \\
+&= ka_1 + k-1.
+\end{align*}
+However, there is a unique integer $a_1$ satisfying these inequalities,
+namely $a_1 = \lfloor n/k \rfloor$. Moreover, once $a_1$ is fixed,
+there are $k$ different possibilities for the sum $a_1 + a_2 + \cdots + a_k$:
+if $i$ is the last integer such that $a_i = a_1$, then the sum equals
+$ka_1 + (i-1)$. The possible values of $i$ are $1, \dots, k$,
+and exactly one of these sums comes out equal to $n$, proving
+our claim.
+
+\textbf{Note:}
+In summary, there is a unique partition of $n$ with $k$ terms that is
+``as equally spaced as possible''.
+One can also obtain essentially the same construction inductively: except
+for the all-ones sum, each partition of $n$ is obtained by ``augmenting''
+a unique partition of $n-1$.
+
+\item[A2]
+\textbf{First solution:}
+Assume without loss of generality that $a_i + b_i > 0$
+for each $i$ (otherwise both sides of the desired inequality are zero).
+Then the AM-GM inequality gives
+\begin{multline*}
+\left( \frac{a_1\cdots a_n}{(a_1+b_1)\cdots(a_n+b_n)} \right)^{1/n} \\
+\leq \frac{1}{n} \left( \frac{a_1}{a_1 + b_1} + \cdots + \frac{a_n}{a_n+b_n}
+\right),
+\end{multline*}
+and likewise with the roles of $a$ and $b$ reversed. Adding these two
+inequalities and clearing denominators yields the desired result.
+
+\textbf{Second solution:}
+Write the desired inequality in the form
+\[
+(a_1 + b_1)\cdots(a_n+b_n) \geq
+[(a_1\cdots a_n)^{1/n} + (b_1\cdots b_n)^{1/n}]^n,
+\]
+expand both sides, and compare the terms on both sides
+in which $k$ of the terms are among the $a_i$. On the left,
+one has the product of each $k$-element subset of $\{1, \dots, n\}$;
+on the right, one has
+\[
+\binom{n}{k} (a_1\cdots a_n)^{k/n} \cdots (b_1 \dots b_n)^{(n-k)/n},
+\]
+which is precisely $\binom{n}{k}$ times the geometric mean of the terms
+on the left.  Thus AM-GM shows that the terms under consideration on the
+left exceed those on the right; adding these inequalities over all $k$
+yields the desired result.
+
+\textbf{Third solution:}
+Since both sides are continuous in each $a_i$, it is sufficient to
+prove the claim with $a_1, \dots, a_n$ all positive (the general case
+follows by taking limits as some of the $a_i$ tend to zero).
+Put $r_i = b_i/a_i$; then the given inequality is equivalent to
+\[
+(1 + r_1)^{1/n} \cdots (1+r_n)^{1/n} \geq 1 + (r_1\cdots r_n)^{1/n}.
+\]
+In terms of the function
+\[
+f(x) = \log(1 + e^x)
+\]
+and the quantities $s_i = \log r_i$,
+we can rewrite the desired inequality as
+\[
+\frac{1}{n}(f(s_1) + \cdots + f(s_n)) \geq f\left( \frac{s_1 + \cdots +
+s_n}{n} \right).
+\]
+This will follow from Jensen's inequality if we can verify that $f$
+is a convex function; it is enough to check that $f''(x) > 0$ for all $x$.
+In fact,
+\[
+f'(x) = \frac{e^x}{1+e^x} = 1 - \frac{1}{1+e^x}
+\]
+is an increasing function of $x$, so $f''(x) > 0$ and Jensen's inequality
+thus yields the desired result. (As long as the $a_i$ are all positive,
+equality holds when $s_1 = \cdots = s_n$, i.e., when the vectors
+$(a_1, \dots, a_n)$ and $(b_1, \dots, b_n)$. Of course other equality
+cases crop up if some of the $a_i$ vanish, i.e., if $a_1=b_1=0$.)
+
+\textbf{Fourth solution:}
+We apply induction on $n$, the case $n=1$ being evident.
+First we verify the auxiliary inequality
+\[
+(a^n + b^n)(c^n + d^n)^{n-1} \geq (ac^{n-1} + b d^{n-1})^n
+\]
+for $a,b,c,d \geq 0$.
+The left side can be written as
+\begin{align*}
+a^n c^{n(n-1)} &+ b^n d^{n(n-1)} \\
+&+ \sum_{i=1}^{n-1} \binom{n-1}{i} b^n c^{ni} d^{n(n-1-i)} \\
+&+ \sum_{i=1}^{n-1} \binom{n-1}{i-1} a^n c^{n(i-1)} d^{n(n-i)}.
+\end{align*}
+Applying the weighted AM-GM inequality between matching terms in the two
+sums yields
+\begin{multline*}
+(a^n + b^n)(c^n + d^n)^{n-1} \geq a^n c^{n(n-1)} + b^n d^{n(n-1)} \\
++ \sum_{i=1}^{n-1} \binom{n}{i} a^i b^{n-i} c^{(n-1)i} d^{(n-1)(n-i)},
+\end{multline*}
+proving the auxiliary inequality.
+
+Now given the auxiliary inequality and the $n-1$ case of the desired
+inequality, we apply the auxiliary inequality with $a = a_1^{1/n}$,
+$b = b_1^{1/n}$, $c = (a_2 \cdots a_n)^{1/n(n-1)}$,
+$d = (b_2 \dots b_n)^{1/n(n-1)}$. The right side will be the $n$-th
+power of the desired inequality. The left side comes out to
+\[
+(a_1 + b_1)((a_2 \cdots a_n)^{1/(n-1)} + (b_2 \cdots b_n)^{1/(n-1)})^{n-1},
+\]
+and by the induction hypothesis, the second factor is less than
+$(a_2 + b_2)\cdots(a_n+b_n)$. This yields the desired result.
+
+\textbf{Note:}
+Equality holds if and only if $a_i=b_i=0$ for some $i$ or if the vectors
+$(a_1, \dots, a_n)$ and $(b_1, \dots, b_n)$ are proportional.
+As pointed out by Naoki Sato, the problem also appeared on the 1992
+Irish Mathematical Olympiad.
+It is also a special case of a classical inequality,
+known as H\"older's inequality, which generalizes the
+Cauchy-Schwarz inequality (this is visible from the $n=2$ case); the
+first solution above is adapted from the standard proof of H\"older's
+inequality.
+We don't know whether the declaration
+``Apply H\"older's inequality'' by itself is considered
+an acceptable solution to this problem.
+
+\item[A3]
+\textbf{First solution:}
+Write
+\begin{align*}
+f(x) &= \sin x + \cos x + \tan x + \cot x + \sec x + \csc x \\
+&= \sin x + \cos x + \frac{1}{\sin x \cos x} + \frac{\sin x + \cos x}{\sin x
+\cos x}.
+\end{align*}
+We can write $\sin x + \cos x = \sqrt{2} \cos(\pi/4 - x)$; this suggests
+making the substitution $y = \pi/4 - x$. In this new coordinate,
+\[
+\sin x \cos x = \frac{1}{2} \sin 2x = \frac{1}{2} \cos 2y,
+\]
+and writing $c = \sqrt{2} \cos y$, we have
+\begin{align*}
+f(y) &= (1 + c)\left(1 + \frac{2}{c^2 -1} \right) - 1 \\
+&= c + \frac{2}{c - 1}.
+\end{align*}
+We must analyze this function of $c$ in the range $[-\sqrt{2}, \sqrt{2}]$.
+Its value at $c=-\sqrt{2}$ is $2 - 3\sqrt{2} < -2.24$, and at
+$c = \sqrt{2}$ is $2 + 3\sqrt{2}>6.24$.
+Its derivative is $1 - 2/(c-1)^2$, which vanishes when
+$(c-1)^2 = 2$, i.e., where $c = 1 \pm \sqrt{2}$. Only the value
+$c = 1 - \sqrt{2}$ is in bounds, at which
+the value of $f$ is $1-2\sqrt{2} > -1.83$. As for the pole at $c=1$,
+we observe that $f$ decreases as $c$ approaches from below
+(so takes negative values for all $c<1$) and increases as $c$
+approaches from above (so takes positive values for all $c>1$); from
+the data collected so far, we see that $f$ has no sign crossings, so
+the minimum of $|f|$ is achieved at a critical point of $f$.
+We conclude that the minimum of $|f|$ is $2 \sqrt{2} - 1$.
+
+Alternate derivation (due to Zuming Feng): We can also minimize $|c + 2/(c-1)|$
+without calculus (or worrying about boundary conditions). For $c>1$, we have
+\[
+1 + (c-1) + \frac{2}{c-1} \geq 1 + 2 \sqrt{2}
+\]
+by AM-GM on the last two terms, with equality for $c-1 = \sqrt{2}$
+(which is out of range).
+For $c<1$, we similarly have
+\[
+-1 + 1-c + \frac{2}{1-c} \geq -1 + 2\sqrt{2},
+\]
+here with equality for $1-c = \sqrt{2}$.
+
+\textbf{Second solution:}
+Write
+\[
+f(a,b) = a+b + \frac{1}{ab} + \frac{a+b}{ab}.
+\]
+Then the problem is to minimize $|f(a,b)|$ subject to the constraint
+$a^2+b^2-1 = 0$. Since the constraint region has no boundary, it is
+enough to check the value at each critical point and each potential
+discontinuity (i.e., where $ab=0$) and select the smallest value
+(after checking that $f$ has no sign crossings).
+
+We locate the critical points using the Lagrange multiplier condition:
+the gradient of $f$ should be parallel to that of the constraint, which is
+to say, to the vector $(a,b)$. Since
+\[
+\frac{\partial f}{\partial a}
+= 1 - \frac{1}{a^2 b} - \frac{1}{a^2}
+\]
+and similarly for $b$, the proportionality yields
+\[
+a^2 b^3 - a^3 b^2 + a^3 - b^3 + a^2 - b^2 = 0.
+\]
+The irreducible factors of the left side are $1+a$, $1+b$,
+$a-b$, and $ab-a-b$. So we must check what happens when any of
+those factors, or $a$ or $b$, vanishes.
+
+If $1+a = 0$, then $b=0$, and the singularity of $f$ becomes removable
+when restricted to the circle. Namely, we have
+\[
+f = a + b + \frac{1}{a} + \frac{b+1}{ab}
+\]
+and $a^2+b^2-1 = 0$ implies $(1+b)/a = a/(1-b)$. Thus we have
+$f = -2$; the same occurs when $1+b=0$.
+
+If $a-b=0$, then $a=b=\pm \sqrt{2}/2$ and either
+$f = 2 + 3 \sqrt{2} > 6.24$, or $f = 2 - 3 \sqrt{2} < -2.24$.
+
+If $a=0$, then either $b = -1$ as discussed above, or $b=1$. In the
+latter case, $f$ blows up as one approaches this point, so there cannot
+be a global minimum there.
+
+Finally, if $ab-a-b = 0$, then
+\[
+a^2b^2 = (a + b)^2 = 2ab + 1
+\]
+and so $ab = 1 \pm \sqrt{2}$. The plus sign is impossible since
+$|ab| \leq 1$, so $ab = 1 - \sqrt{2}$ and
+\begin{align*}
+f(a,b) &= ab + \frac{1}{ab} + 1 \\
+&= 1 - 2 \sqrt{2} > -1.83.
+\end{align*}
+This yields the smallest value of $|f|$ in the list (and indeed no sign
+crossings are possible), so $2\sqrt{2}-1$ is the desired minimum of $|f|$.
+
+\textbf{Note:} Instead of using the geometry of the graph of $f$ to rule
+out sign crossings, one can verify explicitly that $f$ cannot
+take the value 0. In the first solution, note that $c + 2/(c-1)=0$
+implies $c^2 - c + 2 = 0$, which has no real roots.
+In the second solution, we would have
+\[
+a^2 b + ab^2 + a + b =  -1.
+\]
+Squaring both sides and simplifying yields
+\[
+2a^3b^3 + 5a^2b^2 + 4ab = 0,
+\]
+whose only real root is $ab=0$. But the cases with $ab=0$ do not yield
+$f=0$, as verified above.
+
+\item[A4]
+We split into three cases.
+Note first that $|A| \geq |a|$, by applying the condition for large $x$.
+
+\textbf{Case 1: $B^2 - 4AC > 0$.}
+In this case $Ax^2 + Bx + C$ has two distinct real roots $r_1$ and $r_2$.
+The condition implies that $ax^2 + bx + c$ also vanishes at $r_1$ and $r_2$,
+so $b^2 - 4ac > 0$.
+Now
+\begin{align*}
+B^2 - 4AC &= A^2(r_1-r_2)^2 \\
+&\geq a^2(r_1 - r_2)^2 \\
+&= b^2 - 4ac.
+\end{align*}
+
+\textbf{Case 2: $B^2 - 4AC \leq 0$ and $b^2 - 4ac \leq 0$.}
+Assume without loss of generality that $A \geq a > 0$, and that $B=0$
+(by shifting $x$). Then $Ax^2 + Bx + C \geq ax^2 + bx + c \geq 0$ for all $x$;
+in particular, $C \geq c \geq 0$. Thus
+\begin{align*}
+4AC - B^2 &= 4AC \\
+&\geq 4ac \\
+&\geq 4ac - b^2.
+\end{align*}
+Alternate derivation (due to Robin Chapman): the ellipse
+$Ax^2 + Bxy + Cy^2 = 1$ is contained within
+the ellipse $ax^2 + bxy + cy^2 = 1$,
+and their respective enclosed areas are $\pi/(4AC-B^2)$ and
+$\pi/(4ac-b^2)$.
+
+\textbf{Case 3: $B^2 - 4AC \leq 0$ and $b^2 - 4ac > 0$.}
+Since $Ax^2 + Bx + C$ has a graph not crossing the $x$-axis,
+so do $(Ax^2 + Bx + C) \pm (ax^2 + bx + c)$. Thus
+\begin{gather*}
+(B-b)^2 - 4(A-a)(C-c) \leq 0, \\
+(B+b)^2 - 4(A+a)(C+c) \leq 0
+\end{gather*}
+and adding these together yields
+\[
+2(B^2 - 4AC) + 2(b^2 - 4ac) \leq 0.
+\]
+Hence $b^2 - 4ac \leq 4AC - B^2$, as desired.
+
+\item[A5]
+\textbf{First solution:}
+We represent a Dyck $n$-path by a sequence $a_1\cdots a_{2n}$, where
+each $a_i$ is either $(1,1)$ or $(1,-1)$.
+
+Given an $(n-1)$-path $P=a_1\cdots a_{2n-2}$, we distinguish two cases.
+If $P$ has no returns of even-length, then let $f(P)$ denote the $n$-path
+$(1,1)(1,-1)P$.  Otherwise, let $a_ia_{i+1}\cdots a_{j}$ denote the
+rightmost even-length return in $P$, and let $f(P)=(1,1)a_1a_2\cdots
+a_j(1,-1)a_{j+1}\cdots a_{2n-2}$.  Then $f$ clearly maps the set of Dyck
+$(n-1)$-paths to the set of Dyck $n$-paths having no even return.
+
+We claim that $f$ is bijective; to see this, we simply construct the
+inverse mapping.  Given an $n$-path $P$, let $R=a_ia_{i+1}...a_j$
+denote the leftmost return in $P$, and let $g(P)$ denote the
+path obtained by removing $a_1$ and $a_j$ from $P$.  Then evidently
+$f \circ g$ and $g \circ f$ are identity maps, proving the claim.
+
+\textbf{Second solution:} (by Dan Bernstein)
+Let $C_n$ be the number of Dyck paths of length $n$, let $O_n$ be the number
+of Dyck paths whose final return has odd length, and let $X_n$ be the number
+of Dyck paths with no return of even length.
+
+We first exhibit a recursion for $O_n$; note that $O_0 = 0$.
+Given a Dyck $n$-path
+whose final return has odd length, split it just after its next-to-last return.
+For some $k$ (possibly zero), this yields
+a Dyck $k$-path, an upstep, a Dyck $(n-k-1)$-path whose odd return
+has even length, and a downstep. Thus for $n \geq 1$,
+\[
+O_n = \sum_{k=0}^{n-1} C_k (C_{n-k-1} - O_{n-k-1}).
+\]
+
+We next exhibit a similar recursion for $X_n$; note that $X_0 = 1$.
+Given a Dyck $n$-path with no even return,
+splitting as above yields for some $k$
+a Dyck $k$-path with no even return,
+an upstep, a Dyck $(n-k-1)$-path whose final return has even length,
+then a downstep. Thus for $n \geq 1$,
+\[
+X_n = \sum_{k=0}^{n-1} X_k (C_{n-k-1} - O_{n-k-1}).
+\]
+
+To conclude, we verify that $X_n = C_{n-1}$ for $n \geq 1$,
+by induction on $n$. This is
+clear for $n=1$ since $X_1 = C_0 = 1$. Given $X_k = C_{k-1}$ for $k<n$, we have
+\begin{align*}
+X_n  &=
+\sum_{k=0}^{n-1} X_k (C_{n-k-1} - O_{n-k-1}) \\
+&= C_{n-1} - O_{n-1} + \sum_{k=1}^{n-1} C_{k-1} (C_{n-k-1} - O_{n-k-1}) \\
+&= C_{n-1} - O_{n-1} + O_{n-1} \\
+&= C_{n-1},
+\end{align*}
+as desired.
+
+\textbf{Note:}
+Since the problem only asked about the \emph{existence} of a
+one-to-one correspondence, we believe that any proof, bijective or not,
+that the two sets
+have the same cardinality is an acceptable solution. (Indeed, it would be
+highly unusual to insist on using or not using a specific proof technique!)
+The second solution
+above can also be phrased in terms of generating functions.
+Also, the $C_n$ are well-known to equal the Catalan numbers
+$\frac{1}{n+1} \binom{2n}{n}$; the problem at hand is part of a famous
+exercise in Richard Stanley's \textit{Enumerative Combinatorics, Volume 1}
+giving 66 combinatorial interpretations of the Catalan numbers.
+
+\item[A6]
+\textbf{First solution:} Yes, such a partition is possible. To achieve it,
+place each integer into $A$ if it has an even number of 1s in its binary
+representation, and into $B$ if it has an odd number. (One discovers this
+by simply attempting to place the first few numbers by hand and noticing
+the resulting pattern.)
+
+To show that $r_A(n) = r_B(n)$, we exhibit a bijection between the pairs
+$(a_1, a_2)$ of distinct elements of $A$ with $a_1 + a_2 = n$ and the
+pairs $(b_1, b_2)$ of distinct elements of $B$ with $b_1 + b_2 = n$.
+Namely, given a pair $(a_1, a_2)$ with $a_1+a_2 = n$, write both numbers
+in binary and find the lowest-order place in which they differ (such a
+place exists because $a_1 \neq a_2$). Change both numbers in that place
+and call the resulting numbers $b_1, b_2$. Then $a_1 + a_2 = b_1 + b_2 =
+n$, but the parity of the number of 1s in $b_1$ is opposite that of $a_1$,
+and likewise between $b_2$ and $a_2$. This yields the desired bijection.
+
+\textbf{Second solution:} (by Micah Smukler)
+Write $b(n)$ for the number of 1s in the base 2 expansion of $n$,
+and $f(n) = (-1)^{b(n)}$.
+Then
+the desired partition can be described as $A = f^{-1}(1)$ and $B = f^{-1}(-1)$.
+Since $f(2n) + f(2n+1) = 0$, we have
+\[
+\sum_{i=0}^n f(n) = \begin{cases} 0 & \mbox{$n$ odd} \\
+f(n) & \mbox{$n$ even.} \end{cases}
+\]
+If $p,q$ are both in $A$, then $f(p) + f(q) = 2$;
+if $p,q$ are both in $B$, then $f(p) + f(q) = -2$; if $p,q$ are
+in different sets, then $f(p) + f(q) = 0$. In other words,
+\[
+2(r_A(n) - r_B(n)) = \sum_{p+q=n,p < q} (f(p) + f(q))
+\]
+and it suffices to show that the sum on the right is always zero.
+If $n$ is odd, that sum is visibly $\sum_{i=0}^n f(i) = 0$.
+If $n$ is even, the sum equals
+\[
+\left(\sum_{i=0}^n f(i) \right) - f(n/2) = f(n) - f(n/2) = 0.
+\]
+This yields the desired result.
+
+\textbf{Third solution:} (by Dan Bernstein)
+Put $f(x) = \sum_{n \in A} x^n$ and $g(x) = \sum_{n \in B} x^n$; then
+the value of $r_A(n)$ (resp.\ $r_B(n)$) is the coefficient of $x^n$
+in $f(x)^2 - f(x^2)$ (resp.\ $g(x)^2 - g(x^2)$). From the evident identities
+\begin{align*}
+\frac{1}{1-x} &= f(x) + g(x) \\
+f(x) &= f(x^2) + xg(x^2) \\
+g(x) &= g(x^2) + xf(x^2),
+\end{align*}
+we have
+\begin{align*}
+f(x) - g(x) &= f(x^2) - g(x^2) + xg(x^2) - xf(x^2) \\
+&= (1-x)(f(x^2) - g(x^2)) \\
+&= \frac{f(x^2) - g(x^2)}{f(x) + g(x)}.
+\end{align*}
+We deduce that $f(x)^2 - g(x)^2 = f(x^2) - g(x^2)$, yielding the desired
+equality.
+
+\textbf{Note:}
+This partition is actually unique, up to interchanging $A$ and $B$.
+More precisely, the condition that $0 \in A$ and $r_A(n) = r_B(n)$ for
+$n=1, \dots, m$ uniquely determines the positions of $0, \dots, m$. We
+see this by induction on $m$: given the result for $m-1$, switching the
+location of $m$ changes $r_A(m)$ by one and does not change $r_B(m)$, so
+it is not possible for both positions to work.  Robin Chapman points out
+this problem is solved in D.J. Newman's \textit{Analytic Number Theory}
+(Springer, 1998); in that solution, one uses generating functions to find
+the partition and establish its uniqueness, not just verify it.
+
+\item[B1]
+No, there do not.
+
+\textbf{First solution:}
+Suppose the contrary.  By setting $y=-1,0,1$ in succession, we see that
+the polynomials $1-x+x^2, 1, 1+x+x^2$ are linear combinations of $a(x)$
+and $b(x)$.  But these three polynomials are linearly independent, so
+cannot all be written as linear combinations of two other polynomials,
+contradiction.
+
+Alternate formulation: the given equation expresses a diagonal matrix with
+$1,1,1$ and zeroes on the diagonal, which has rank 3, as the sum of two
+matrices of rank 1. But the rank of a sum of matrices is at most the sum
+of the ranks of the individual matrices.
+
+\textbf{Second solution:}
+It is equivalent (by relabeling and rescaling)
+to show that $1 + xy + x^2y^2$ cannot be written
+as $a(x) d(y) - b(x) c(y)$.
+Write $a(x) = \sum a_i x^i$,
+$b(x) = \sum b_i x^i$, $c(y) = \sum c_j y^j$,
+$d(y) = \sum d_j y^j$. We now start comparing coefficients
+of $1 + xy + x^2 y^2$. By comparing coefficients of
+$1+xy + x^2y^2 $ and $a(x)d(y) - b(x)c(y)$, we get
+\begin{align*}
+1 &= a_id_i - b_i c_i \qquad (i=0,1,2)\\
+0 &= a_id_j - b_i c_j \qquad (i \neq j).
+\end{align*}
+The first equation says that $a_i$ and $b_i$ cannot both vanish,
+and $c_i$ and $d_i$ cannot both vanish. The second equation says that
+$a_i/b_i = c_j/d_j$ when $i \neq j$, where both sides should be viewed
+in $\RR \cup \{\infty\}$ (and neither is undetermined if
+$i,j \in \{0,1,2\}$). But then
+\[
+a_0/b_0 = c_1/d_1 = a_2/b_2 = c_0/d_0
+\]
+contradicting the equation $a_0d_0 - b_0c_0 = 1$.
+
+\textbf{Third solution:}
+We work over the complex numbers, in which we have a primitive cube root
+$\omega$ of 1. We also use without further comment unique factorization
+for polynomials in two variables over a field.  And we keep the relabeling
+of the second solution.
+
+Suppose the contrary.  Since $1+xy+x^2y^2 = (1 - xy/\omega)(1 -
+xy/\omega^2)$, the rational function $a(\omega/y) d(y) - b(\omega/y) c(y)$
+must vanish identically (that is, coefficient by coefficient).  If one of
+the polynomials, say $a$, vanished identically, then one of $b$ or $c$
+would also, and the desired inequality could not hold. So none of them
+vanish identically, and we can write
+\[
+\frac{c(y)}{d(y)} = \frac{a(\omega/y)}{b(\omega/y)}.
+\]
+Likewise,
+\[
+\frac{c(y)}{d(y)}= \frac{a(\omega^2/y)}{b(\omega^2/y)}.
+\]
+Put $f(x) = a(x)/b(x)$; then we have $f(\omega x) = f(x)$ identically. That is,
+$a(x) b(\omega x) = b(x) a(\omega x)$. Since $a$ and $b$ have no common
+factor (otherwise $1+xy+x^2y^2$ would have a factor divisible only by
+$x$, which it doesn't since it doesn't vanish identically for any particular
+$x$), $a(x)$ divides $a(\omega x)$. Since they have the same degree, they
+are equal up to scalars. It follows that one of $a(x), xa(x), x^2a(x)$
+is a polynomial in $x^3$ alone, and likewise for $b$ (with the same
+power of $x$).
+
+If $xa(x)$ and $xb(x)$, or $x^2 a(x)$ and $x^2 b(x)$, are polynomials in
+$x^3$, then $a$ and $b$ are divisible by $x$, but we know $a$ and $b$ have no
+common factor. Hence $a(x)$ and $b(x)$ are polynomials in $x^3$. Likewise,
+$c(y)$ and $d(y)$ are polynomials in $y^3$. But then $1 + xy + x^2 y^2 =
+a(x)d(y) - b(x) c(y)$ is a polynomial in $x^3$ and $y^3$, contradiction.
+
+\textbf{Note:}
+The third solution only works over fields of characteristic not equal to 3,
+whereas the other two work over arbitrary fields. (In the first solution,
+one must replace $-1$ by another value if working in characteristic 2.)
+
+\item[B2]
+It is easy to see by induction that the $j$-th entry of the $k$-th
+sequence (where the original sequence is $k=1$) is
+$\sum_{i=1}^k \binom{k-1}{i-1}/(2^{k-1} (i+j-1))$, and so
+$x_n = \frac{1}{2^{n-1}} \sum_{i=1}^n \binom{n-1}{i-1}/i$.
+Now $\binom{n-1}{i-1}/i = \binom{n}{i}/n$; hence
+\[
+x_n = \frac{1}{n2^{n-1}} \sum_{i=1}^n \binom{n}{i}
+= \frac{2^n-1}{n 2^{n-1}} < 2/n,
+\]
+as desired.
+
+
+\item[B3]
+\textbf{First solution:}
+It is enough to show that for each prime $p$, the exponent of $p$ in
+the prime factorization of both sides is the same.
+On the left side, it is well-known that the exponent of $p$ in the
+prime factorization of $n!$ is
+\[
+\sum_{i =1}^n \left\lfloor \frac{n}{p^i} \right\rfloor.
+\]
+(To see this, note that the $i$-th term counts the multiples of $p^i$ among
+$1, \dots, n$, so that a number divisible exactly by $p^i$ gets counted
+exactly $i$ times.)  This number can be reinterpreted as the cardinality
+of the set $S$ of points in the plane with positive integer coordinates
+lying on or under the curve $y = np^{-x}$: namely, each summand is the
+number of points of $S$ with $x=i$.
+
+On the right side, the exponent of $p$ in the prime factorization of $\lcm(1,
+\dots, \lfloor n/i \rfloor)$ is $\lfloor \log_p \lfloor n/i \rfloor \rfloor
+= \lfloor \log_p (n/i) \rfloor$.  However, this is precisely the number
+of points of $S$ with $y=i$. Thus
+\[
+\sum_{i=1}^n
+\lfloor \log_p \lfloor n/i \rfloor \rfloor
+= \sum_{i =1}^n \left\lfloor \frac{n}{p^i} \right\rfloor,
+\]
+and the desired result follows.
+
+\textbf{Second solution:}
+We prove the result by induction on $n$, the case $n=1$ being obvious.
+What we actually show is that going from $n-1$ to $n$ changes both
+sides by the same multiplicative factor, that is,
+\[
+n = \prod_{i=1}^{n-1} \frac{\lcm\{1, 2, \dots, \lfloor n/i \rfloor\}}{\lcm
+\{1, 2, \dots, \lfloor (n-1)/i \rfloor\}}.
+\]
+Note that the $i$-th term in the product is equal to 1 if $n/i$ is not
+an integer, i.e., if $n/i$ is not a divisor of $n$.
+It is also equal to 1 if $n/i$ is a divisor of $n$ but not a prime power,
+since any composite number divides the lcm of all smaller numbers.
+However, if $n/i$ is a power of $p$, then the $i$-th term is equal to $p$.
+
+Since $n/i$ runs over all proper divisors of $n$, the product on the right
+side includes one factor of the prime $p$
+for each factor of $p$ in the prime factorization of $n$. Thus the whole
+product is indeed equal to $n$, completing the induction.
+
+\item[B4]
+\textbf{First solution:}
+Put $g = r_1 + r_2$, $h = r_3 + r_4$, $u = r_1r_2$, $v = r_3r_4$.
+We are given that $g$ is rational. The following are also rational:
+\begin{align*}
+\frac{-b}{a} &= g+h \\
+\frac{c}{a} &= gh + u + v \\
+\frac{-d}{a} &= gv + hu
+\end{align*}
+From the first line, $h$ is rational. From the second line, $u+v$
+is rational. From the third line, $g(u+v) - (gv+hu) =
+(g-h)u$ is rational. Since $g \neq h$, $u$ is rational, as desired.
+
+\textbf{Second solution:} This solution uses some basic
+Galois theory. We may assume $r_1 \neq r_2$, since otherwise they are both
+rational and so then is $r_1r_2$.
+
+Let $\tau$ be an automorphism of the field of algebraic numbers; then $\tau$
+maps each $r_i$ to another one, and fixes the rational number $r_1 + r_2$.
+If $\tau(r_1)$ equals one of $r_1$ or $r_2$, then $\tau(r_2)$ must equal
+the other one, and vice versa.  Thus $\tau$ either fixes the set $\{r_1,
+r_2\}$ or moves it to $\{r_3, r_4\}$. But if the latter happened, we would
+have $r_1 +r_2 = r_3+r_4$, contrary to hypothesis.  Thus $\tau$ fixes the
+set $\{r_1, r_2\}$ and in particular the number $r_1r_2$. Since this is
+true for any $\tau$, $r_1r_2$ must be rational.
+
+\textbf{Note:} The conclusion fails if we allow
+$r_1 + r_2 = r_3 + r_4$. For
+instance, take the polynomial $x^4 - 2$ and label its roots so that
+$(x-r_1)(x-r_2) = x^2 - \sqrt{2}$ and
+$(x-r_3)(x-r_4) = x^2 + \sqrt{2}$.
+
+\item[B5]
+\textbf{First solution:}
+Place the unit circle on the complex plane so that $A,B,C$ correspond
+to the complex numbers $1,\omega,\omega^2$, where
+$\omega=e^{2\pi i/3}$, and let $P$ correspond to the complex number
+$x$. The distances $a,b,c$ are then $|x-1|,|x-\omega|,|x-\omega^2|$.
+Now the identity
+\[
+(x-1) + \omega(x-\omega) + \omega^2(x-\omega^2) = 0
+\]
+implies that there is a triangle whose sides, as vectors, correspond
+to the complex numbers $x-1, \omega(x-\omega), \omega^2(x-\omega^2)$;
+this triangle has sides of length $a,b,c$.
+
+To calculate the area of this triangle, we first note a more general
+formula. If a triangle in the plane has vertices at $0$,
+$v_1=s_1+it_1$, $v_2=s_2+it_2$, then it is well known that the area
+of the triangle is $|s_1t_2-s_2t_1|/2 = |v_1\overline{v_2}-
+v_2\overline{v_1}|/4$. In our case, we have $v_1 = x-1$
+and $v_2 = \omega(x-\omega)$; then
+\[
+v_1\overline{v_2} - v_2\overline{v_1}
+= (\omega^2-\omega)(x\overline{x}-1)
+= i\sqrt{3}(|x|^2-1).
+\]
+Hence the area of the triangle is $\sqrt{3}(1-|x|^2)/4$, which depends
+only on the distance $|x|$ from $P$ to $O$.
+
+\textbf{Second solution:} (by Florian Herzig)
+Let $A'$, $B'$, $C'$ be the points obtained by intersecting the lines
+$AP$, $BP$, $CP$ with the unit circle. Let $d$ denote $OP$. Then $A'P =
+(1-d^2)/a$, etc., by using the power of the point $P$. As triangles $A'B'P$
+and $BAP$ are similar, we get that $A'B' = AB \cdot A'P/b = \sqrt 3
+(1-d^2)/(ab)$. It follows that triangle $A'B'C'$ has sides proportional
+to $a$, $b$, $c$, by a factor of $\sqrt 3 (1-d^2)/(abc)$. In particular,
+there is a triangle with sides $a$, $b$, $c$, and it has circumradius $R =
+(abc)/(\sqrt 3 (1-d^2))$. Its area is $abc/(4R) = \sqrt 3 (1-d^2)/4$.
+
+\textbf{Third solution:} (by Samuel Li)
+Consider the rotation by the angle $\pi/3$ around $A$ carrying $B$ to $C$, and let $P_A$ be the image of $P$;
+define $P_B, P_C$ similarly.
+Let $A'$ be the intersection of the tangents to the circle at $B, C$; define $B', C'$, similarly.
+Put $\ell = AB = BC = CA$; we then have
+\begin{gather*}
+AB' = AC' = BC' = BA' = CA' = CB' = \ell \\
+PA = PP_A = P_A A = P_B C' = P_C A' = a \\
+PB = PP_B = P_B B = P_C A' = P_A C' = b \\
+PC = PP_C = P_C C = P_A B' = P_B A' = c.
+\end{gather*}
+
+The triangle $\triangle A'B'C'$ has area four times that of $\triangle ABC$.
+We may dissect it into twelve triangles by first splitting it into three quadrilaterals $PAC'B$, $PBC'A, PCA'B$, then splitting each of these in four around the respective interior points $P_B, P_C, P_A$. 
+Of the resulting twelve triangles, three have side lengths $a,b,c$, while three are equilateral triangles
+of respective sides lengths $a,b,c$. The other six are isomorphic to two copies each of
+$\triangle PAB, \triangle PBC, \triangle PCA$, so their total area is twice that of $\triangle ABC$.
+
+It thus suffices to compute $a^2 + b^2 + c^2$ in terms of the radius of the circle and the distance $OP$.
+This can be done readily in terms of
+$OP$ using vectors, Cartesian coordinates, or complex numbers as in the first solution.
+
+
+\item[B6]
+\textbf{First solution:} (composite of solutions by Feng Xie and David
+Pritchard)
+Let $\mu$ denote Lebesgue measure on $[0,1]$. Define
+\begin{align*}
+E_+ &= \{x \in [0,1]: f(x) \geq 0\} \\
+E_- &= \{x \in [0,1]: f(x) < 0\};
+\end{align*}
+then $E_+$, $E_-$ are measurable and $\mu(E_+) + \mu(E_-) = 1$.
+Write $\mu_+$ and $\mu_-$ for $\mu(E_+)$ and $\mu(E_-)$.
+Also define
+\begin{align*}
+I_+ &= \int_{E_+} |f(x)|\,dx \\
+I_- &= \int_{E_-} |f(x)|\,dx,
+\end{align*}
+so that $\int_0^1 |f(x)|\,dx = I_+ + I_-$.
+
+From the triangle inequality $|a+b| \geq \pm(|a| - |b|)$,
+we have the inequality
+\begin{align*}
+&\iint_{E_+ \times E_-} |f(x) + f(y)|\,dx\,dy \\
+&\geq
+\pm \iint_{E_+ \times E_-} (|f(x)| - |f(y)|)\,dx\,dy \\
+&= \pm ( \mu_- I_+ - \mu_+ I_-),
+\end{align*}
+and likewise with $+$ and $-$ switched. Adding these inequalities together
+and allowing all possible choices of the signs, we get
+\begin{align*}
+&\iint_{(E_+ \times E_-) \cup (E_- \times E_+)} |f(x) + f(y)|\,dx\,dy \\
+&\geq
+\max\left\{ 0, 2 (\mu_- I_+ - \mu_+ I_-), 2 (\mu_+ I_- - \mu_- I_+) \right\}.
+\end{align*}
+To this inequality, we add the equalities
+\begin{align*}
+\iint_{E_+ \times E_+} |f(x) + f(y)|\,dx\,dy &= 2 \mu_+ I_+ \\
+\iint_{E_- \times E_-} |f(x) + f(y)|\,dx\,dy &= 2 \mu_- I_- \\
+-\int_0^1 |f(x)|\,dx &= -(\mu_+ + \mu_-)(I_+ + I_-)
+\end{align*}
+to obtain
+\begin{multline*}
+\int_0^1 \int_0^1 |f(x)+f(y)|\,dx\,dy - \int_0^1 |f(x)|\,dx \\
+\geq \max\{ (\mu_+ - \mu_-)(I_+ + I_-)+ 2\mu_-(I_- - I_+), \\
+(\mu_+ - \mu_-)(I_+ - I_-), \\
+(\mu_- - \mu_+)(I_+ + I_-)+ 2\mu_+(I_+ - I_-) \}.
+\end{multline*}
+Now simply note that for each of the possible comparisons between
+$\mu_+$ and $\mu_-$, and between $I_+$ and $I_-$, one of the three
+terms above is manifestly nonnegative. This yields the desired result.
+
+\textbf{Second solution:}
+We will show at the end that it
+is enough to prove a discrete analogue: if $x_1, \dots, x_n$
+are real numbers, then
+\[
+\frac{1}{n^2} \sum_{i,j=1}^n |x_i + x_j| \geq \frac{1}{n}
+\sum_{i=1}^n |x_i|.
+\]
+In the meantime, we concentrate on this assertion.
+
+Let $f(x_1, \dots, x_n)$ denote the difference between the two sides.
+We induct
+on the number of nonzero values of $|x_i|$. We leave for later the base case,
+where there is at most one such value. Suppose instead for now that there
+are two or more. Let $s$ be the smallest, and suppose without loss of
+generality that $x_1 = \cdots = x_a = s$, $x_{a+1} = \cdots = x_{a+b} = -s$,
+and for $i > a+b$, either $x_i = 0$ or $|x_i| > s$. (One of $a,b$ might be
+zero.)
+
+Now consider
+\[
+f(\overbrace{t, \cdots,t}^{\mbox{$a$ terms}},\overbrace{-t,\cdots,-t}^{\mbox{$b$ terms}},x_{a+b+1},\cdots, x_n)
+\]
+as a function of $t$.
+It is piecewise linear near $s$; in fact, it is
+linear between 0 and
+the smallest nonzero value among $|x_{a+b+1}|, \dots, |x_n|$
+(which exists by hypothesis). Thus its minimum is achieved by one (or both)
+of those two endpoints. In other words, we can reduce the
+number of distinct nonzero absolute values among the $x_i$ without
+increasing $f$. This
+yields the induction, pending verification of the base case.
+
+As for the base case, suppose that $x_1 = \cdots = x_a = s > 0$,
+$x_{a+1} = \cdots = x_{a+b} = -s$, and $x_{a+b+1} = \cdots = x_n = 0$.
+(Here one or even both of $a,b$ could be zero, though the latter case
+is trivial.)
+Then
+\begin{multline*}
+f(x_1, \dots, x_n) = \frac{s}{n^2} (2a^2 + 2b^2 + (a+b)(n-a-b)) \\
+- \frac{s}{n} (a+b) = \frac{s}{n^2} (a^2 -2ab + b^2) \geq 0.
+\end{multline*}
+This proves the base case of the induction, completing the solution
+of the discrete analogue.
+
+To deduce the original statement from the discrete analogue,
+approximate both integrals
+by equally-spaced Riemann sums and take limits. This works because
+given a continuous function
+on a product of closed intervals,
+any sequence of Riemann sums with mesh size tending to zero
+converges to the integral. (The domain is compact, so
+the function is uniformly continuous. Hence for any $\epsilon > 0$
+there is a cutoff below
+which any mesh size forces the
+discrepancy between the Riemann sum and the integral to be less than
+$\epsilon$.)
+
+Alternate derivation (based on a solution by Dan Bernstein):
+from the discrete analogue, we have
+\[
+\sum_{1 \leq i<j\leq n} |f(x_i) + f(x_j)| \geq \frac{n-2}{2}
+\sum_{i=1}^n |f(x_i)|,
+\]
+for all $x_1, \dots, x_n \in [0,1]$. Integrating both sides as
+$(x_1, \dots, x_n)$ runs over
+$[0,1]^n$ yields
+\begin{align*}
+&\frac{n(n-1)}{2} \int_0^1 \int_0^1 |f(x)+f(y)|\,dy\,dx \\
+&\geq
+\frac{n(n-2)}{2} \int_0^1 |f(x)|\,dx,
+\end{align*}
+or
+\[
+\int_0^1 \int_0^1 |f(x)+f(y)|\,dy\,dx
+\geq
+\frac{n-2}{n-1} \int_0^1 |f(x)|\,dx.
+\]
+Taking the limit as $n \to \infty$ now yields the desired result.
+
+\textbf{Third solution:} (by David Savitt)
+We give an argument which yields the following improved result.  Let
+$\mu_p$ and $\mu_n$ be the measure of the sets $\{ x \ : \ f(x) > 0\}$ and
+$\{ x \ : \ f(x) < 0\}$ respectively, and let $\mu \le 1/2$ be
+$\min(\mu_p,\mu_n)$.  Then
+\begin{align*}
+& \int_{0}^{1} \int_{0}^{1} |f(x) + f(y)|\,dx\,dy \\
+&\ge (1 + (1-2\mu)^2)
+\int_{0}^{1} |f(x)|\,dx.
+\end{align*}
+Note that the constant can be seen to be best possible by considering a
+sequence of functions tending towards the step function which is $1$ on
+$[0,\mu]$ and $-1$ on $(\mu,1]$.
+
+Suppose without loss of generality that $\mu = \mu_p$.  As in the second
+solution, it suffices to prove a
+strengthened discrete analogue, namely
+\[
+\frac{1}{n^2} \sum_{i,j} |a_i + a_j| \ge
+    \left(1 + \left(1 - \frac{2p}{n}\right)^2\right)\left(\frac{1}{n}
+    \sum_{i=1}^{n} |a_i| \right),
+\]
+where $p \le n/2$ is the number of $a_1,\ldots,a_n$ which are positive.
+(We need only make sure to choose meshes so that $p/n \to \mu$ as
+$n \to \infty$.)
+An equivalent inequality is
+\[
+\sum_{1 \le i < j \le n} | a_i + a_j | \ge \left(n - 1 - 2p +
+    \frac{2p^2}{n}\right) \sum_{i=1}^{n} | a_i |.
+\]
+
+Write $r_i = |a_i|$, and assume without loss of generality that $r_i \ge
+r_{i+1}$ for each $i$. Then for $i<j$,
+$|a_i + a_j| = r_i + r_j$ if $a_i$ and $a_j$
+have the same sign, and is $r_i - r_j$ if they have opposite signs. The
+left-hand side is therefore equal to
+\[
+\sum_{i = 1}^n (n - i) r_i + \sum_{j = 1}^n r_j C_j,
+\]
+where
+\begin{multline*}
+C_j = \#\{ i < j \ : \sgn(a_i) = \sgn(a_j)\} \\
+- \#\{ i < j : \sgn(a_i) \neq \sgn(a_j)\}.
+\end{multline*}
+
+Consider the partial sum $P_k = \sum_{j = 1}^{k} C_j$.  If exactly $p_k$ of
+$a_1,\ldots,a_k$ are positive, then this sum is equal to
+\[
+\binom{p_k}{2} + \binom{k-p_k}{2} - \left[ \binom {k}{2} -
+\binom{p_k}{2} - \binom{k-p_k}{2} \right],
+\]
+which expands and simplifies to
+\[
+-2 p_k (k-p_k) + \binom{k}{2} \,.
+\]
+For $k \le 2p$ even, this partial sum would be minimized with $p_k = \frac{k}{2}$,
+and would then equal $-\frac{k}{2}$; for $k < 2p$ odd, this partial sum would
+be minimized with $p_k = \frac{k \pm 1}{2}$, and would then equal
+$-\frac{k-1}{2}$.  Either way, $P_k \ge - \lfloor \frac{k}{2} \rfloor$.  On the other
+hand, if $k > 2p$, then
+\[
+-2 p_k (k-p_k) + \binom{k}{2} \ge -2 p(k-p) + \binom{k}{2}
+\]
+since $p_k$ is at most $p$. Define $Q_k$ to
+be $- \lfloor \frac{k}{2} \rfloor$ if $k \le
+2p$ and $-2 p(k-p) + \binom{k}{2}$ if $k \ge 2p$, so that $P_k \ge Q_k$.  Note
+that $Q_1=0$.
+
+Partial summation gives
+\begin{align*}
+\sum_{j = 1}^n r_j C_j & =  r_n P_n + \sum_{j=2}^{n} (r_{j-1} - r_j)
+P_{j-1} \\
+& \ge r_n Q_n + \sum_{j=2}^{n} (r_{j-1} - r_j) Q_{j-1} \\
+& =  \sum_{j=2}^{n} r_j (Q_j - Q_{j-1}) \\
+& =  - r_2 - r_4 - \cdots - r_{2p} + \sum_{j = 2p+1}^{n} (j-1-2p) r_j.
+\end{align*}
+It follows that
+\begin{align*}
+\sum_{1 \le i < j \le n} | a_i + a_j | 
+    &= \sum_{i = 1}^n (n - i) r_i + \sum_{j = 1}^n r_j C_j \\
+& \ge \sum_{i = 1}^{2p} (n - i - [ i \ \text{even}]) r_i \\
+&\quad + \sum_{i = 2p+1}^{n} (n - 1 - 2p) r_i \\
+&  = (n-1-2p) \sum_{i=1}^{n} r_i \\
+&\quad + \sum_{i=1}^{2p} (2p + 1 - i - [i \ \text{even}]) r_i \\
+&  \ge  (n-1-2p) \sum_{i=1}^{n} r_i + p \sum_{i=1}^{2p} r_i \\
+&  \ge  (n-1-2p) \sum_{i=1}^{n} r_i + p\frac{2p}{n} \sum_{i=1}^{n} r_i\,,
+\end{align*}
+as desired.  The next-to-last and last inequalities each follow from the
+monotonicity of the $r_i$'s, the former by pairing the $i^{\textrm{th}}$
+term with the $(2p+1-i)^{\textrm{th}}$.
+
+\textbf{Note:}
+Compare the closely related Problem 6 from the 2000 USA Mathematical
+Olympiad: prove that
+for any nonnegative real numbers $a_1, \dots, a_n, b_1, \dots, b_n$,
+one has
+\[
+\sum_{i,j=1}^n \min\{a_i a_j,b_i b_j\} \leq
+\sum_{i,j=1}^n \min\{a_i b_j,a_j b_i\}.
+\]
+
+\end{itemize}
+
+\end{document}
+
+
+

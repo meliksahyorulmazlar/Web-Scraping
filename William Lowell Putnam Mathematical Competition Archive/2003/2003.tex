@@ -1,0 +1,123 @@
+\documentclass[amssymb,twocolumn,pra,10pt,aps]{revtex4-1}
+\usepackage{mathptmx,amsmath,tikz}
+
+\begin{document}
+\title{The 64th William Lowell Putnam Mathematical Competition \\
+    Saturday, December 6, 2003}
+\maketitle
+
+\begin{itemize}
+
+\item[A1]
+Let $n$ be a fixed positive integer. How many ways are there to write  $n$
+as a sum of positive integers,  
+\[
+n = a_1 + a_2 + \cdots + a_k,
+\]
+with  $k$  an
+arbitrary positive integer and  $a_1 \le a_2 \le \cdots \le a_k \le a_1  + 1$?
+For example, with $n=4$ there are four ways: 4, 2+2, 1+1+2, 1+1+1+1.
+
+\item[A2]
+Let $a_1, a_2, \dots, a_n$  and  $b_1, b_2, \dots, b_n$
+be nonnegative real numbers.
+Show that
+\begin{align*}
+& (a_1 a_2 \cdots a_n)^{1/n} + (b_1 b_2 \cdots b_n)^{1/n} \\
+&\leq [(a_1+b_1) (a_2+b_2) \cdots (a_n + b_n) ]^{1/n}.
+\end{align*}
+
+\item[A3]
+Find the minimum value of
+\[
+  | \sin x + \cos x + \tan x + \cot x + \sec x + \csc x |
+\]
+for real numbers  $x$.
+
+\item[A4]
+Suppose that $a,b,c,A,B,C$  are real numbers, $a\ne 0$ and $A \ne 0$, such that
+\[
+          | a x^2 + b x + c | \leq | A x^2 + B x + C |
+\]
+for all real numbers  $x$. Show that
+\[
+              | b^2 - 4 a c | \leq | B^2 - 4 A C |.
+\]
+
+\item[A5]
+A Dyck $n$-path is a lattice path of  $n$  upsteps $(1,1)$ and  $n$
+  downsteps $(1,-1)$
+that starts at the origin  $O$  and never dips below the  $x$-axis.
+A return is a maximal sequence of contiguous downsteps that terminates
+on the  $x$-axis. For example, the Dyck 5-path illustrated has two returns,
+of length  3  and  1  respectively.
+\begin{center}
+\begin{tikzpicture}[scale=.5]
+\fill (0,0) circle (.2); \fill (1,1) circle (.2); \fill (2,2) circle (.2);
+\fill (3,1) circle (.2); \fill (4,2) circle (.2); \fill (5,3) circle (.2);
+\fill (6,2) circle (.2); \fill (7,1) circle (.2); \fill (8,0) circle (.2);
+\fill (9,1) circle (.2); \fill (10,0) circle (.2);
+\draw (0,0) -- (2,2) -- (3,1) -- (5,3) -- (8,0) -- (9,1) -- (10,0) -- cycle;
+\draw (-.3,-.1) node[anchor=north] {$O$};
+\end{tikzpicture}
+\end{center}
+Show that there is a one-to-one correspondence between the Dyck  $n$-paths
+with no return of even length and the Dyck $(n-1)$-paths.
+
+\item[A6]
+For a set  $S$  of nonnegative integers, let  $r_S(n)$  denote the number of
+ordered pairs  $(s_1, s_2)$  such that  $s_1 \in S$, $s_2 \in S$, $s_1 \ne
+s_2$,
+and  $s_1 + s_2 = n$.  Is it possible to partition the nonnegative
+integers into two sets  $A$  and  $B$  in such a way that  $r_A(n) = r_B(n)$
+for all  $n$ ?
+
+\item[B1]
+Do there exist polynomials  $a(x), b(x), c(y), d(y)$  such that
+\[
+       1 + x y + x^2 y^2 = a(x) c(y) + b(x) d(y)
+\]
+holds identically?
+
+\item[B2]
+Let  $n$  be a positive integer. Starting with the sequence
+$1, \frac{1}{2}, \frac{1}{3}, \dots, \frac{1}{n}$,
+form a new sequence of  $n-1$  entries
+$\frac{3}{4}, \frac{5}{12}, \dots, \frac{2n-1}{2n(n-1)}$
+by taking the averages of
+two consecutive entries in the first sequence. Repeat the
+averaging of neighbors on the second sequence to obtain a third
+sequence of  $n-2$  entries, and continue until the final sequence produced
+consists of a single number  $x_n$.  Show that  $x_n < 2/n$.
+
+\item[B3]
+Show that for each positive integer  n,
+\[
+    n! = \prod_{i=1}^n  \mathrm{lcm}\{1, 2, \dots, \lfloor n/i\rfloor\} .
+\]
+(Here $\mathrm{lcm}$ denotes the least common multiple, and
+$\lfloor x \rfloor$ denotes the greatest integer $\leq x$.)
+
+\item[B4]
+Let $f(z) = a z^4 + b z^3 + c z^2 + d z + e = a(z-r_1)(z-r_2)(z-r_3)(z-r_4)$
+where  $a,b,c,d,e$  are integers, $a \ne 0$.  Show that if  $r_1 + r_2$  is a
+rational number and $r_1 + r_2 \ne r_3 + r_4$,  then  $r_1 r_2$  is a
+rational number.
+
+\item[B5]
+Let  $A,B$, and $C$  be equidistant points on the circumference of a circle
+of unit radius centered at  $O$,  and let  $P$  be any point in the circle's
+interior.  Let  $a, b, c$  be the distance from  $P$  to $A, B, C$,
+respectively.
+Show that there is a triangle with side lengths  $a, b, c$,  and that the
+area of this triangle depends only on the distance from  $P$  to  $O$.
+
+\item[B6]
+Let  $f(x)$  be  a continuous real-valued function defined on the interval
+$[0,1]$. Show that
+\[
+   \int_0^1 \int_0^1 | f(x) + f(y) |\,dx\,dy \geq \int_0^1 |f(x)|\,dx.
+\]
+
+\end{itemize}
+\end{document}
