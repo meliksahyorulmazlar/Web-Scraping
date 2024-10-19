@@ -1,0 +1,102 @@
+\documentclass[amssymb,twocolumn,pra,10pt,aps]{revtex4-1}
+\usepackage{mathptmx,amsmath}
+
+\begin{document}
+\title{The 66th William Lowell Putnam Mathematical Competition \\
+    Saturday, December 3, 2005}
+\maketitle
+
+\begin{itemize}
+
+\item[A1]
+Show that every positive integer is a sum of one or more numbers of the
+form $2^r 3^s$, where $r$ and $s$ are nonnegative integers and no
+summand divides another.
+(For example, 23 = 9 + 8 + 6.)
+
+\item[A2]
+Let $\mathbf{S} = \{(a,b) | a = 1, 2, \dots,n, b = 1,2,3\}$.
+A \emph{rook tour} of $\mathbf{S}$ is a polygonal path made up of line
+segments connecting points $p_1, p_2, \dots, p_{3n}$ in sequence such that
+\begin{enumerate}
+\item[(i)] $p_i \in \mathbf{S}$,
+\item[(ii)] $p_i$ and $p_{i+1}$ are a unit distance apart, for
+$1 \leq i <3n$,
+\item[(iii)] for each $p \in \mathbf{S}$ there is a unique $i$ such that
+$p_i = p$. How many rook tours are there that begin at $(1,1)$
+and end at $(n,1)$?
+\end{enumerate}
+(An example of such a rook tour for $n=5$ was depicted in the original.)
+
+\item[A3]
+Let $p(z)$ be a polynomial of degree $n$ all of whose zeros have absolute
+value 1 in the complex  plane. Put $g(z) = p(z)/z^{n/2}$. Show that all zeros
+of $g'(z) = 0$ have absolute value 1.
+
+\item[A4]
+Let $H$ be an $n \times n$ matrix all of whose entries are $\pm 1$ and
+whose rows are mutually orthogonal. Suppose $H$ has an $a \times b$ submatrix
+whose entries are all $1$. Show that $ab \leq n$.
+
+\item[A5]
+Evaluate $\int_0^1 \frac{\ln(x+1)}{x^2+1}\,dx$.
+
+\item[A6]
+Let $n$ be given, $n \geq 4$, and suppose that $P_1, P_2, \dots, P_n$
+are $n$ randomly, independently and uniformly, chosen points on a circle.
+Consider the convex $n$-gon whose vertices are the $P_i$. What is the
+probability that at least one of the vertex angles of this polygon is
+acute?
+
+\item[B1]
+Find a nonzero polynomial $P(x,y)$ such that $P(\lfloor a \rfloor,
+\lfloor 2a \rfloor) = 0$ for all real numbers $a$.
+(Note: $\lfloor \nu \rfloor$ is the greatest integer less than
+or equal to $\nu$.)
+
+\item[B2]
+Find all positive integers $n, k_1, \dots, k_n$ such that
+$k_1 + \cdots + k_n = 5n-4$ and
+\[
+\frac{1}{k_1} + \cdots + \frac{1}{k_n} = 1.
+\]
+
+\item[B3]
+Find all differentiable functions $f: (0, \infty) \to (0, \infty)$ for which
+there is a positive real number $a$ such that
+\[
+f' \left( \frac{a}{x} \right) = \frac{x}{f(x)}
+\]
+for all $x > 0$.
+
+\item[B4]
+For positive integers $m$ and $n$, let $f(m,n)$ denote the number of
+$n$-tuples $(x_1,x_2,\dots,x_n)$ of integers such that
+$|x_1| + |x_2| + \cdots + |x_n| \leq m$.
+Show that $f(m,n) = f(n,m)$.
+
+\item[B5]
+Let $P(x_1,\dots,x_n)$ denote a polynomial with real coefficients in the
+variables $x_1, \dots, x_n$, and suppose that
+\[
+\left( \frac{\partial^2}{\partial x_1^2} + \cdots + \frac{\partial^2}{\partial
+x_n^2}\right) P(x_1, \dots,x_n) = 0 \quad \mbox{(identically)}
+\] % Equation labelled (a) (label to the left of the equation) in AMM version.
+and that
+\[
+x_1^2 + \cdots + x_n^2 \mbox{ divides } P(x_1, \dots, x_n).
+\] % Equation labelled (b) (label to the left of the equation) in AMM version.
+Show that $P=0$ identically.
+
+\item[B6]
+Let $S_n$ denote the set of all permutations of the numbers $1,2,\dots,n$.
+For $\pi \in S_n$, let $\sigma(\pi) = 1$ if $\pi$ is an even permutation
+and $\sigma(\pi) = -1$ if $\pi$ is an odd permutation.
+Also, let $\nu(\pi)$ denote the number of fixed points of $\pi$.
+Show that
+\[
+\sum_{\pi \in S_n} \frac{\sigma(\pi)}{\nu(\pi) + 1} = (-1)^{n+1}
+\frac{n}{n+1}.
+\]
+\end{itemize}
+\end{document}

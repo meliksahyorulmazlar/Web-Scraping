@@ -1,0 +1,864 @@
+\documentclass[amssymb,twocolumn,pra,10pt,aps]{revtex4-1}
+\usepackage{mathptmx,amsmath}
+
+\newcommand{\RR}{\mathbb{R}}
+\newcommand{\CC}{\mathbb{C}}
+\DeclareMathOperator{\lcm}{lcm}
+\DeclareMathOperator{\sgn}{sgn}
+
+\begin{document}
+\title{Solutions to the 67th William Lowell Putnam Mathematical Competition \\
+    Saturday, December 2, 2006}
+\author{Kiran Kedlaya and Lenny Ng}
+\noaffiliation
+\maketitle
+
+\begin{itemize}
+
+\item[A--1]
+We change to cylindrical coordinates, i.e., we put $r = \sqrt{x^2 + y^2}$.
+Then the given inequality is equivalent to
+\[
+r^2 + z^2 + 8 \leq 6r,
+\]
+or
+\[
+(r-3)^2 + z^2 \leq 1.
+\]
+This defines a solid of revolution (a solid torus); the area being rotated
+is the disc $(x-3)^2 + z^2 \leq 1$ in the $xz$-plane. By Pappus's theorem,
+the volume of this equals the area of this disc, which is $\pi$, times the
+distance through which the center of mass is being rotated, which is $(2\pi)3$.
+That is, the total volume is $6 \pi^2$.
+
+\item[A--2]
+Suppose on the contrary that the set $B$ of values of $n$ for which Bob
+has a winning strategy is finite; for convenience, we include $n=0$ in $B$,
+and write $B = \{b_1, \dots, b_m\}$.
+Then for every nonnegative integer $n$ not
+in $B$, Alice must have some move on a heap of $n$ stones leading to a
+position in which the second player wins. That is, every nonnegative integer
+not in $B$ can be written as $b + p - 1$ for some $b \in B$ and some prime
+$p$. However, there are numerous ways to show that this cannot happen.
+
+\textbf{First solution:}
+Let $t$ be any integer bigger than all of the $b \in B$. Then it is easy to
+write down $t$ consecutive composite integers, e.g., $(t+1)! + 2, \dots,
+(t+1)! + t+1$. Take $n = (t+1)! + t$; then for each $b \in B$,
+$n - b + 1$ is one of the composite integers we just wrote down.
+
+\textbf{Second solution:}
+Let $p_1, \dots, p_{2m}$ be
+any prime numbers; then by the Chinese remainder theorem, there exists a
+positive integer $x$ such that
+\begin{align*}
+x - b_1 &\equiv -1 \pmod{p_1 p_{m+1}} \\
+\dots \\
+x - b_n &\equiv -1 \pmod{p_m p_{2m}}.
+\end{align*}
+For each $b \in B$,
+the unique integer $p$ such that $x=b+p-1$ is divisible
+by at least two primes, and so cannot itself be prime.
+
+\textbf{Third solution:} (by Catalin Zara)
+Put $b_1 = 0$, and take $n = (b_2 - 1)\cdots(b_m - 1)$; then $n$ is
+composite because $3, 8 \in B$, and for any nonzero $b \in B$,
+$n - b_i + 1$ is divisible by but not equal to $b_i - 1$.
+(One could also take $n = b_2 \cdots b_m - 1$, so that
+$n-b_i+1$ is divisible by $b_i$.)
+
+\item[A--3]
+We first observe that given any sequence of integers
+$x_1, x_2, \dots$ satisfying a recursion
+\[
+x_k = f(x_{k-1}, \dots, x_{k-n}) \qquad (k > n),
+\]
+where $n$ is fixed and $f$ is a fixed polynomial of $n$ variables with
+integer coefficients, for any positive integer $N$, the sequence modulo $N$
+is eventually periodic. This is simply because there are only finitely many
+possible sequences of $n$ consecutive values modulo $N$, and once such
+a sequence is repeated, every subsequent value is repeated as well.
+
+We next observe that if one can rewrite the same recursion as
+\[
+x_{k-n} = g(x_{k-n+1}, \dots, x_k) \qquad (k > n),
+\]
+where $g$ is also a polynomial with integer coefficients, then
+the sequence extends uniquely to a doubly infinite sequence $\dots,
+x_{-1}, x_0, x_1, \dots$ which is fully periodic modulo any $N$.
+That is the case in the
+situation at hand, because we can rewrite the given recursion as
+\[
+x_{k-2005} = x_{k+1} - x_k.
+\]
+It thus suffices to find 2005 consecutive terms divisible by $N$ in the
+doubly infinite sequence, for any fixed $N$ (so in particular for
+$N = 2006$).
+Running the recursion backwards, we easily find
+\begin{gather*}
+x_1 = x_0 = \cdots = x_{-2004} = 1 \\
+x_{-2005} = \cdots = x_{-4009} = 0,
+\end{gather*}
+yielding the desired result.
+
+\item[A--4]
+\textbf{First solution:}
+By the linearity of expectation, the average number of local maxima is equal
+to the sum of the probability of having a local maximum at $k$ over
+$k=1,\dots, n$.
+For $k=1$, this probability is 1/2: given the pair
+$\{\pi(1), \pi(2)\}$, it is equally likely that $\pi(1)$ or $\pi(2)$ is
+bigger. Similarly, for $k=n$, the probability is 1/2. For $1 < k < n$,
+the probability is 1/3: given the pair $\{\pi(k-1), \pi(k), \pi(k+1)\}$,
+it is equally likely that any of the three is the largest.
+Thus the average number of local maxima is
+\[
+2 \cdot \frac{1}{2} + (n-2) \cdot \frac{1}{3} =
+\frac{n+1}{3}.
+\]
+
+\textbf{Second solution:}
+Another way to apply the linearity of expectation is to compute the
+probability that $i \in \{1, \dots, n\}$ occurs as a local maximum.
+The most efficient way to do this is to imagine the permutation
+as consisting of the symbols $1, \dots, n, *$ written in a circle in
+some order. The number $i$ occurs as a local maximum if the two symbols
+it is adjacent to both belong to the set $\{*, 1, \dots, i-1\}$. There are
+$i(i-1)$ pairs of such symbols and $n(n-1)$ pairs in total, so the
+probability of $i$ occurring as a local maximum is $i(i-1)/(n(n-1))$, and
+the average number of local maxima is
+\begin{align*}
+\sum_{i=1}^n \frac{i(i-1)}{n(n-1)} &=
+\frac{2}{n(n-1)} \sum_{i=1}^n \binom{i}{2} \\
+&= \frac{2}{n(n-1)} \binom{n+1}{3} \\
+&= \frac{n+1}{3}.
+\end{align*}
+One can obtain a similar (if slightly more intricate)
+solution inductively, by removing the known
+local maximum $n$ and splitting into two shorter sequences.
+
+\textbf{Remark:}
+The usual term for a local maximum in this sense is a \emph{peak}.
+The complete distribution for the number of peaks is known;
+Richard Stanley suggests the reference:
+F. N. David and D. E. Barton, \textit{Combinatorial Chance}, Hafner, New York,
+1962, p.\ 162 and subsequent.
+
+\item[A--5]
+Since the desired expression involves symmetric functions of $a_1,
+\dots, a_n$, we start by finding a polynomial with $a_1, \dots, a_n$
+as roots. Note that
+\[
+1 \pm i \tan \theta = e^{\pm i \theta} \sec \theta
+\]
+so that
+\[
+1 + i \tan \theta = e^{2 i \theta} (1 - i \tan \theta).
+\]
+Consequently, if we put $\omega = e^{2 i n \theta}$, then the polynomial
+\[
+Q_n(x) = (1 + ix)^n - \omega (1-ix)^n
+\]
+has among its roots $a_1, \dots, a_n$. Since these are distinct and
+$Q_n$ has degree $n$, these must be exactly the roots.
+
+If we write
+\[
+Q_n(x) = c_n x^n + \cdots + c_1 x + c_0,
+\]
+then $a_1 + \cdots + a_n = -c_{n-1}/c_n$ and $a_1\cdots a_n = -c_0/c_n$,
+so the ratio we are seeking is $c_{n-1}/c_0$.
+By inspection,
+\begin{align*}
+c_{n-1} &= n i^{n-1} - \omega n (-i)^{n-1} = n i^{n-1} (1-\omega)\\
+c_0 &= 1 - \omega
+\end{align*}
+so
+\[
+\frac{a_1+ \cdots + a_n}{a_1 \cdots a_n}
+= \begin{cases} n & n \equiv 1 \pmod{4} \\ -n & n \equiv 3 \pmod{4}.
+\end{cases}
+\]
+
+\textbf{Remark:} The same argument shows that the ratio between
+any two \emph{odd} elementary
+symmetric functions of $a_1, \dots, a_n$ is independent
+of $\theta$.
+
+\item[A--6]
+\textbf{First solution:}
+(by Daniel Kane)
+The probability is $1 - \frac{35}{12\pi^2}$.
+We start with some notation and simplifications.
+For simplicity, we
+assume without loss of generality that the circle has radius 1.
+Let $E$ denote the expected value of a random variable over all
+choices of $P,Q,R$.
+Write $[XYZ]$ for the area of triangle $XYZ$.
+
+If $P,Q,R,S$ are the four points, we may ignore the case where three
+of them are collinear, as this occurs with probability zero. Then the only
+way they can fail to form the vertices of a convex quadrilateral is if one
+of them lies inside the triangle formed by the other three. There are four
+such configurations, depending on which point lies inside the triangle, and
+they are mutually exclusive. Hence the desired probability is 1 minus
+four times the probability that $S$ lies inside triangle $PQR$. That latter
+probability is simply $E([PQR])$ divided by the area of
+the disc.
+
+Let $O$ denote the center of the circle,
+and let $P',Q',R'$ be the projections of $P,Q,R$ onto the circle from $O$.
+We can write
+\[
+[PQR] = \pm [OPQ] \pm [OQR] \pm [ORP]
+\]
+for a suitable choice of signs, determined as follows. If the points
+$P',Q',R'$ lie on no semicircle, then all of the signs are positive.
+If $P',Q',R'$ lie on a semicircle in that order and
+$Q$ lies inside the triangle $OPR$, then the sign on $[OPR]$ is
+positive and the others are negative.
+If $P',Q',R'$ lie on a semicircle in that order and
+$Q$ lies outside the triangle $OPR$, then the sign on $[OPR]$ is
+negative and the others are positive.
+
+We first calculate
+\[
+E([OPQ] + [OQR] + [ORP]) = 3 E([OPQ]).
+\]
+Write $r_1 = OP, r_2 = OQ, \theta = \angle POQ$, so that
+\[
+[OPQ] = \frac{1}{2} r_1 r_2 (\sin \theta).
+\]
+The distribution of $r_1$ is given by $2r_1$ on $[0,1]$
+(e.g., by the change of variable formula to polar coordinates),
+and similarly for $r_2$.
+The distribution of $\theta$ is uniform on $[0,\pi]$.
+These three distributions are independent; hence
+\begin{align*}
+& E([OPQ]) \\
+&= \frac{1}{2} \left( \int_0^{1} 2r^2\,dr \right)^2
+\left( \frac{1}{\pi} \int_0^\pi \sin (\theta)\,d\theta \right) \\
+&= \frac{4}{9 \pi},
+\end{align*}
+and
+\[
+E([OPQ] + [OQR] + [ORP]) = \frac{4}{3 \pi}.
+\]
+
+We now treat the case where $P',Q',R'$ lie on a semicircle in
+that order.
+Put $\theta_1 = \angle POQ$ and $\theta_2 = \angle QOR$; then
+the distribution of $\theta_1, \theta_2$ is uniform on the region
+\[
+0 \leq \theta_1, \quad 0 \leq \theta_2, \quad \theta_1 + \theta_2 \leq \pi.
+\]
+In particular, the distribution on $\theta = \theta_1 + \theta_2$
+is $\frac{2\theta}{\pi^2}$ on $[0, \pi]$.
+Put $r_P = OP, r_Q = OQ, r_R = OR$. Again, the distribution on $r_P$
+is given by $2 r_P$ on $[0,1]$, and similarly for $r_Q, r_R$; these
+are independent from each other and from the joint distribution
+of $\theta_1,\theta_2$.
+Write $E'(X)$ for the expectation of a random variable $X$
+restricted to this part of the domain.
+
+Let $\chi$ be the random variable with value 1 if $Q$ is inside
+triangle $OPR$ and 0 otherwise.
+We now compute
+\begin{align*}
+&E'([OPR]) \\
+&=
+\frac{1}{2} \left( \int_0^1 2r^2\,dr \right)^2
+\left( \int_0^\pi \frac{2\theta}{\pi^2} \sin(\theta) \,d\theta \right)\\
+&= \frac{4}{9 \pi} \\
+& E'(\chi [OPR]) \\
+&= E'(2 [OPR]^2 / \theta) \\
+&=
+\frac{1}{2} \left( \int_0^1 2r^3\,dr \right)^2
+\left( \int_0^\pi \frac{2\theta}{\pi^2} \theta^{-1} \sin^2(\theta) \,d\theta \right)\\
+&= \frac{1}{8\pi}.
+\end{align*}
+Also recall that given any triangle $XYZ$, if $T$ is chosen uniformly
+at random inside $XYZ$, the expectation of $[TXY]$ is the area of
+triangle bounded by $XY$ and the centroid of $XYZ$, namely
+$\frac{1}{3} [XYZ]$.
+
+Let $\chi$ be the random variable with value 1 if $Q$ is inside
+triangle $OPR$ and 0 otherwise. Then
+\begin{align*}
+&E'([OPQ] + [OQR] + [ORP] - [PQR]) \\
+&= 2 E'(\chi ([OPQ] + [OQR]) + 2 E'((1-\chi)[OPR]) \\
+&= 2 E'(\frac{2}{3} \chi [OPR]) + 2 E'([OPR]) - 2 E'(\chi [OPR]) \\
+&= 2E'([OPR]) - \frac{2}{3} E'(\chi [OPR]) = \frac{29}{36 \pi}.
+\end{align*}
+Finally, note that the case when $P',Q',R'$
+lie on a semicircle in some order occurs with probability $3/4$.
+(The case where they lie on a semicircle proceeding clockwise from $P'$
+to its antipode has probability 1/4; this case and its two analogues are
+exclusive and exhaustive.) Hence
+\begin{align*}
+&E([PQR]) \\
+&= E([OPQ]+[OQR]+[ORP]) \\
+&\quad - \frac{3}{4} E'([OPQ] + [OQR] + [ORP] - [PQR]) \\
+&= \frac{4}{3 \pi} - \frac{29}{48 \pi} = \frac{35}{48 \pi},
+\end{align*}
+so the original probability is
+\[
+1 - \frac{4 E([PQR])}{\pi} = 1 - \frac{35}{12 \pi^2}.
+\]
+
+\textbf{Second solution:}
+(by David Savitt)
+As in the first solution, it suffices to check that for
+$P,Q,R$ chosen uniformly at random in the disc, $E([PQR]) = \frac{35}{48 \pi}$.
+Draw the lines $PQ, QR, RP$, which with probability 1 divide the interior
+of the circle into seven regions. Put $a = [PQR]$, let $b_1,b_2,b_3$
+denote the areas of the
+three other regions sharing a side with the triangle, and let
+$c_1,c_2,c_3$ denote the areas of the other three regions.
+Put $A = E(a)$, $B = E(b_1)$, $C = E(c_1)$, so that
+$A + 3B + 3C = \pi$.
+
+Note that $c_1 + c_2 + c_3 + a$ is the area of the region in which we can
+choose a fourth point $S$ so that the quadrilateral $PQRS$ fails to be
+convex. By comparing expectations, we have $3C + A = 4A$,
+so $A = C$ and $4A + 3B = \pi$.
+
+We will compute $B + 2A = B + 2C$, which is the expected area of the part
+of the circle cut off by a chord through two random points $D,E$, on the
+side of the chord not containing a third random point $F$.
+Let $h$ be the distance from the center $O$ of the circle to the line $DE$.
+We now determine the distribution of $h$.
+
+Put $r = OD$; the distribution of $r$ is $2r$ on $[0,1]$.
+Without loss of generality, suppose $O$ is the origin and
+$D$ lies on the positive $x$-axis.
+For fixed $r$, the distribution of $h$ runs over $[0,r]$,
+and can be computed as the area of the infinitesimal region in which
+$E$ can be chosen so the chord through $DE$ has distance to $O$
+between $h$ and $h+dh$, divided by $\pi$.
+This region splits into two symmetric pieces, one of which lies
+between chords making angles of $\arcsin(h/r)$ and
+$\arcsin((h + dh)/r)$ with the $x$-axis.
+The angle between these is $d\theta = dh/(r^2 - h^2)$.
+Draw the chord through $D$ at distance $h$ to $O$, and let $L_1,L_2$ be the
+lengths of the parts on opposite sides of $D$; then
+the area we are looking for is $\frac{1}{2}(L_1^2 + L_2^2) d\theta$.
+Since
+\[
+\{L_1, L_2 \} = \sqrt{1-h^2} \pm \sqrt{r^2 - h^2},
+\]
+the area we are seeking (after doubling) is
+\[
+2\frac{1 + r^2 - 2h^2}{\sqrt{r^2 - h^2}}.
+\]
+Dividing by $\pi$, then integrating over $r$, we compute the distribution
+of $h$ to be
+\begin{align*}
+&\frac{1}{\pi} \int_h^1 2 \frac{1 + r^2 - 2h^2}{\sqrt{r^2 - h^2}} 2r\,dr \\
+&= \frac{16}{3\pi} (1-h^2)^{3/2}.
+\end{align*}
+
+We now return to computing $B +2A$.
+Let $A(h)$ denote the smaller of the two areas of the disc cut off
+by a chord at distance $h$.
+The chance that the third point is in the smaller (resp.\
+larger) portion is $A(h)/\pi$ (resp.\ $1 - A(h)/\pi$),
+and then the area we are trying to compute is $\pi - A(h)$
+(resp.\ $A(h)$).
+Using the distribution on $h$,
+and the fact that
+\begin{align*}
+A(h) &= 2 \int_h^1 \sqrt{1-h^2}\,dh \\
+&= \frac{\pi}{2}  - \arcsin(h) - h \sqrt{1-h^2},
+\end{align*}
+we find
+\begin{align*}
+&B+2A \\
+&= \frac{2}{\pi} \int_0^1 A(h) (\pi - A(h))\, \frac{16}{3\pi} (1-h^2)^{3/2}
+\,dh \\
+&= \frac{35 + 24 \pi^2}{72 \pi}.
+\end{align*}
+Since $4A + 3B = \pi$, we solve to obtain
+$A = \frac{35}{48 \pi}$ as in the first solution.
+
+\textbf{Third solution:} (by Noam Elkies)
+Again, we reduce to computing the average area of a triangle formed by
+three random points $A,B,C$ inside a unit circle.
+Let $O$ be the center of the circle, and put $c = \max\{OA,OB,OC\}$;
+then the probability that $c \leq r$ is $(r^2)^3$, so the distribution
+of $c$ is $6c^5\,dc$ on $[0,1]$.
+
+Given $c$, the expectation of $[ABC]$ is equal to $c^2$ times $X$, the expected
+area of a triangle formed by two random points $P,Q$ in a circle and
+a fixed point $R$ on the boundary. We introduce polar coordinates centered
+at $R$, in which the circle is given by $r = 2 \sin \theta$ for
+$\theta \in [0, \pi]$. The distribution of a random point in that circle is
+$\frac{1}{\pi} r\,dr\,d\theta$ over $\theta \in [0,\pi]$ and
+$r \in [0, 2 \sin \theta]$. If $(r,\theta)$ and $(r',\theta')$ are the
+two random points, then the area is $\frac{1}{2} rr' \sin |\theta - \theta'|$.
+
+Performing the integrals over $r$ and $r'$ first, we find
+\begin{align*}
+X &= \frac{32}{9 \pi^2} \int_0^\pi \int_0^\pi \sin^3 \theta \sin^3 \theta'
+\sin |\theta-\theta'|\,d\theta'\,d\theta \\
+&= \frac{64}{9 \pi^2} \int_0^\pi \int_0^\theta \sin^3 \theta \sin^3 \theta'
+\sin (\theta-\theta') \,d\theta'\,d\theta.
+\end{align*}
+This integral is unpleasant but straightforward; it yields
+$X = 35/(36 \pi)$, and
+$E([PQR]) = \int_0^1 6c^7 X\,dc = 35/(48 \pi)$, giving the desired
+result.
+
+\textbf{Remark:}
+This is one of the oldest problems in geometric probability; it is an instance
+of Sylvester's four-point problem, which nowadays is usually solved using
+a device known as Crofton's formula.
+We defer to \texttt{http://mathworld.wolfram.com/} for
+further discussion.
+
+\item[B--1]
+The ``curve'' $x^3 + 3xy + y^3 - 1 = 0$ is actually reducible, because the
+left side factors as
+\[
+(x+y-1)(x^2 -xy + y^2 + x + y + 1).
+\]
+Moreover, the second factor is
+\[
+\frac{1}{2} ((x+1)^2 + (y+1)^2 + (x-y)^2),
+\]
+so it only vanishes at $(-1,-1)$. Thus the curve in question consists of the
+single point $(-1,-1)$ together with the line $x+y=1$. To form a triangle
+with three points on this curve, one of its vertices must be $(-1,-1)$.
+The other two vertices lie on the line $x+y=1$, so the length of the altitude
+from $(-1,-1)$ is the distance from $(-1,-1)$ to $(1/2,1/2)$, or
+$3 \sqrt{2}/2$. The area of an equilateral triangle of height $h$ is
+$h^2 \sqrt{3}/3$, so the desired area is
+$3 \sqrt{3}/2$.
+
+\textbf{Remark:} The factorization used above is a special case of the fact
+that
+\begin{align*}
+&x^3 + y^3 + z^3 - 3xyz \\
+&= (x+y+z)(x+\omega y + \omega^2 z)(x + \omega^2 y
++ \omega z),
+\end{align*}
+where $\omega$ denotes a primitive cube root of unity. That fact in turn follows
+from the evaluation of the determinant of the \emph{circulant matrix}
+\[
+\begin{pmatrix} x & y & z \\ z & x & y \\ y & z & x
+\end{pmatrix}
+\]
+by reading off the eigenvalues of the eigenvectors
+$(1, \omega^i, \omega^{2i})$ for $i=0,1,2$.
+
+\item[B--2]
+Let $\{x\} = x - \lfloor x \rfloor$ denote the fractional part of $x$.
+For $i=0,\dots, n$, put $s_i = x_1 + \cdots + x_i$ (so that $s_0 = 0$).
+Sort the numbers $\{s_0\}, \dots, \{s_n\}$ into ascending order,
+and call the result $t_0, \dots, t_n$. Since $0 = t_0 \leq \cdots \leq
+t_n < 1$, the differences
+\[
+t_1 - t_0, \dots, t_n - t_{n-1}, 1 - t_n
+\]
+are nonnegative and add up to 1. Hence (as in  the pigeonhole principle) one
+of these differences
+is no more than $1/(n+1)$; if it is anything other than $1 - t_n$,
+it equals $\pm (\{s_i\} - \{s_j\})$ for some
+$0 \leq i < j \leq n$. Put $S = \{x_{i+1}, \dots, x_j\}$ and
+$m = \lfloor s_i \rfloor - \lfloor s_j \rfloor$; then
+\begin{align*}
+\left| m + \sum_{s \in S} s \right|
+&= |m + s_j - s_i| \\
+&= |\{s_j\} - \{s_i\}| \\
+&\leq \frac{1}{n+1},
+\end{align*}
+as desired. In case $1 - t_n \leq 1 / (n+1)$, we take
+$S = \{x_1, \dots, x_n\}$ and $m = -\lceil s_n \rceil$, and again obtain
+the desired conclusion.
+
+\item[B--3]
+The maximum is $\binom{n}{2} + 1$, achieved for instance by a
+convex $n$-gon: besides the trivial partition (in which all of the points
+are in one part), each linear
+partition occurs by drawing a line crossing a unique pair
+of edges.
+
+\textbf{First solution:}
+We will prove that $L_S = \binom{n}{2} + 1$ in any configuration in which
+no two of the lines joining points of $S$ are parallel. This suffices
+to imply the maximum in all configurations: given a maximal configuration,
+we may vary the points slightly to get another maximal configuration in which
+our hypothesis is satisfied.
+For convenience, we assume $n \geq 3$, as the cases $n=1,2$ are easy.
+
+Let $P$ be the line at infinity in the real projective plane; i.e., $P$
+is the set of possible directions of lines in the plane, viewed as a circle.
+Remove the directions corresponding to lines through two points of $S$;
+this leaves behind $\binom{n}{2}$ intervals.
+
+Given a direction in one of the intervals, consider the set of linear
+partitions achieved by lines parallel to that direction. Note that the
+resulting collection of partitions depends only on the interval. Then
+note that the collections associated to adjacent intervals differ in only
+one element.
+
+The trivial partition that puts all of $S$ on one side is in every such
+collection. We now observe that for any other linear partition
+$\{A,B\}$, the set of intervals to which $\{A,B\}$ is:
+\begin{enumerate}
+\item[(a)] a consecutive block of intervals, but
+\item[(b)] not all of them.
+\end{enumerate}
+For (a), note that if $\ell_1, \ell_2$ are nonparallel lines achieving
+the same partition, then we can rotate around their point of intersection
+to achieve all of the intermediate directions on one side or the other.
+For (b), the case $n=3$ is evident; to reduce the general case to this case,
+take points $P,Q,R$ such that $P$ lies on the opposite side of
+the partition from $Q$ and $R$.
+
+It follows now that that each linear partition,
+except for the trivial one, occurs in exactly one place as the partition
+associated to some interval but not to its immediate counterclockwise neighbor.
+In other words, the number of linear partitions is one more  than the
+number of intervals, or $\binom{n}{2} + 1$ as desired.
+
+\textbf{Second solution:}
+We prove the upper bound
+by induction on $n$. Choose a point $P$ in the convex hull of $S$.
+Put $S' = S \setminus \{P\}$;
+by the induction hypothesis, there are at most $\binom{n-1}{2} + 1$
+linear partitions of $S'$. Note that each linear partition of $S$ restricts
+to a linear partition of $S'$. Moreover, if two linear partitions of $S$
+restrict to the same linear partition of $S'$, then that partition of $S'$
+is achieved by a line through $P$.
+
+By rotating a line through $P$, we see that there are at most $n-1$
+partitions of $S'$ achieved by lines through $P$: namely, the partition only
+changes when the rotating line passes through one of the points of $S$.
+This yields the desired result.
+
+\textbf{Third solution:} (by Noam Elkies) We enlarge the plane to a projective
+plane by adding a line at infinity, then apply the polar duality map
+centered at one of the points $O \in S$. This turns the rest of $S$ into
+a set $S'$ of $n-1$ lines in the dual projective plane. Let $O'$ be the
+point in the dual plane corresponding to the original line at infinity;
+it does not lie on any of the lines in $S'$.
+
+Let $\ell$ be a line in the original plane, corresponding to a point $P$ in
+the dual plane. If we form the linear partition induced by $\ell$, then
+the points of $S \setminus \{O\}$ lying in the same part as $O$
+correspond to the lines of $S'$ which cross the segment $O'P$.
+If we consider the dual affine plane as being divided into regions by
+the lines of $S'$, then the lines of $S'$ crossing the segment $O'P$
+are determined by which region $P$ lies in.
+
+Thus our original maximum is equal to the maximum number of regions into
+which $n-1$ lines divide an affine plane. By induction on $n$, this number
+is easily seen to be $1 + \binom{n}{2}$.
+
+\textbf{Fourth solution:} (by Florian Herzig)
+Say that an \emph{$S$-line} is a line that intersects $S$ in at least two points.
+We claim that the nontrivial linear partitions of $S$ are in natural bijection with pairs
+$(\ell, \{X,Y\})$ consisting of an $S$-line $\ell$ and a nontrivial linear partition $\{X,Y\}$ of $\ell \cap S$.
+Since an $S$-line $\ell$ admits precisely $|\ell\cap S|-1 \le \binom{|\ell \cap S|}{2}$ nontrivial linear partitions,
+the claim implies that $L_S \le \binom n2 + 1$ with equality iff no three points of $S$ are collinear.
+
+Let $P$ be the line at infinity in the real projective plane. Given any nontrivial linear partition $\{A,B\}$ of $S$, the
+set of lines inducing this partition is a proper, open, connected subset $I$ of $P$. (It is proper because it has to omit
+directions of $S$-lines that pass through both parts of the partition and open because we can vary the separating line. It is
+connected because if we have two such lines that aren't parallel, we can rotate through their point of intersection to
+get all intermediate directions.) Among all $S$-lines that intersect both $A$ and $B$ choose a line $\ell$ whose direction is
+minimal (in the clockwise direction) with respect to the interval $I$; also, pick an arbitrary line $\ell'$ that induces
+$\{A,B\}$. By rotating $\ell'$ clockwise to $\ell$ about their point of intersection, we see that the direction
+of $\ell$ is the least upper bound of $I$. (We can't hit any point of $S$ during the rotation because of the minimality
+property of $\ell$.)  The line $\ell$ is in fact unique because if the (parallel) lines $pq$ and $rs$ are two choices for $\ell$,
+with $p$, $q \in A$; $r$, $s \in B$, then one of the diagonals $ps$, $qr$ would contradict the minimality property of
+$\ell$. To define the above bijection we send $\{A,B\}$ to $(\ell, \{A \cap \ell, B \cap \ell\})$.
+
+Conversely, suppose that we are given an $S$-line $\ell$ and a nontrivial linear partition $\{X,Y\}$ of $\ell \cap S$.
+Pick any point $p \in \ell$ that induces the partition $\{X,Y\}$. If we rotate the line $\ell$ about $p$ in the counterclockwise
+direction by a sufficiently small amount, we get a nontrivial linear partitition of $S$ that is independent of all choices.
+(It is obtained from the partition of $S-\ell$ induced by $\ell$ by adjoining $X$ to one part and $Y$ to the other.) This
+defines a map in the other direction.
+
+By construction these two maps are inverse to each other, and this proves the claim.
+
+
+\textbf{Remark:}
+Given a finite set $S$ of points in $\mathbb{R}^n$, a \emph{non-Radon partition}
+of $S$ is a pair $(A,B)$
+of complementary subsets that can be separated by
+a hyperplane. \emph{Radon's theorem} states that if $\#S\geq n+2$, then not
+every $(A,B)$ is a non-Radon partition. The result of this problem
+has been greatly
+extended, especially within the context of matroid theory and oriented
+matroid theory. Richard Stanley suggests the following references:
+T. H. Brylawski, A combinatorial
+perspective on the Radon convexity theorem, \emph{Geom. Ded.} \textbf{5}
+(1976),
+459-466; and T. Zaslavsky, Extremal arrangements of hyperplanes,
+\emph{Ann. N. Y. Acad. Sci.} \textbf{440} (1985), 69-87.
+
+\item[B--4]
+The maximum is $2^k$, achieved for instance by the subspace
+\[
+\{(x_1, \dots, x_n) \in \mathbb{R}^n: x_1 = \cdots = x_{n-k} = 0\}.
+\]
+
+\textbf{First solution:}
+More generally, we show that any affine $k$-dimensional plane in
+$\mathbb{R}^n$ can contain at most $2^k$ points in $Z$. The proof is by
+induction on $k+n$; the case $k=n=0$ is clearly true.
+
+Suppose that $V$ is a $k$-plane in $\mathbb{R}^n$. Denote the
+hyperplanes $\{x_n = 0\}$ and $\{x_n = 1\}$ by $V_0$ and $V_1$,
+respectively. If $V\cap V_0$ and $V\cap V_1$ are each at most
+$(k-1)$-dimensional, then $V\cap V_0\cap Z$ and $V\cap V_1 \cap Z$ each
+have cardinality at most $2^{k-1}$ by the induction assumption, and
+hence $V\cap Z$ has at most $2^k$ elements. Otherwise, if $V\cap V_0$ or
+$V\cap V_1$ is $k$-dimensional, then $V \subset V_0$ or $V\subset V_1$;
+now apply the induction hypothesis on $V$, viewed as a subset of
+$\mathbb{R}^{n-1}$ by dropping the last coordinate.
+
+\textbf{Second solution:}
+Let $S$ be a subset of $Z$ contained in a $k$-dimensional subspace of $V$.
+This is equivalent to asking that any $t_1, \dots, t_{k+1} \in S$
+satisfy a nontrivial linear dependence $c_1 t_1 + \cdots + c_{k+1} t_{k+1} = 0$
+with $c_1, \dots, c_{k+1} \in \mathbb{R}$. Since $t_1, \dots, t_{k+1} \in
+\mathbb{Q}^n$, given such a dependence we can always find another one with
+$c_1, \dots, c_{k+1} \in \mathbb{Q}$; then by clearing denominators, we
+can find one with $c_1, \dots, c_{k+1} \in \mathbb{Z}$ and not all having a
+common factor.
+
+Let $\mathbb{F}_2$ denote the field of two elements, and let
+$\overline{S} \subseteq \mathbb{F}_2^n$ be the reductions modulo 2 of the points of
+$S$. Then any $t_1, \dots, t_{k+1} \in \overline{S}$ satisfy a nontrivial
+linear dependence, because we can take the dependence from the end of
+the previous paragraph and reduce modulo 2. Hence $\overline{S}$ is contained
+in a $k$-dimensional subspace of $\mathbb{F}_{2^n}$, and the latter has cardinality
+exactly $2^k$. Thus $\overline{S}$ has at most $2^k$ elements, as does
+$S$.
+
+Variant (suggested by David Savitt): if $\overline{S}$ contained $k+1$
+linearly independent elements, the $(k+1) \times n$ matrix formed by these
+would have a nonvanishing maximal minor. The lift of that minor back to $\RR$
+would also not vanish, so $S$ would contain $k+1$ linearly independent
+elements.
+
+\textbf{Third solution:} (by Catalin Zara)
+Let $V$ be a $k$-dimensional subspace. Form the matrix whose rows are the elements
+of $V \cap Z$; by construction, it has row rank at most $k$. It thus also has
+column rank at most $k$; in particular, we can choose $k$ coordinates such that
+each point of $V \cap Z$ is determined by those $k$ of its coordinates. Since
+each coordinate of a point in $Z$ can only take two values, $V \cap Z$ can have
+at most $2^k$ elements.
+
+\textbf{Remark:} The proposers probably did not realize that this problem appeared
+online about three months before the exam, at
+\texttt{http://www.artofproblemsolving.com/ Forum/viewtopic.php?t=105991}. (It
+may very well have also appeared even earlier.)
+
+\item[B--5]
+The answer is $1/16$. We have
+\begin{align*}
+&\int_0^1 x^2 f (x)\,dx - \int_0^1 x f(x)^2\,dx \\
+&= \int_0^1 (x^3/4 - x
+( f(x)-x/2)^2)\,dx \\
+&\leq \int_0^1 x^3/4\,dx = 1/16,
+\end{align*}
+with equality when $f(x) = x/2$.
+
+\item[B--6]
+\textbf{First solution:}
+We start with some easy
+upper and lower bounds on $a_n$.
+We write $O(f(n))$ and $\Omega(f(n))$ for functions $g(n)$ such that
+$f(n)/g(n)$ and $g(n)/f(n)$, respectively, are bounded above.
+Since $a_n$ is a nondecreasing sequence, $a_{n+1}-a_n$ is bounded above,
+so $a_n = O(n)$. That means $a_n^{-1/k} = \Omega(n^{-1/k})$, so
+\[
+a_n = \Omega \left( \sum_{i=1}^n i^{-1/k} \right)
+= \Omega(n^{(k-1)/k}).
+\]
+In fact, all we will need is that $a_n \to \infty$ as $n \to \infty$.
+
+By Taylor's theorem with remainder, for $1 < m < 2$ and $x>0$,
+\[
+|(1+x)^m - 1 - mx| \leq \frac{m(m-1)}{2}x^2.
+\]
+Taking $m = (k+1)/k$ and $x = a_{n+1}/a_n = 1 + a_n^{-(k+1)/k}$, we obtain
+\[
+\left| a_{n+1}^{(k+1)/k} - a_n^{(k+1)/k} - \frac{k+1}{k} \right|
+\leq \frac{k+1}{2k^2} a_n^{-(k+1)/k}.
+\]
+In particular,
+\[
+\lim_{n \to \infty} a_{n+1}^{(k+1)/k} - a_n^{(k+1)/k} = \frac{k+1}{k}.
+\]
+
+In general, if $x_n$ is a sequence with $\lim_{n \to \infty} x_n = c$, then
+also
+\[
+\lim_{n \to \infty} \frac{1}{n} \sum_{i=1}^n x_i = c
+\]
+by Cesaro's lemma. Explicitly, for any $\epsilon > 0$, we can find $N$ such that
+$|x_n - c| \leq \epsilon/2$ for $n \geq N$, and then
+\[
+\left| c - \frac{1}{n} \sum_{i=1}^n x_i \right|
+\leq \frac{n-N}{n} \frac{\epsilon}{2} + \frac{N}{n} \left| \sum_{i=1}^N (c-x_i) \right|;
+\]
+for $n$ large, the right side is smaller than $\epsilon$.
+
+In our case, we deduce that
+\[
+\lim_{n \to \infty} \frac{a_n^{(k+1)/k}}{n} = \frac{k+1}{k}
+\]
+and so
+\[
+\lim_{n \to \infty} \frac{a_n^{k+1}}{n^k} = \left(\frac{k+1}{k} \right)^k,
+\]
+as desired.
+
+\textbf{Remark:}
+The use of Cesaro's lemma above is the special case $b_n = n$
+of the \emph{Cesaro-Stolz
+theorem}: if $a_n,b_n$ are sequences such that $b_n$ is positive,
+strictly increasing, and unbounded, and
+\[
+\lim_{n \to \infty} \frac{a_{n+1} - a_n}{b_{n+1} - b_n} = L,
+\]
+then
+\[
+\lim_{n \to \infty} \frac{a_n}{b_n} = L.
+\]
+
+\textbf{Second solution:}
+In this solution, rather than applying Taylor's theorem with remainder
+to $(1+x)^m$ for $1 < m < 2$ and $x > 0$, we only apply convexity to deduce
+that $(1+x)^m \geq 1 + mx$. This gives
+\[
+a_{n+1}^{(k+1)/k} - a_n^{(k+1)/k} \geq \frac{k+1}{k},
+\]
+and so
+\[
+a_n^{(k+1)/k} \geq \frac{k+1}{k} n + c
+\]
+for some $c \in \RR$. In particular,
+\[
+\liminf_{n \to \infty} \frac{a_n^{(k+1)/k}}{n} \geq \frac{k+1}{k}
+\]
+and so
+\[
+\liminf_{n \to \infty} \frac{a_n}{n^{k/(k+1)}} \geq \left(\frac{k+1}{k} \right)^{k/(k+1)}.
+\]
+But turning this around, the fact that
+\begin{align*}
+&a_{n+1} - a_n \\
+&= a_n^{-1/k} \\
+&\leq \left(\frac{k+1}{k} \right)^{-1/(k+1)} n^{-1/(k+1)}
+(1 + o(1)),
+\end{align*}
+where $o(1)$ denotes a function tending to 0 as $n \to \infty$,
+yields
+\begin{align*}
+&a_n \\
+&\leq
+\left(\frac{k+1}{k} \right)^{-1/(k+1)} \sum_{i=1}^n i^{-1/(k+1)} (1 + o(1)) \\
+&= \frac{k+1}{k} \left(\frac{k+1}{k} \right)^{-1/(k+1)} n^{k/(k+1)}(1 + o(1)) \\
+&= \left( \frac{k+1}{k} \right)^{k/(k+1)} n^{k/(k+1)}(1 + o(1)),
+\end{align*}
+so
+\[
+\limsup_{n \to \infty} \frac{a_n}{n^{k/(k+1)}} \leq \left( \frac{k+1}{k}
+\right)^{k/(k+1)}
+\]
+and this completes the proof.
+
+\textbf{Third solution:}
+We argue that $a_n \to \infty$ as in the first solution.
+Write $b_n = a_n - L n^{k/(k+1)}$, for a value of $L$ to be determined
+later.
+We have
+\begin{align*}
+&b_{n+1} \\
+ &= b_n + a_n^{-1/k} - L ((n+1)^{k/(k+1)} - n^{k/(k+1)}) \\
+&= e_1 + e_2,
+\end{align*}
+where
+\begin{align*}
+e_1 &= b_n + a_n^{-1/k} - L^{-1/k} n^{-1/(k+1)} \\
+e_2 &= L ((n+1)^{k/(k+1)} - n^{k/(k+1)}) \\
+&\quad - L^{-1/k} n^{-1/(k+1)}.
+\end{align*}
+We first estimate $e_1$.
+For $-1 < m < 0$, by the convexity of $(1+x)^m$
+and $(1+x)^{1-m}$, we have
+\begin{align*}
+1 + mx &\leq (1+x)^m \\
+&\leq 1 + mx (1+x)^{m-1}.
+\end{align*}
+Hence
+\begin{align*}
+-\frac{1}{k} L^{-(k+1)/k} n^{-1} b_n &\leq e_1 - b_n \\
+&\leq
+-\frac{1}{k} b_n a_n^{-(k+1)/k}.
+\end{align*}
+Note that both bounds have sign opposite to $b_n$; moreover,
+by the bound $a_n = \Omega(n^{(k-1)/k})$, both bounds have absolutely
+value strictly less than that of $b_n$ for $n$ sufficiently large. Consequently,
+for $n$ large,
+\[
+|e_1| \leq |b_n|.
+\]
+We now work on $e_2$.
+By Taylor's theorem
+with remainder applied to $(1+x)^m$ for $x > 0$ and $0 < m < 1$,
+\begin{align*}
+1+mx &\geq (1+x)^m \\
+&\geq 1 + mx + \frac{m(m-1)}{2} x^2.
+\end{align*}
+The ``main term'' of $L ((n+1)^{k/(k+1)} - n^{k/(k+1)})$
+is $L \frac{k}{k+1} n^{-1/(k+1)}$. To make this coincide with
+$L^{-1/k} n^{-1/(k+1)}$, we take
+\[
+L = \left( \frac{k+1}{k} \right)^{k/(k+1)}.
+\]
+We then find that
+\[
+|e_2| = O(n^{-2}),
+\]
+and because $b_{n+1} = e_1 + e_2$, we have
+$|b_{n+1}| \leq |b_n| + |e_2|$. Hence
+\[
+|b_n| = O\left (\sum_{i=1}^n i^{-2} \right) = O(1),
+\]
+and so
+\[
+\lim_{n \to \infty} \frac{a_n^{k+1}}{n^k} = L^{k+1} = \left( \frac{k+1}{k} \right)^k.
+\]
+
+\textbf{Remark:}
+The case $k=2$ appeared on the 2004 Romanian Olympiad (district level).
+
+\textbf{Remark:}
+One can make a similar argument for any sequence given by
+$a_{n+1} = a_n + f(a_n)$, when $f$ is a \emph{decreasing} function.
+
+\textbf{Remark:}
+Richard Stanley suggests a heuristic for determining the asymptotic
+behavior of sequences of this type: replace the given recursion
+\[
+a_{n+1} - a_n = a_n^{-1/k}
+\]
+by the differential equation
+\[
+y' = y^{-1/k}
+\]
+and determine the asymptotics of the latter.
+\end{itemize}
+
+
+\end{document}
+
+
+

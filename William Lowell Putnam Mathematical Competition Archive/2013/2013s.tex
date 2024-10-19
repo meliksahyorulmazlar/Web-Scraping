@@ -1,0 +1,379 @@
+\documentclass[amssymb,twocolumn,pra,10pt,aps]{revtex4-1}
+\usepackage{mathptmx,amsmath,amsthm}
+
+\newtheorem{lemma}{Lemma}
+\newtheorem{cor}[lemma]{Corollary}
+\newtheorem*{lemma*}{Lemma}
+\newcommand{\FF}{\mathbb{F}}
+\newcommand{\RR}{\mathbb{R}}
+\newcommand{\CC}{\mathbb{C}}
+\newcommand{\ZZ}{\mathbb{Z}}
+\DeclareMathOperator{\lcm}{lcm}
+\DeclareMathOperator{\sgn}{sgn}
+\DeclareMathOperator{\Trace}{Trace}
+
+\begin{document}
+\title{Solutions to the 74th William Lowell Putnam Mathematical Competition \\
+    Saturday, December 7, 2013}
+\author{Kiran Kedlaya and Lenny Ng}
+\noaffiliation
+\maketitle
+
+\begin{itemize}
+\item[A1]
+Suppose otherwise. Then each vertex $v$ is a vertex for five faces, all of which have different labels, and so the sum of the labels of the five faces incident to $v$ is at least $0+1+2+3+4 = 10$. Adding this sum over all vertices $v$ gives $3 \times 39 = 117$, since each face's label is counted three times. Since there are $12$ vertices, we conclude that $10 \times 12 \leq 117$, contradiction.
+
+\noindent
+\textbf{Remark:}
+One can also obtain the desired result by showing that any collection of five faces must contain two faces that share a vertex; it then follows that each label can appear at most $4$ times, and so the sum of all labels is at least $4(0+1+2+3+4) = 40 > 39$, contradiction.
+
+\item[A2]
+Suppose to the contrary that $f(n) = f(m)$ with $n<m$, and let $n\cdot a_1\cdots a_r$, $m\cdot b_1\cdots b_s$ be perfect squares where $n < a_1 < \cdots < a_r$, $m < b_1 < \cdots < b_s$, $a_r,b_s$ are minimal and $a_r=b_s$. Then $(n\cdot a_1\cdots a_r)\cdot (m\cdot b_1\cdots b_s)$ is also a perfect square. Now eliminate any factor in this product that appears twice (i.e., if $a_i = b_j$ for some $i,j$, then delete $a_i$ and $b_j$ from this product). The product of what remains must also be a perfect square, but this is now a product of distinct integers, the smallest of which is $n$ and the largest of which is strictly smaller than $a_r = b_s$. This contradicts the minimality of $a_r$.
+
+\noindent
+\textbf{Remark:}
+Sequences whose product is a perfect square occur naturally in the \emph{quadratic sieve} algorithm for factoring large integers. However,
+the behavior of the function $f(n)$ seems to be somewhat erratic. 
+Karl Mahlburg points out the upper bound $f(n) \leq 2n$ for $n \geq 5$, which holds because the interval $(n, 2n)$ contains an integer of the form $2m^2$. A trivial lower bound is $f(n) \geq n+p$ where $p$ is the least prime factor of $n$. For $n = p$ prime, the bounds agree and we have $f(p) = 2p$. For more discussion, see 
+\url{https://oeis.org/A006255}.
+
+\item[A3]
+Suppose on the contrary that $a_0 + a_1 y + \cdots + a_n y^n$ is nonzero for $0 < y < 1$. By the intermediate value theorem, this is only possible if $a_0 + a_1 y + \cdots + a_n y^n$ has the same sign for $0 < y < 1$; without loss of generality, we may assume that $a_0 + a_1 y + \cdots + a_n y^n > 0$ for $0 < y < 1$. For the given value of $x$, we then have
+\[
+a_0 x^m + a_1 x^{2m} + \cdots + a_n x^{(n+1)m} \geq 0
+\]
+for $m=0,1,\dots$, with strict inequality for $m>0$.
+Taking the sum over all $m$ is absolutely convergent and hence valid; this yields
+\[
+\frac{a_0}{1-x} + \frac{a_1}{1-x^2} + \cdots + \frac{a_n}{1-x^{n+1}} > 0,
+\]
+a contradiction.
+
+\item[A4]
+ Let $w_1',\ldots,w_k'$ be arcs such that: $w_j'$ has the same length as $w_j$; $w_1'$ is the same as $w_1$; and $w_{j+1}'$ is adjacent to $w_j'$ (i.e., the last digit of $w_j'$ comes right before the first digit of $w_{j+1}'$). Since $w_j$ has length $Z(w_j)+N(w_j)$, the sum of the lengths of $w_1,\ldots,w_k$ is $k(Z+N)$, and so the concatenation of $w_1',\ldots,w_k'$ is a string of $k(Z+N)$ consecutive digits around the circle. (This string may wrap around the circle, in which case some of these digits may appear more than once in the string.) Break this string into $k$ arcs $w_1'',\ldots,w_k''$ each of length $Z+N$, each adjacent to the previous one. (Note that if the number of digits around the circle is $m$, then $Z+N \leq m$ since $Z(w_j)+N(w_j) \leq m$ for all $j$, and thus each of $w_1'',\ldots,w_k''$ is indeed an arc.)
+
+We claim that for some $j=1,\ldots,k$, $Z(w_j'')=Z$ and $N(w_j'')=N$ (where the second equation follows from the first since $Z(w_j'')+N(w_j'')=Z+N$). Otherwise, since all of the $Z(w_j'')$ differ by at most $1$, either $Z(w_j'') \leq Z-1$ for all $j$ or $Z(w_j'') \geq Z+1$ for all $j$. In either case,
+$|kZ - \sum_j Z(w_j')| = |kZ-\sum_j Z(w_j'')| \geq k$. But since $w_1=w_1'$, we have
+$|kZ - \sum_j Z(w_j')| = |\sum_{j=1}^k (Z(w_j)-Z(w_j'))| = |\sum_{j=2}^k (Z(w_j)-Z(w_j'))| \leq \sum_{j=2}^k |Z(w_j)-Z(w_j')| \leq k-1$, contradiction.
+
+\item[A5]
+Let $A_1,\ldots,A_m$ be points in $\mathbb{R}^3$, and let $\hat{n}_{ijk}$ denote a unit vector normal to $\Delta A_iA_jA_k$ (unless $A_i,A_j,A_k$ are collinear, there are two possible choices for $\hat{n}_{ijk}$). If $\hat{n}$ is a unit vector in $\mathbb{R}^3$, and $\Pi_{\hat{n}}$ is a plane perpendicular to $\hat{n}$, then the area of the orthogonal projection of $\Delta A_iA_jA_k$ onto $\Pi_{\hat{n}}$ is $\text{Area}(\Delta A_iA_jA_k) |\hat{n}_{ijk} \cdot \hat{n}|$. Thus if $\{a_{ijk}\}$ is area definite for $\mathbb{R}^2$, then for any $\hat{n}$,
+\[
+\sum a_{ijk} \text{Area}(\Delta A_iA_jA_k) |\hat{n}_{ijk} \cdot \hat{n}| \geq 0.
+\]
+Note that integrating $|\hat{n}_{ijk} \cdot \hat{n}|$ over $\hat{n} \in S^2$, the unit sphere in $\mathbb{R}^3$, with respect to the natural measure on $S^2$ gives a positive number $c$, which is independent of $\hat{n}_{ijk}$ since the measure on $S^2$ is rotation-independent. Thus integrating the above inequality over $\hat{n}$ gives
+$c \sum a_{ijk} \text{Area}(\Delta A_iA_jA_k) \geq 0$. It follows that $\{a_{ijk}\}$ is area definite for $\mathbb{R}^3$, as desired. 
+
+\noindent
+\textbf{Remark:}
+It is not hard to check (e.g., by integration in spherical coordinates) that the constant $c$ occurring above is equal to $2\pi$. It follows that for any convex body $C$ in $\mathbb{R}^3$, the average over $\hat{n}$ of the area of the projection of $C$ onto $\Pi_{\hat{n}}$ equals $1/4$ of the surface area of $C$. 
+
+More generally, let $C$ be a convex body in $\mathbb{R}^n$.
+For $\hat{n}$ a unit vector, let $\Pi_{\hat{n}}$ denote the hyperplane through the origin perpendicular to $\hat{n}$. Then the average over $\hat{n}$ of the volume of the projection of $C$ onto $\Pi_{\hat{n}}$ equals a constant (depending only on $n$) times the $(n-1)$-dimensional surface area of $C$. 
+
+Statements of this form inhabit the field of \emph{inverse problems}, in which one attempts to reconstruct information about a geometric object from low-dimensional samples. This field has important applications in imaging and tomography.
+
+\item[A6]
+(by Harm Derksen)
+Consider the generating functions
+\begin{align*}
+f(x,y) &= \sum_{(a,b) \in S} x^a y^b, \\
+g(x,y) &= \sum_{(a,b) \in \mathbb{Z}^2} w(a,b) x^a y^b.
+\end{align*}
+Then $A(S)$ is the constant coefficient of the Laurent polynomial
+$h(x,y) = f(x,y) f(x^{-1}, y^{-1}) g(x,y)$. We may compute this coefficient by averaging over unit circles:
+\begin{align*}
+(2 \pi)^2 A(S) &= \int_0^{2\pi} \int_0^{2\pi} h(e^{is}, e^{it})\,dt\,ds \\
+&= \int_0^{2\pi} \int_0^{2\pi} \left| f(e^{is}, e^{it}) \right|^2 g(e^{is}, e^{it}) \,dt\,ds.
+\end{align*}
+Consequently, it is enough to check that $g(e^{is}, e^{it})$ is a nonnegative real number for all $s,t \in \mathbb{R}$. But
+$g(e^{is}, e^{it}) = 16 G(\cos s,\cos t)$ for
+\[
+G(z,w) = zw + z^2 + w^2 - z^2 w - zw^2 - z^2w^2.
+\]
+If $z,w \in [-1,1]$ and $zw \geq 0$, then
+\[
+G(z,w) = zw(1-zw) + z^2(1-w) + w^2(1-z) \geq 0.
+\]
+If $z,w \in [-1,1]$ and $zw \leq 0$, then
+\[
+G(z,w) = (z+w)^2 - zw(1+z)(1+w) \geq 0.
+\]
+Hence $g(e^{is},e^{it}) \geq 0$ as desired.
+
+\item[B1]
+Note that 
+\begin{align*}
+c(2k+1)c(2k+3) &= (-1)^k c(k) (-1)^{k+1} c(k+1) \\
+&= -c(k)c(k+1) \\ 
+&= -c(2k)c(2k+2).
+\end{align*}
+It follows that $\sum_{n=2}^{2013} c(n)c(n+2) = \sum_{k=1}^{1006} (c(2k)c(2k+2)+c(2k+1)c(2k+3)) = 0$,
+and so the desired sum is $c(1)c(3) = -1$. 
+
+\textbf{Remark}: Karl Mahlburg points out the general formula
+$c(n) = (-1)^{b_0 b_1 + b_1 b_2 + \dots + b_{k-1} b_k}$
+for $n$ having binary representation $b_k \cdots b_0$.
+
+\item[B2]
+We claim that the maximum value of $f(0)$ is $3$. This is attained for
+$N=2$, $a_1=\frac{4}{3}$, $a_2=\frac{2}{3}$: in this case $f(x) = 1+\frac{4}{3} \cos(2\pi x)+\frac{2}{3} \cos(4\pi x) =
+1+\frac{4}{3} \cos(2\pi x)+\frac{2}{3}(2\cos^2(2\pi x)-1) = \frac{1}{3} (2\cos(2\pi x)+1)^2$ is always nonnegative.
+
+Now suppose that $f = 1 + \sum_{n=1}^N a_n \cos(2\pi nx) \in C$. When $n$ is an integer, $\cos(2\pi n/3)$ equals $0$ if $3|n$ and $-1/2$ otherwise. Thus $a_n \cos(2\pi n/3) = -a_n/2$ for all $n$, and
+$f(1/3) = 1-\sum_{n=1}^N (a_n/2)$. Since $f(1/3) \geq 0$, $\sum_{n=1}^N a_n \leq 2$, whence $f(0) = 1 + \sum_{n=1}^N a_n \leq 3$.
+
+
+\item[B3]
+Yes, such numbers must exist. To define them, we make the following observations.
+
+\setcounter{lemma}{0}
+\begin{lemma}
+For any $i \in \{1,\dots,n\}$, if there exists any $S \in P$ containing $i$, then there exist $S,T \in P$ such that $S$ is the disjoint union of $T$ with $\{i\}$.
+\end{lemma}
+\begin{proof}
+Let $S$ be an element of $P$ containing $i$ of minimum cardinality.
+By (ii), there must be a subset $T \subset S$ containing $P$ with exactly one fewer element than $S$. These sets have the desired form.
+\end{proof}
+
+\begin{lemma}
+Suppose $S_1, S_2, T_1, T_2 \in P$ have the property that for some $i \in \{1,\dots,n\}$, $S_1$ is the disjoint union of $T_1$ with $\{i\}$ and $S_2$ is the disjoint union of $T_2$ with $\{i\}$. Then 
+\[
+f(S_1) - f(T_1) = f(S_2) - f(T_2).
+\]
+\end{lemma}
+\begin{proof}
+By (i) we have
+\begin{align*}
+f(T_1 \cup T_2 \cup \{i\}) &= f(S_1) + f(T_2) - f(T_1 \cap T_2) \\
+f(T_1 \cup T_2 \cup \{i\}) &= f(T_1) + f(S_2) - f(T_1 \cap T_2),
+\end{align*}
+from which the claim follows immediately.
+\end{proof}
+
+We now define $f_1,\dots,f_n$ as follows. If $i$ does not appear in any element of $P$, we put $f_i = 0$. Otherwise, by Lemma~1, we can find 
+$S, T \in P$ such that $S$ is the disjoint union of $T$ with $\{i\}$. We then set $f_i = f(S) - f(T)$; by Lemma~2, this does not depend on the choice of $S,T$.
+
+To check that $f(S) = \sum_{i \in S} f_i$ for $S \in P$, note first that $\emptyset \in P$ by repeated application of (ii) and that $f(\emptyset) = 0$ by hypothesis. This provides the base case for an induction on the cardinality of $S$; for any nonempty $S \in P$, we may apply (ii) to find $T \subset S$ such that $S$ is the disjoint union of $T$ and some singleton set $\{j\}$. By construction and the induction hypothesis, we have $f(S) = f(T) + f_j = j + \sum_{i \in T} f_i = \sum_{i \in S} f_i$ as desired.
+
+\item[B4]
+\newcommand{\Var}{\mathrm{Var}}
+
+Write $f_0(x) = f(x)-\mu(f)$ and $g_0(x) = g(x)-\mu(g)$, so that $\int_0^1 f_0(x)^2\,dx = \Var(f)$, $\int_0^1 g_0(x)^2\,dx = \Var(g)$, and $\int_0^1 f_0(x)\,dx = \int_0^1 g_0(x)\,dx = 0$. Now since $|g(x)| \leq M(g)$ for all $x$, $0\leq \int_0^1 f_0(x)^2(M(g)^2-g(x)^2)\,dx = \Var(f) M(g)^2-\int_0^1 f_0(x)^2g(x)^2\,dx$, and similarly $0 \leq \Var(g)M(f)^2-\int_0^1 f(x)^2g_0(x)^2\,dx$. Summing gives
+\begin{equation}
+\Var(f)M(g)^2+\Var(g)M(f)^2
+\label{eq:1}
+\geq \int_0^1 (f_0(x)^2g(x)^2+f(x)^2g_0(x)^2)\,dx.
+\end{equation}
+Now
+\begin{align*}
+&\int_0^1 (f_0(x)^2g(x)^2+f(x)^2g_0(x)^2)\,dx-\Var(fg) \\&= \int_0^1 (f_0(x)^2g(x)^2+f(x)^2g_0(x)^2-(f(x)g(x)-\int_0^1 f(y)g(y)\,dy)^2)\,dx;
+\end{align*}
+substituting $f_0(x)+\mu(f)$ for $f(x)$ everywhere and $g_0(x)+\mu(g)$ for $g(x)$ everywhere, and using the fact that $\int_0^1 f_0(x)\,dx = \int_0^1 g_0(x)\,dx = 0$, we can expand and simplify the right hand side of this equation to obtain
+\begin{align*}
+&\int_0^1 (f_0(x)^2g(x)^2+f(x)^2g_0(x)^2)\,dx-\Var(fg) \\
+&= \int_0^1 f_0(x)^2g_0(x)^2\,dx \\
+&-2\mu(f)\mu(g)\int_0^1 f_0(x)g_0(x)\,dx +(\int_0^1 f_0(x)g_0(x)\,dx)^2 \\
+&\geq -2\mu(f)\mu(g)\int_0^1 f_0(x)g_0(x)\,dx.
+\end{align*}
+Because of \eqref{eq:1}, it thus suffices to show that
+\begin{equation}
+2\mu(f)\mu(g)\int_0^1 f_0(x)g_0(x)\,dx
+\label{eq:3} \leq \Var(f)M(g)^2+\Var(g)M(f)^2.
+\end{equation}
+Now since $(\mu(g) f_0(x)-\mu(f) g_0(x))^2 \geq 0$ for all $x$, we have
+\begin{align*}
+2\mu(f)\mu(g) \int_0^1 f_0(x)g_0(x)\,dx
+& \leq \int_0^1 (\mu(g)^2 f_0(x)^2 + \mu(f)^2 g_0(x)^2) dx \\
+& = \Var(f) \mu(g)^2 + \Var(g) \mu(f)^2 \\
+& \leq \Var(f) M(g)^2 + \Var(g) M(f)^2,
+\end{align*}
+establishing \eqref{eq:3} and completing the proof. 
+
+\item[B5]
+\setcounter{lemma}{0}
+\textbf{First solution:}
+We assume $n \geq 1$ unless otherwise specified.
+For $T$ a set and $S_1, S_2$ two subsets of $T$, we say that a function $f: T \to T$ \emph{iterates $S_1$ into $S_2$} if for each $x \in S_1$, there is a $j \geq 0$ such that $f^{(j)}(x) \in S_2$.
+
+\begin{lemma}
+Fix $k \in X$. Let $f,g: X \to X$ be two functions such that $f$ iterates $X$ into $\{1,\dots,k\}$ and $f(x) = g(x)$ for $x \in \{k+1,\dots,n\}$. Then $g$ also iterates $X$ into $\{1,\dots,k\}$.
+\end{lemma}
+\begin{proof}
+For $x \in X$, by hypothesis there exists a nonnegative integer $j$ such that $f^{(j)}(x) \in \{1,\dots,k\}$. Choose the integer $j$ as small as possible; then $f^{(i)}(x) \in \{k+1,\dots,n\}$ for $0 \leq i<j$. By induction on $i$, we have $f^{(i)}(x) = g^{(i)}(x)$ for $i=0,\dots,j$, so in particular $g^{(j)}(x) \in \{1,\dots,k\}$. This proves the claim.
+\end{proof}
+
+We proceed by induction on $n-k$, the case $n-k=0$ being trivial.
+For the induction step, we need only confirm that the number $x$ of functions $f: X \to X$ which iterate $X$ into $\{1,\dots,k+1\}$ but not into $\{1,\dots,k\}$ is equal to $n^{n-1}$. These are precisely the functions for which there is a unique cycle $C$ containing only numbers in $\{k+1,\dots,n\}$ and said cycle contains $k+1$. Suppose $C$ has length $\ell \in \{1,\dots,n-k\}$. For a fixed choice of $\ell$, we may choose the underlying set of $C$ in
+$\binom{n-k-1}{\ell-1}$ ways and the cycle structure in $(\ell-1)!$ ways. Given $C$, the functions $f$ we want are the ones that act on $C$ as specified and iterate $X$ into
+$\{1,\dots,k\} \cup C$.
+By Lemma~1, the number of such functions is
+$n^{-\ell}$ times the total number of functions that iterate $X$ into
+$\{1,\dots,k\} \cup C$.
+By the induction hypothesis,
+we compute the number of functions  which iterate $X$ into $\{1,\dots,k+1\}$ but not into $\{1,\dots,k\}$ to be
+\[
+\sum_{\ell=1}^{n-k} (n-k-1)\cdots(n-k-\ell+1)
+(k+\ell) n^{n-\ell-1}
+\]
+By rewriting this as a telescoping sum, we get
+\begin{align*}
+&\sum_{\ell=1}^{n-k} (n-k-1)\cdots(n-k-\ell+1)
+(n) n^{n-\ell-1} \\
+&- \sum_{\ell=1}^{n-k} (n-k-1)\cdots(n-k-\ell+1)
+(n-k-\ell) n^{n-\ell-1} \\
+&=\sum_{\ell=0}^{n-k-1} (n-k-1)\cdots(n-k-\ell) n^{n-\ell-1} \\
+&- \sum_{\ell=1}^{n-k} (n-k-1)\cdots
+(n-k-\ell) n^{n-\ell-1} \\
+&= n^{n-1}.
+\end{align*}
+as desired.
+
+\textbf{Second solution:}
+For $T$ a set, $f: T \to T$ a function, and $S$ a subset of $T$,
+we define the \emph{contraction} of $f$ at $S$ as the function $g: \{* \} \cup (T-S) \to \{*\}  \cup (T-S)$
+given by
+\[
+g(x) = \begin{cases} * & x = *  \\
+* & x \neq *, f(x) \in S \\
+f(x) & x \neq *, f(x) \notin S.
+\end{cases}
+\]
+\begin{lemma}
+For $S \subseteq X$ of cardinality $\ell \geq 0$,
+there are $\ell n^{n-\ell-1}$ functions $f: \{*\} \cup X \to \{*\} \cup X$ with $f^{-1}(*) = \{*\} \cup S$
+which iterate $X$ into $\{*\}$.
+\end{lemma}
+\begin{proof}
+We induct on $n$. If $\ell = n$ then there is nothing to check.
+Otherwise, put $T = f^{-1}(S)$, which must be nonempty.
+The contraction $g$ of $f$ at $\{*\} \cup S$ is then a function on $\{*\} \cup (X-S)$ with $f^{-1}(*) = \{*\} \cup T$ which iterates $X-S$ into $\{*\}$. Moreover, for given $T$, each such $g$ arises from
+$\ell^{\# T}$ functions of the desired form.
+Summing over $T$ and invoking the induction hypothesis, we see that the number of functions $f$ is 
+\begin{align*}
+&\sum_{k=1}^{n-\ell} \binom{n-\ell}{k} \ell^k \cdot k (n-\ell)^{n-\ell-k-1} \\
+&=\sum_{k=1}^{n-\ell} \binom{n-\ell-1}{k-1} \ell^k (n-\ell)^{n-\ell-k} 
+= \ell n^{n-\ell-1}
+\end{align*}
+as claimed.
+\end{proof}
+
+We now count functions $f: X \to X$ which iterate $X$ into $\{1,\dots,k\}$ as follows. By Lemma~1 of the first solution, this count equals $n^k$ times the number of functions with $f(1) = \cdots = f(k) = 1$  which iterate $X$ into $\{1,\dots,k\}$. For such a function $f$, put $S = \{k+1,\dots,n\} \cap f^{-1}(\{1,\dots,k\})$ and let $g$ be the contraction of $f$
+at $\{1,\dots,k\}$; then $g^{-1}(*) = * \cup \{S\}$ and $g$ iterates 
+its domain into $*$. By Lemma~2, for $\ell = \#S$, there are
+$\ell (n-k)^{n-k-\ell-1}$ such functions $g$.
+For given $S$, each such $g$ gives rise to $k^{\ell}$ functions $f$ with $f(1) = \cdots = f(k) = 1$  which iterate $X$ into $\{1,\dots,k\}$.
+Thus the number of such functions $f$ is
+\begin{align*}
+&\sum_{\ell=0}^{n-k} \binom{n-k}{\ell} k^{\ell} \ell (n-k)^{n-k-\ell-1} \\
+&= \sum_{\ell=0}^{n-k} \binom{n-k-1}{\ell-1} k^{\ell} (n-k)^{n-k-\ell}\\
+&= k n^{n-k-1}.
+\end{align*}
+The desired count is this times $n^k$, or $k n^{n-1}$ as desired.
+
+\textbf{Remark:}
+Functions of the sort counted in Lemma~2 can be identified with rooted trees on the vertex set $\{*\} \cup X$ with root $*$. Such trees can be counted using \emph{Cayley's formula}, a special case of \emph{Kirchoff's matrix tree theorem}. The matrix tree theorem can also be used to show directly that the number of rooted forests on $n$ vertices with $k$ fixed roots is $k n^{n-k-1}$; the desired count follows immediately from this formula plus Lemma~1. (One can also use Pr\"ufer sequences for a more combinatorial interpretation.)
+
+\item[B6]
+
+We show that the only winning first move for Alice is to place a stone in the central space. We start with some terminology.
+
+%Divide the playing area into the \emph{left half}, the \emph{central %space}, and the \emph{right half}.
+By a \emph{block} of stones, we mean a (possibly empty) sequence of stones occupying consecutive spaces. By the \emph{extremal blocks}, we mean the (possibly empty) maximal blocks adjacent to the left and right ends of the playing area.
+
+We refer to a legal move consisting of placing a stone in an empty space as a move of \emph{type 1}, and any other legal move as being of \emph{type 2}.
+For $i=0,\dots,n$, let $P_i$ be the collection of positions containing $i$ stones. Define the \emph{end zone} as the union $Z = P_{n-1} \cup P_n$. In this language, we make the following observations.
+\begin{itemize}
+\item
+Any move of type 1 from $P_i$ ends in $P_{i+1}$.
+\item
+Any move of type 2 from $P_n$ ends in $P_{n-1}$.
+\item
+For $i < n$, any move of type 2 from $P_i$ ends in $P_i \cup P_{i+1}$.
+\item
+At this point, we see that  the number of stones cannot decrease until we reach the end zone.
+\item
+For $i < n-1$, if we start at a position in $P_i$ where the extremal blocks have length $a,b$, then the only possible moves to $P_i$ decrease one of $a,b$ while leaving the other unchanged (because they are separated by at least two empty spaces). In particular, no repetition is possible within $P_i$, so the number of stones must eventually increase to $i+1$.
+\item
+From any position in the end zone, the legal moves are precisely to the other positions in the end zone which have not previously occurred. Consequently, after the first move into the end zone, the rest of the game consists of enumerating all positions in the end zone in some order.
+\item
+At this point, we may change the rules without affecting the outcome by eliminating the rule on repetitions and declaring that the first player to move into the end zone loses (because $\# Z = n+1$ is even).
+\end{itemize}
+
+To determine who wins in each position, number the spaces of the board $1,\dots,n$ from left to right. Define the \emph{weight} of a position to be the sum of the labels of the occupied spaces, reduced modulo $n+1$. For any given position outside of the end zone, 
+for each $s=1,\dots,n$ there is a unique move that adds $s$ to the weight:
+if $s$ is empty that a move of type 1 there does the job.
+Otherwise, $s$ inhabits a block running from $i+1$ to $j-1$ with $i$ and $j$ empty (or equal to $0$ or $n+1$), so the type 2 move at $i+j-s$ (which belongs to the same block) does the job.
+
+We now verify that a position of weight $s$ outside of the end zone is a win for the player to move if and only if $s \neq (n+1)/2$. We check this for positions in $P_i$ for $i = n-2, \dots, 0$ by descending induction. For positions in $P_{n-2}$, the only safe moves are in the extremal blocks; we may thus analyze these positions as two-pile Nim with pile sizes equal to the lengths of the extremal blocks. In particular, a position is a win for the player to move if and only if the extremal blocks are unequal, in which case the winning move is to equalize the blocks. In other words, a position is a win for the player to move unless the empty spaces are at $s$ and $n+1-s$ for some $s \in \{1,\dots,(n-1)/2\}$, and indeed these are precisely the positions for which the weight equals $(1 + \cdots + n) - (n+1) \equiv (n+1)/2 \pmod{n+1}$.
+Given the analysis of positions in $P_{i+1}$ for some $i$, it is clear that if a position in $P_i$ has weight $s \neq (n+1)/2$, there is a winning move of weight $t$ where $s+t \equiv (n+1)/2 \pmod{n}$,
+whereas if $s = (n+1)/2$ then no move leads to a winning position.
+
+It thus follows that the unique winning move for Alice at her first turn is to move at the central space, as claimed.
+
+\textbf{Remark:}
+Despite the existence of a simple description of the winning positions, it is nonetheless necessary to go through the preliminary analysis in order to establish the nature of the end zone and to ensure that the repetition clause does not affect the availability of moves outside of the end zone. However, it is not strictly necessary to study $P_{n-2}$ separately: none of the positions in $P_{n-1}$ has weight $(n+1)/2$, so following the strategy of forcing the weight to equal $(n+1)/2$ cannot force a first move into the end zone.
+
+\textbf{Remark:}
+It is easy to see that Alice's winning strategy is to ensure that after each of her moves, the stones are placed symmetrically and the central space is occupied. However, it is somewhat more complicated to describe Bob's winning strategy without the modular interpretation. 
+
+\textbf{Remark:}
+To resolve a mild ambiguity in the problem statement, it should be clarified that the initial position (with no stones placed) should be treated as having occurred previously once the first move has been made. This only affects the case $n=1$.
+
+\textbf{Remark:}
+For the analogous problem with $n$ even, David Savitt has conjectured (based on the cases $n=2$ and $n=4$) that Alice has a winning strategy, and her possible winning moves at her first turn are to place a stone in one of the two central spaces. We give a partial analysis based on an argument from Art of Problem Solving user \texttt{gnayijoag}, with some clarification from Savitt.
+
+We first revise the endgame analysis from the original solution. Define the sets $P_i$ and the end zone $Z$ as before. The first six observations from the previous solution remain correct; however, now the number of positions in $Z$ is odd, so the first player to move into $Z$ wins. That is, every position in $P_{n-2}$ is a winning position for the player to move. Consequently, the positions in $P_{n-3}$ can be identified with two-player Nim on the extremal blocks (the subdivision between the two internal blocks being immaterial).
+
+This suggests that if we want to introduce a numerical invariant that detects the difference between winning and losing positions for the player to move, we must consider a formula that selectively discards some information about some of the stones. To this end, for a position $x \in P_{n-k}$ for $k \geq 2$ with vacant spaces at $a_0 > \cdots > a_{k-1}$
+(or $a_0(x) > \cdots > a_{k-1}(x)$ if this needs to be clarified),
+define
+\begin{align*}
+A(x) &= a_0 + \cdots + a_{k-1} \\
+f(x,t) &= A - a_t - t(n+1) \quad (t=0,\dots,k-1);
+\end{align*}
+note that $f(x,0) > \cdots > f(x,k-1)$. We say that $x$ is \emph{balanced} if $f(x,t) = 0$ for some (necessarily unique) choice of $t$, in which case we refer to $a_t$ as the \emph{balance point} of $x$; otherwise, we say that
+$x$ is \emph{unbalanced}.
+This definition then has the following properties. 
+\begin{itemize}
+\item
+The property of being balanced is invariant under left-right symmetry. This will permit some simplification in the following arguments.
+\item
+Every position in $P_{n-2}$ is unbalanced, because $a_0 < a_0 + a_1 < a_1 + (n+1)$.
+\item
+For a position $x \in P_1$ to be balanced,
+in order to have $f(x,t) \equiv 0 \pmod{n+1}$ for some $t$,
+the unique occupied space must be $n+1-t$. We must then have
+$A(x) - t = 1 + \cdots + n - (n+1) = (n/2  -1)(n+1)$,
+so $x$ is balanced if and only if $f(x, n/2 - 1) = 0$.
+This occurs if and only if the occupied space is $n/2$ or $n/2 + 1$.
+\item
+From every balanced position $x \in P_{n-k}$ for $k \geq 3$, every move leads to an unbalanced position.
+To check this, we need only consider moves at or to the left of the balance point $a_t$ of $x$.
+Let $y$ be the result of a move from $x$. If the move is at $a_t$,
+then
+\[
+f(y,t') \equiv f(x,t) - a_{t'}(y) = -a_{t'}(y) \pmod{n+1}
+\]
+and the latter is not a nonzero residue because $a_{t'} \in \{1,\dots,n\}$.
+For a move to the left of $a_t$, the vacant spaces to the right of $a_t$ remain at $a_0,\dots,a_{t-1}$
+and $0 < A(x) - A(y) < a_t$; consequently, 
+\begin{align*}
+f(y,t-1) &= f(x,t-1) - (A(x)-A(y)) \\
+&\geq (f(x,t) + a_t - a_{t-1} + (n+1)) - (a_t - 1) \\
+&= n+2 - a_{t-1} > 0.
+\end{align*}
+Meanwhile, either $a_t$ remains vacant, or $a_{t}$ and $a_{t+1}$ are filled while some space $b$ in between becomes vacant; in either case, we have $f(y,t) <f(x,t) = 0$.
+Since $f(y,t) < 0 < f(y,t-1)$, $y$ is unbalanced.
+\end{itemize}
+
+To complete the analysis, one would need to show that from 
+every unbalanced position in $P_{n-k}$ for $k \geq 3$, there is a move to some balanced position;
+this would then show that a position in the game is a win for the player to move if and only if it is unbalanced,
+from which the conjecture of Savitt would follow.
+
+\end{itemize}
+\end{document}
+
+
+
