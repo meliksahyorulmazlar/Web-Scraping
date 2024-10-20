@@ -74,9 +74,7 @@ class LisbonMuncipialLibrary:
             index = self.newspapers.index(newspaper)
             website = self.links[index]
             name_part = website.split("/")[4]
-            print(name_part)
             html_part: list = website.split("/")
-            print(html_part)
             html_part.pop()
             html_part = "/".join(html_part)
 
@@ -85,8 +83,6 @@ class LisbonMuncipialLibrary:
             pdf_links = [f"{html_part}/{link['href']}" for link in soup.find_all("a",href=True) if ".pdf" in link['href'] or ".PDF" in link["href"]]
 
             if len(pdf_links) > 1:
-                print("option 1")
-                print(pdf_links)
                 for pdf in pdf_links:
                     response = requests.get(url=pdf)
                     part1 = pdf.split("/")[-2]
@@ -106,10 +102,7 @@ class LisbonMuncipialLibrary:
                             f"{newspaper}/{filename} was not downloaded,it had response status code {response.status_code}\n")
 
             elif len(pdf_links) == 1:
-                print("option 2")
                 html_links = [f"{html_part}/{link['href']}" for link in soup.find_all("a",href=True) if ("htm" in link["href"] or "HTM" in link["href"]) and "/" not in link["href"]]
-                print(pdf_links,newspaper,website,html_links)
-                print(len(html_links))
                 if len(html_links) == 0:
                     print("option 2a")
                     for pdf in pdf_links:
@@ -198,4 +191,6 @@ class LisbonMuncipialLibrary:
 if __name__ == "__main__":
     lml = LisbonMuncipialLibrary()
     lml.download_all()
+
+
 
