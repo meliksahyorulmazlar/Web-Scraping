@@ -342,6 +342,7 @@ class AzerbaijanLibrary:
                         with open("journal_results.json", "w") as f:
                             json.dump({}, f, indent=4)
                             journals_dictionary = {}
+                    journal = journal.replace("/","-")
                     if journal in journals_dictionary:
                         journal_list = journals_dictionary[journal]
                         journal_list.append(pdf_link)
