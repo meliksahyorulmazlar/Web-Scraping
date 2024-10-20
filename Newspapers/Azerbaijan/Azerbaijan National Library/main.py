@@ -17,7 +17,7 @@ class AzerbaijanLibrary:
 
     # Changes the Russian text etc.
     def normalize_text(self,text):
-        return unicodedata.normalize('NFC', text.strip().replace("/", "-")).title()
+        return unicodedata.normalize('NFC', text.strip()).title()
 
     #This method will find all the newspapers on the website
     def get_newspapers(self):
@@ -35,7 +35,7 @@ class AzerbaijanLibrary:
     def get_journals(self):
         soup = BeautifulSoup(requests.get(url=self.journals_site).text, "lxml")
         select_tag = soup.find("select", class_="form-control")
-        journals = [name.text.replace("/","-") for name in select_tag.find_all("option")][1:]
+        journals = [name.text for name in select_tag.find_all("option")][1:]
         for n in journals:
             n = self.normalize_text(n)
             if n not in self.journals:
