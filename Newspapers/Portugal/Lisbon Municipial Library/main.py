@@ -73,9 +73,16 @@ class LisbonMuncipialLibrary:
             os.mkdir(newspaper)
             index = self.newspapers.index(newspaper)
             website = self.links[index]
-            name_part = website.split("/")[-2]
+            name_part = website.split("/")[4]
+            print(name_part)
+            html_part: list = website.split("/")
+            print(html_part)
+            html_part.pop()
+            html_part = "/".join(html_part)
+
+
             soup = BeautifulSoup(requests.get(url=website).text,"lxml")
-            pdf_links = [f"https://hemerotecadigital.cm-lisboa.pt/Periodicos/{name_part}/{link['href']}" for link in soup.find_all("a",href=True) if ".pdf" in link['href'] or ".PDF" in link["href"]]
+            pdf_links = [f"{html_part}/{link['href']}" for link in soup.find_all("a",href=True) if ".pdf" in link['href'] or ".PDF" in link["href"]]
 
             if len(pdf_links) > 1:
                 print("option 1")
@@ -100,9 +107,6 @@ class LisbonMuncipialLibrary:
 
             elif len(pdf_links) == 1:
                 print("option 2")
-                html_part:list = website.split("/")
-                html_part.pop()
-                html_part = "/".join(html_part)
                 html_links = [f"{html_part}/{link['href']}" for link in soup.find_all("a",href=True) if ("htm" in link["href"] or "HTM" in link["href"]) and "/" not in link["href"]]
                 print(pdf_links,newspaper,website,html_links)
                 print(len(html_links))
@@ -136,7 +140,8 @@ class LisbonMuncipialLibrary:
                         os.mkdir(f"{newspaper}/{directory_name}")
 
                         soup = BeautifulSoup(requests.get(url=directory).text,"lxml")
-                        pdf_links = [f"https://hemerotecadigital.cm-lisboa.pt/Periodicos/{name_part}/{link['href']}" for link in soup.find_all("a",href=True) if ".pdf" in link['href'] or ".PDF" in link["href"]]
+                        pdf_links = [f"https://hemerotecadigital.cm-lisboa.pt/Periodicos/{name_part}/{link['href'].replace('../','')}" for link in soup.find_all("a",href=True) if ".pdf" in link['href'] or ".PDF" in link["href"]]
+                        print(pdf_links)
                         for pdf in pdf_links:
                             response = requests.get(url=pdf)
                             part1 = pdf.split("/")[-2]
@@ -158,13 +163,17 @@ class LisbonMuncipialLibrary:
                 html_part.pop()
                 html_part = "/".join(html_part)
                 html_links = list(sorted(set([f"{html_part}/{link['href']}" for link in soup.find_all("a",href=True) if ("htm" in link["href"] or "HTM" in link["href"]) and "/" not in link["href"]])))
+                print(html_links)
                 for directory in html_links:
                     directory_name = directory.split("/")[-1]
                     directory_name = directory_name.replace(".htm", "").replace(".HTM", "")
                     os.mkdir(f"{newspaper}/{directory_name}")
 
                     soup = BeautifulSoup(requests.get(url=directory).text, "lxml")
-                    pdf_links = [f"https://hemerotecadigital.cm-lisboa.pt/Periodicos/{name_part}/{link['href']}" for link in soup.find_all("a", href=True) if ".pdf" in link['href'] or ".PDF" in link["href"]]
+                    if newspaper == 'Crónica Constitucional de Lisboa':
+                        pdf_links = [f"https://hemerotecadigital.cm-lisboa.pt/Periodicos/{name_part}/1833/{link['href']}" for link in soup.find_all("a", href=True) if ".pdf" in link['href'] or ".PDF" in link["href"]]
+                    else:
+                        pdf_links = [f"https://hemerotecadigital.cm-lisboa.pt/Periodicos/{name_part}/{link['href']}" for link in soup.find_all("a", href=True) if ".pdf" in link['href'] or ".PDF" in link["href"]]
                     for pdf in pdf_links:
                         response = requests.get(url=pdf)
                         part1 = pdf.split("/")[-2]
@@ -188,4 +197,5 @@ class LisbonMuncipialLibrary:
 
 if __name__ == "__main__":
     lml = LisbonMuncipialLibrary()
+    lml.download_all()
 
