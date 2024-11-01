@@ -16,8 +16,7 @@ class LegoInstructions:
         self.year_amount = {}
         self.year_clicks = {}
         self.get_years()
-        self.year_amount = dict(sorted(self.year_amount.items(), key=lambda item: item[1]))
-
+        self.year_amount = dict(sorted(self.year_amount.items()))
         self.themes = {}
         self.theme_clicks = {}
         self.get_themes()
@@ -33,6 +32,17 @@ class LegoInstructions:
         buttons = self.driver.find_elements(By.TAG_NAME, "button")
         dismiss_button = [button for button in buttons if button.text == "Dismiss"][0]
         dismiss_button.click()
+
+    def get_pdf_names(self):
+        try:
+            with open("pdf_files.txt","r") as f:
+                pdfs = f.readlines()
+                pdfs = [pdf.replace("\n","") for pdf in pdfs]
+        except FileNotFoundError:
+            with open("pdf_files.txt","w") as f:
+                f.write("")
+                pdfs = []
+        self.pdfs = pdfs
 
 
 
@@ -84,7 +94,6 @@ class LegoInstructions:
 
     def download_theme(self,theme:str):
         if theme in self.theme_clicks:
-
             theme_url = self.themes[theme]
             theme_site = f"https://www.lego.com/en-us/service/buildinginstructions/search?q=&theme={theme_url}&sort=setnumber"
             self.driver.get(url=theme_site)
@@ -114,10 +123,8 @@ class LegoInstructions:
                 os.makedirs(f"{theme}/{set_id}")
 
                 for pdf in pdf_files:
-
                     response = requests.get(url=pdf)
                     pdf_name = pdf.split("/")[-1]
-
                     if response.status_code == 200:
 
                         with open(f"{theme}/{set_id}/{pdf_name}","wb") as f:
@@ -125,6 +132,8 @@ class LegoInstructions:
                         with open("download_results.txt","a") as f:
                             f.write(f"{set_id} {pdf_name} was downloaded\n")
                         print(f"{set_id} {pdf_name} was downloaded\n")
+                        with open("pdf_files.txt","a") as f:
+                            f.write(f"{pdf_name}\n")
 
                     else:
                         with open("download_results.txt","a") as f:
@@ -173,7 +182,8 @@ class LegoInstructions:
                         with open("download_results.txt", "a") as f:
                             f.write(f"{set_id} {pdf_name} was downloaded\n")
                         print(f"{set_id} {pdf_name} was downloaded\n")
-
+                        with open("pdf_files.txt","a") as f:
+                            f.write(f"{pdf_name}\n")
                     else:
                         with open("download_results.txt", "a") as f:
                             f.write(
@@ -227,6 +237,8 @@ class LegoInstructions:
                         with open("download_results.txt","a") as f:
                             f.write(f"{set_id} {pdf_name} was downloaded\n")
                         print(f"{set_id} {pdf_name} was downloaded\n")
+                        with open("pdf_files.txt","a") as f:
+                            f.write(f"{pdf_name}\n")
 
                     else:
                         with open("download_results.txt","a") as f:
@@ -275,6 +287,8 @@ class LegoInstructions:
                         with open("download_results.txt", "a") as f:
                             f.write(f"{set_id} {pdf_name} was downloaded\n")
                         print(f"{set_id} {pdf_name} was downloaded\n")
+                        with open("pdf_files.txt","a") as f:
+                            f.write(f"{pdf_name}\n")
 
                     else:
                         with open("download_results.txt", "a") as f:
@@ -282,10 +296,72 @@ class LegoInstructions:
 
                         print(f"{set_id} {pdf_name} was not downloaded, it had response status code {response.status_code}\n")
 
+    # The following method will update any missing
+    def update_all(self):
+        self.get_pdf_names()
+        for year in self.year_amount:
+            website = f"https://www.lego.com/en-us/service/buildinginstructions/search?q=&year={year}&sort=setnumber"
+            self.driver.get(website)
+            click_amount = self.year_clicks[year]
+            time.sleep(5)
+
+            for i in range(click_amount):
+                self.driver.execute_script("window.scrollBy(0, 1600);")
+                load_button = [button for button in self.driver.find_elements(By.TAG_NAME, "button") if "Load more" in button.text][0]
+                load_button.click()
+                time.sleep(2)
+
+            html_content = self.driver.page_source
+            year_soup = BeautifulSoup(html_content, "lxml")
+            lego_sets = sorted(list(
+                set([f"https://www.lego.com{anchor_tag['href']}" for anchor_tag in year_soup.find_all("a", href=True) if "View Instructions" in anchor_tag.text])))
+            try:
+                os.makedirs(str(year))
+            except FileExistsError:
+                pass
+
+            for lego_set in lego_sets:
+                self.driver.get(url=lego_set)
+                time.sleep(1.5)
+                self.driver.execute_script("window.scrollBy(0, 1100);")
+                set_id = lego_set.split("/")[-1]
+                set_html = self.driver.page_source
+                set_soup = BeautifulSoup(set_html, "lxml")
+                pdf_files = [f"{pdf['href']}" for pdf in set_soup.find_all("a", href=True) if "pdf" in pdf["href"] and "LEGO_Modern_Slavery_Transparency_Statement_2023_FINAL.pdf" not in pdf["href"]]
+                try:
+                    os.makedirs(f"{year}/{set_id}")
+                except FileExistsError:
+                    pass
+
+                for pdf in pdf_files:
+                    response = requests.get(url=pdf)
+                    pdf_name = pdf.split("/")[-1]
+
+                    if pdf_name not in self.pdfs:
+                        if response.status_code == 200:
+                            with open(f"{year}/{set_id}/{pdf_name}", "wb") as f:
+                                f.write(response.content)
+                            with open("download_results.txt", "a") as f:
+                                f.write(f"{set_id} {pdf_name} was downloaded\n")
+                            print(f"{set_id} {pdf_name} was downloaded\n")
+                            with open('pdf_files.txt',"a") as f:
+                                f.write(f"{pdf_name}\n")
+
+                        else:
+                            with open("download_results.txt", "a") as f:
+                                f.write(f"{set_id} {pdf_name} was not downloaded, it had response status code {response.status_code}\n")
+
+                            print(f"{set_id} {pdf_name} was not downloaded, it had response status code {response.status_code}\n")
+                    else:
+                        print("This pdf has already been downloaded")
 
 if __name__ == "__main__":
     li = LegoInstructions()
+    
+    
     #li.download_theme('LEGOLAND (5)')
+
+    #li.update_all will download all the pdfs that might have been added to the lego.com website
 
     #The following method will download a specific year between 1996 and the current year that we are in
     #the year input has to be an integer between 1996 to the year that we are in
@@ -341,11 +417,3 @@ if __name__ == "__main__":
     #li.download_theme(theme='LEGO® Prince of Persia™ (5)')
 
     #The other methods in the class are for the initiation of the class and they should not be used after constructing the class
-
-
-
-
-
-
-
-
