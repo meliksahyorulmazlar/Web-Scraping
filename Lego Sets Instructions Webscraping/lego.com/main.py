@@ -296,7 +296,6 @@ class LegoInstructions:
 
                         print(f"{set_id} {pdf_name} was not downloaded, it had response status code {response.status_code}\n")
 
-    # The following method will update any missing
     def update_all(self):
         self.get_pdf_names()
         for year in self.year_amount:
