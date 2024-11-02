@@ -386,7 +386,7 @@ class LegoInstructions:
 
     def update_range(self,year1:int,year2:int):
         self.get_pdf_names()
-        if year2 > year1:
+        if year1 > year2:
             c = year2
             year2 = year1
             year1 = c
