@@ -109,12 +109,13 @@ class BermudaNationLibrary:
         for newspaper in self.newspaper_dictionary:
             self.download_newspaper(newspaper)
 
+    # The following method will check if all the newspapers have been downloaded
     def check_newspaper(self,newspaper:str):
         if newspaper in self.newspaper_dictionary:
             try:
                 items = os.listdir(newspaper)
             except FileNotFoundError:
-                pass
+                self.download_newspaper(newspaper)
             else:
 
 
@@ -188,7 +189,8 @@ class BermudaNationLibrary:
                                     f.write(
                                         f"{filename} was not downloaded,it had response status code {response.status_code}\n")
                                 print(f"{filename} was not downloaded,it had response status code {response.status_code}")
-
+                                
+    # The following method will check if there were any new additional newspapers
     def check_newspapers(self):
         for newspaper in self.newspaper_dictionary:
             self.check_newspaper(newspaper)
