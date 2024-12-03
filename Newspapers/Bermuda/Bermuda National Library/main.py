@@ -217,7 +217,7 @@ class BermudaNationLibrary:
         h3 = [h3.text.replace(",", '') for h3 in soup.find_all("h3") if "Records 1-" in h3.text]
         number = int(h3[0].split()[-1])
         page_count = self.find_page_count(number)
-        for i in range(295, page_count + 1):
+        for i in range(1, page_count + 1):
             site = f"{page}/page/{i}"
             self.driver.get(site)
             time.sleep(2)
@@ -328,7 +328,7 @@ class BermudaNationLibrary:
             h3 = [h3.text.replace(",", '') for h3 in soup.find_all("h3") if "Records 1-" in h3.text]
             number = int(h3[0].split()[-1])
             page_count = self.find_page_count(number)
-            for i in range(295, page_count + 1):
+            for i in range(1, page_count + 1):
                 site = f"{page}/page/{i}"
                 self.driver.get(site)
                 time.sleep(2)
