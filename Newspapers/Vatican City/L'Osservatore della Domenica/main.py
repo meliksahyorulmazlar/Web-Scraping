@@ -14,13 +14,14 @@ class LosservatoreDellaDomenica:
         self.page = 'https://www.osservatoreromano.va/it/osservatore-della-domenica/archivio.html'
         self.start_driver()
 
+    # This method will start the selenium webdriver
     def start_driver(self):
         options = webdriver.ChromeOptions()
         options.add_experimental_option('detach',True)
         options.add_argument('--headless')
         self.driver = webdriver.Chrome(options=options)
 
-    # The followi
+    # The following method will download a specific year
     def download_year(self,year:int):
         pdf_list = []
         for i in range(12):
@@ -31,11 +32,15 @@ class LosservatoreDellaDomenica:
                 string = f"{year}{i + 1}"
             else:
                 string = f"{year}0{i + 1}"
-
+            print(string)
             pdfs = [anchor.get_attribute('href') for anchor in self.driver.find_elements(By.TAG_NAME,'a') if anchor.get_attribute('href') and '.pdf.html' in anchor.get_attribute('href') and string in anchor.get_attribute('href')]
+            count = 0
             while not pdfs:
                 time.sleep(3)
                 pdfs = [anchor.get_attribute('href') for anchor in self.driver.find_elements(By.TAG_NAME, 'a') if anchor.get_attribute('href') and '.pdf.html' in anchor.get_attribute('href') and string in anchor.get_attribute('href')]
+                count += 1
+                if count == 2:
+                    break
             pdf_list += pdfs
         for pdf in pdf_list:
             filename = pdf.split("/")[-1]
@@ -58,7 +63,7 @@ class LosservatoreDellaDomenica:
         for year in range(1934,2008):
             self.download_year(year)
 
-    # This method will check if all the pdfs for a specific have been downloaded or not
+    # This method will check if all the pdfs for a specific year have been downloaded or not
     def check_year(self,year):
         pdf_list = []
         for i in range(12):
@@ -104,4 +109,4 @@ class LosservatoreDellaDomenica:
 
 if __name__ == "__main__":
     ldl = LosservatoreDellaDomenica()
-    ldl.check_year(1935)
+    ldl.download_years()
