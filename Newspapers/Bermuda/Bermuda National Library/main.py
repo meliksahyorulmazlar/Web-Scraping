@@ -36,6 +36,8 @@ class BermudaNationLibrary:
     def find_page_count(self,number:int)->int:
         if number < 20:
             return 1
+        elif number > 10000:
+            return 501
         elif number % 20 == 0:
             return number//20
         else:
