@@ -150,10 +150,10 @@ class NationalLibraryoLiechtenstein:
                                     with open('download_results.txt', 'a') as f:
                                         f.write(f"{category}/{code}.pdf was downloaded.\n")
                                         print(f"{category}/{code}.pdf was downloaded.")
-                            else:
-                                with open('download_results.txt', 'a') as f:
-                                    f.write(f"{category}/{code}.pdf was not downloaded,it had response status code {response.status_code}.\n")
-                                    print(f"{category}/{code}.pdf was not downloaded,it had response status code {response.status_code}.")
+                                else:
+                                    with open('download_results.txt', 'a') as f:
+                                        f.write(f"{category}/{code}.pdf was not downloaded,it had response status code {response.status_code}.\n")
+                                        print(f"{category}/{code}.pdf was not downloaded,it had response status code {response.status_code}.")
                         elif 'toc' in url:
                             try:
                                 os.mkdir(f'{category}/{title}_{code}')
