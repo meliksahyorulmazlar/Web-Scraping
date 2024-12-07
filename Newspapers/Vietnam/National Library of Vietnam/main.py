@@ -27,53 +27,76 @@ class NationalLibraryOfVietnam:
         if newspaper in self.newspaper_dictionary:
             os.mkdir(newspaper)
             page = self.newspaper_dictionary[newspaper]
-            code = page.split("sp=")
-            code = code[1].split("&")[0]
-            print(page)
-            month_soup = BeautifulSoup(requests.get(url=page).text,'lxml')
-            months = [f"http://baochi.nlv.gov.vn{time['href']}" for time in month_soup.select('td a',href=True,class_='datebrowserrichardmonth') if 'cl=CL2.' in time['href']]
-            for month in months:
-                print(month)
-                string = month.split("&")
-                string.pop()
-                string.pop()
-                string = "&".join(string)
-                list_form = string.split(".")
+            if 'cl' not in page:
+                string = page.split("&e")
+                string = string[0]
+                string = string.split("d&d=")[1]
+                code = string[0:5]
+                time = string[5:]
+                os.mkdir(f'{newspaper}/{time}')
+                loop = True
+                page_number = 1
+                while loop:
+                    file = f'http://baochi.nlv.gov.vn/baochi/cgi-bin/imageserver/imageserver.pl?color=all&ext=jpg&oid={code}{time}.1.{page_number}'
+                    response = requests.get(url=file)
+                    if response.status_code == 200:
+                        with open(f'{newspaper}/{time}/{page_number}.jpg', 'wb') as f:
+                            f.write(response.content)
+                        with open("download_results.txt", "a") as f:
+                            f.write(f'{newspaper}/{time}/{page_number}.jpg was downloaded.\n')
+                        print(f'{newspaper}/{time}/{page_number}.jpg was downloaded.')
+                        page_number += 1
+                    else:
+                        break
 
-                month_format = ''
-                year_format = ''
-                for item in list_form:
-                    if len(item) == 4:
-                        year_format = item
-                    elif len(item) == 2:
-                        month_format = item
+            else:
+                code = page.split("sp=")
+                code = code[1].split("&")[0]
+                print(page)
+                month_soup = BeautifulSoup(requests.get(url=page).text,'lxml')
+                months = [f"http://baochi.nlv.gov.vn{time['href']}" for time in month_soup.select('td a',href=True,class_='datebrowserrichardmonth') if 'cl=CL2.' in time['href']]
+                for month in months:
+                    print(month)
+                    string = month.split("&")
+                    string.pop()
+                    string.pop()
+                    string = "&".join(string)
+                    list_form = string.split(".")
 
-                os.mkdir(f"{newspaper}/{month_format}-{year_format}")
+                    month_format = ''
+                    year_format = ''
+                    for item in list_form:
+                        if len(item) == 4:
+                            year_format = item
+                        elif len(item) == 2:
+                            month_format = item
+
+                    os.mkdir(f"{newspaper}/{month_format}-{year_format}")
 
 
-                days_soup = BeautifulSoup(requests.get(url=month).text,'lxml')
-                days = [f"http://baochi.nlv.gov.vn{day['href']}" for day in days_soup.select('ul li a',href=True,class_='datebrowserrichardmonth') ]
+                    days_soup = BeautifulSoup(requests.get(url=month).text,'lxml')
+                    days = [f"http://baochi.nlv.gov.vn{day['href']}" for day in days_soup.select('ul li a',href=True,class_='datebrowserrichardmonth') ]
 
-                for day in days:
+                    for day in days:
 
-                    time = day.split(code)
-                    time = time[1].split("&")[0]
-                    print(time)
-                    os.mkdir(f"{newspaper}/{month_format}-{year_format}/{time}")
-                    loop = True
-                    page_number = 1
-                    while loop:
-                        file  = f'http://baochi.nlv.gov.vn/baochi/cgi-bin/imageserver/imageserver.pl?color=all&ext=jpg&oid={code}{time}.1.{page_number}'
-                        response = requests.get(url=file)
-                        if response.status_code == 200:
-                            with open(f'{newspaper}/{month_format}-{year_format}/{time}/{page_number}.jpg','wb') as f:
-                                f.write(response.content)
-                            with open("download_results.txt","a") as f:
-                                f.write(f'{newspaper}/{month_format}-{year_format}/{time}/{page_number}.jpg was downloaded.\n')
-                            print(f'{newspaper}/{month_format}-{year_format}/{time}/{page_number}.jpg was downloaded.')
-                            page_number += 1
-                        else:
-                            break
+                        time = day.split(code)
+                        time = time[1].split("&")[0]
+                        print(time)
+                        os.mkdir(f"{newspaper}/{month_format}-{year_format}/{time}")
+                        loop = True
+                        page_number = 1
+                        while loop:
+                            file  = f'http://baochi.nlv.gov.vn/baochi/cgi-bin/imageserver/imageserver.pl?color=all&ext=jpg&oid={code}{time}.1.{page_number}'
+                            response = requests.get(url=file)
+                            if response.status_code == 200:
+                                with open(f'{newspaper}/{month_format}-{year_format}/{time}/{page_number}.jpg','wb') as f:
+                                    f.write(response.content)
+                                with open("download_results.txt","a") as f:
+                                    f.write(f'{newspaper}/{month_format}-{year_format}/{time}/{page_number}.jpg was downloaded.\n')
+                                print(f'{newspaper}/{month_format}-{year_format}/{time}/{page_number}.jpg was downloaded.')
+                                page_number += 1
+                            else:
+                                break
 
     # The following method will download all the newspapers
     def download_newspapers(self):
@@ -94,63 +117,92 @@ class NationalLibraryOfVietnam:
                 except FileExistsError:
                     pass
                 page = self.newspaper_dictionary[newspaper]
-                code = page.split("sp=")
-                code = code[1].split("&")[0]
-                print(page)
-                month_soup = BeautifulSoup(requests.get(url=page).text, 'lxml')
-                months = [f"http://baochi.nlv.gov.vn{time['href']}" for time in month_soup.select('td a', href=True, class_='datebrowserrichardmonth') if 'cl=CL2.' in time['href']]
-                for month in months:
-                    print(month)
-                    string = month.split("&")
-                    string.pop()
-                    string.pop()
-                    string = "&".join(string)
-                    list_form = string.split(".")
-
-                    month_format = ''
-                    year_format = ''
-                    for item in list_form:
-                        if len(item) == 4:
-                            year_format = item
-                        elif len(item) == 2:
-                            month_format = item
-
+                if 'cl' not in page:
+                    string = page.split("&e")
+                    string = string[0]
+                    string = string.split("d&d=")[1]
+                    code = string[0:5]
+                    time = string[5:]
                     try:
-                        os.mkdir(f"{newspaper}/{month_format}-{year_format}")
+                        os.mkdir(f'{newspaper}/{time}')
                     except FileExistsError:
                         pass
+                    loop = True
+                    page_number = 1
+                    while loop:
+                        print(page_number)
+                        file = f'http://baochi.nlv.gov.vn/baochi/cgi-bin/imageserver/imageserver.pl?color=all&ext=jpg&oid={code}{time}.1.{page_number}'
+                        filename = f'{page_number}.jpg'
+                        if filename not in os.listdir(f"{newspaper}/{time}"):
+                            response = requests.get(url=file)
+                            if response.status_code == 200:
+                                with open(f'{newspaper}/{time}/{page_number}.jpg', 'wb') as f:
+                                    f.write(response.content)
+                                with open("download_results.txt", "a") as f:
+                                    f.write(f'{newspaper}/{time}/{page_number}.jpg was downloaded.\n')
+                                print(f'{newspaper}/{time}/{page_number}.jpg was downloaded.')
+                                page_number += 1
+                            else:
+                                break
+                        else:
+                            page_number += 1
+                else:
+                    code = page.split("sp=")
+                    code = code[1].split("&")[0]
+                    month_soup = BeautifulSoup(requests.get(url=page).text, 'lxml')
+                    months = [f"http://baochi.nlv.gov.vn{time['href']}" for time in month_soup.select('td a', href=True, class_='datebrowserrichardmonth') if 'cl=CL2.' in time['href']]
+                    for month in months:
+                        print(month)
+                        string = month.split("&")
+                        string.pop()
+                        string.pop()
+                        string = "&".join(string)
+                        list_form = string.split(".")
 
+                        month_format = ''
+                        year_format = ''
+                        for item in list_form:
+                            if len(item) == 4:
+                                year_format = item
+                            elif len(item) == 2:
+                                month_format = item
 
-                    days_soup = BeautifulSoup(requests.get(url=month).text, 'lxml')
-                    days = [f"http://baochi.nlv.gov.vn{day['href']}" for day in days_soup.select('ul li a', href=True, class_='datebrowserrichardmonth')]
-
-                    for day in days:
-
-                        time = day.split(code)
-                        time = time[1].split("&")[0]
-                        print(time)
                         try:
-                            os.mkdir(f"{newspaper}/{month_format}-{year_format}/{time}")
+                            os.mkdir(f"{newspaper}/{month_format}-{year_format}")
                         except FileExistsError:
                             pass
-                        loop = True
-                        page_number = 1
-                        while loop:
-                            file = f'http://baochi.nlv.gov.vn/baochi/cgi-bin/imageserver/imageserver.pl?color=all&ext=jpg&oid={code}{time}.1.{page_number}'
-                            response = requests.get(url=file)
-                            if f"{page_number}.jpg" not in os.listdir(f"{newspaper}/{month_format}-{year_format}/{time}"):
-                                if response.status_code == 200:
-                                    with open(f'{newspaper}/{month_format}-{year_format}/{time}/{page_number}.jpg', 'wb') as f:
-                                        f.write(response.content)
-                                    with open("download_results.txt", "a") as f:
-                                        f.write(
-                                            f'{newspaper}/{month_format}-{year_format}/{time}/{page_number}.jpg was downloaded.\n')
-                                    print(f'{newspaper}/{month_format}-{year_format}/{time}/{page_number}.jpg was downloaded.')
-                                    page_number += 1
+
+
+                        days_soup = BeautifulSoup(requests.get(url=month).text, 'lxml')
+                        days = [f"http://baochi.nlv.gov.vn{day['href']}" for day in days_soup.select('ul li a', href=True, class_='datebrowserrichardmonth')]
+
+                        for day in days:
+
+                            time = day.split(code)
+                            time = time[1].split("&")[0]
+                            print(time)
+                            try:
+                                os.mkdir(f"{newspaper}/{month_format}-{year_format}/{time}")
+                            except FileExistsError:
+                                pass
+                            loop = True
+                            page_number = 1
+                            while loop:
+                                file = f'http://baochi.nlv.gov.vn/baochi/cgi-bin/imageserver/imageserver.pl?color=all&ext=jpg&oid={code}{time}.1.{page_number}'
+                                response = requests.get(url=file)
+                                if f"{page_number}.jpg" not in os.listdir(f"{newspaper}/{month_format}-{year_format}/{time}"):
+                                    if response.status_code == 200:
+                                        with open(f'{newspaper}/{month_format}-{year_format}/{time}/{page_number}.jpg', 'wb') as f:
+                                            f.write(response.content)
+                                        with open("download_results.txt", "a") as f:
+                                            f.write(
+                                                f'{newspaper}/{month_format}-{year_format}/{time}/{page_number}.jpg was downloaded.\n')
+                                        print(f'{newspaper}/{month_format}-{year_format}/{time}/{page_number}.jpg was downloaded.')
+                                        page_number += 1
+                                    else:
+                                        break
                                 else:
-                                    break
-                            else:
-                                page_number += 1
+                                    page_number += 1
 
 
 
@@ -162,10 +214,7 @@ class NationalLibraryOfVietnam:
 
 
 
-
-
-
-
 if __name__ == "__main__":
     nlv = NationalLibraryOfVietnam()
-    nlv.check_newspaper(newspaper='Vịt Đực')
+    nlv.check_newspapers()
+
