@@ -166,8 +166,8 @@ class NationalLibraryoLiechtenstein:
                             for link in links:
                                 link = link.split("=")[-1]
                                 pdf_link = f'https://www.eliechtensteinensia.li/viewer/api/v1/records/{link}/pdf/'
-                                response = requests.get(pdf_link)
                                 if f"{link}.pdf" not in os.listdir(f'{category}/{title}_{code}'):
+                                    response = requests.get(pdf_link)
                                     if response.status_code == 200:
                                         with open(f"{category}/{title}_{code}/{link}.pdf", 'wb') as f:
                                             f.write(response.content)
