@@ -172,12 +172,12 @@ class NationalLibraryoLiechtenstein:
                                         with open(f"{category}/{title}_{code}/{link}.pdf", 'wb') as f:
                                             f.write(response.content)
                                         with open('download_results.txt', 'a') as f:
-                                            f.write(f"{category}/{title}_{code}/{link}.pdf.pdf was downloaded.\n")
-                                            print(f"{category}/{title}_{code}/{link}.pdf.pdf was downloaded.")
+                                            f.write(f"{category}/{title}_{code}/{link}.pdf was downloaded.\n")
+                                            print(f"{category}/{title}_{code}/{link}.pdf was downloaded.")
                                     else:
                                         with open('download_results.txt', 'a') as f:
-                                            f.write(f"{category}/{title}_{code}/{link}.pdf.pdf was not downloaded,it had response status code {response.status_code}.\n")
-                                        print(f"{category}/{title}_{code}/{link}.pdf.pdf was not downloaded,it had response status code {response.status_code}.")
+                                            f.write(f"{category}/{title}_{code}/{link}f.pdf was not downloaded,it had response status code {response.status_code}.\n")
+                                        print(f"{category}/{title}_{code}/{link}.pdf was not downloaded,it had response status code {response.status_code}.")
 
     # The following method will download all the categories
     def download_categories(self):
