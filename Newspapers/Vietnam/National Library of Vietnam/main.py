@@ -188,9 +188,9 @@ class NationalLibraryOfVietnam:
                             loop = True
                             page_number = 1
                             while loop:
-                                file = f'http://baochi.nlv.gov.vn/baochi/cgi-bin/imageserver/imageserver.pl?color=all&ext=jpg&oid={code}{time}.1.{page_number}'
-                                response = requests.get(url=file)
                                 if f"{page_number}.jpg" not in os.listdir(f"{newspaper}/{month_format}-{year_format}/{time}"):
+                                    file = f'http://baochi.nlv.gov.vn/baochi/cgi-bin/imageserver/imageserver.pl?color=all&ext=jpg&oid={code}{time}.1.{page_number}'
+                                    response = requests.get(url=file)
                                     if response.status_code == 200:
                                         with open(f'{newspaper}/{month_format}-{year_format}/{time}/{page_number}.jpg', 'wb') as f:
                                             f.write(response.content)
