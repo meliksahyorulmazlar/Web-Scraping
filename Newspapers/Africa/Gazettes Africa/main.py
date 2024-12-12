@@ -44,6 +44,8 @@ class GazettesAfrica:
                     h1 = h1.replace(country,country_code)
                     h1 = h1.lower().replace(" ","-")
                     h1 = h1.replace('number','no')
+                    if country == 'Eswatini':
+                        h1 = h1.replace('Swaziland','sz')
                     pdf_link = f"https://archive.gazettes.africa/archive/{country_code}/{year_int}/{h1}.pdf"
                     try:
                         os.mkdir(country)
@@ -99,6 +101,8 @@ class GazettesAfrica:
                     h1 = h1.replace(country, country_code)
                     h1 = h1.lower().replace(" ", "-")
                     h1 = h1.replace('number', 'no')
+                    if country == 'Eswatini':
+                        h1 = h1.replace('Swaziland','sz')
                     pdf_link = f"https://archive.gazettes.africa/archive/{country_code}/{year_int}/{h1}.pdf"
                     try:
                         os.mkdir(country)
