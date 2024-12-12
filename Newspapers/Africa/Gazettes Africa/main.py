@@ -114,6 +114,11 @@ class GazettesAfrica:
         for c in self.country_dictionary:
             self.check_country(c)
 
+    # The following method will print the names of all the countries
+    def print_countries(self):
+        for c in self.country_dictionary:
+            print(c)
+
 if __name__ == "__main__":
     ga = GazettesAfrica()
     ga.download_countries()
