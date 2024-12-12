@@ -35,33 +35,20 @@ class GazettesAfrica:
                 year_int = year.split("/")[-1]
                 print(year_int)
                 year_soup = BeautifulSoup(requests.get(url=year).text,'lxml')
-                papers = [f"https://gazettes.africa{p['href']}" for p in year_soup.find_all('a',href=True) if 'government-gazette' in p['href'] or 'official-journal' in p['href']]
+                papers = [f"https://gazettes.africa{p['href']}" for p in year_soup.find_all('a',href=True) if 'government-gazette' in p['href']]
                 print(papers)
                 for p in papers:
-                    paper_soup = BeautifulSoup(requests.get(url=p).text,'lxml')
-                    h1 = paper_soup.find('h1').text
-                    country_code = self.country_dictionary[country].split("/")[-2]
-                    h1 = h1.replace(country,country_code)
-                    h1 = h1.lower().replace(" ","-")
-                    h1 = h1.replace('number','no')
-                    h1 = h1.replace('volume','vol')
-                    if country == 'Eswatini':
-                        h1 = h1.replace('Swaziland','sz')
-                    elif country == 'Economic Community of West African States':
-                        h1 = h1.replace('Economic Community of West African States','aa-ecowas')
-                    pdf_link = f"https://archive.gazettes.africa/archive/{country_code}/{year_int}/{h1}.pdf"
+                    pdf_link = f"{p}/source.pdf"
+                    filename = p.split("@")[-1] + ".pdf"
                     try:
                         os.mkdir(country)
                     except FileExistsError:
                         pass
-
                     try:
                         os.mkdir(f"{country}/{year_int}")
                     except FileExistsError:
                         pass
-
                     response = requests.get(url=pdf_link)
-                    filename = h1
                     if response.status_code == 200:
                         with open(f'{country}/{year_int}/{filename}.pdf','wb') as f:
                             f.write(response.content)
@@ -95,21 +82,11 @@ class GazettesAfrica:
                 year_int = year.split("/")[-1]
                 print(year_int)
                 year_soup = BeautifulSoup(requests.get(url=year).text, 'lxml')
-                papers = [f"https://gazettes.africa{p['href']}" for p in year_soup.find_all('a', href=True) if 'government-gazette' in p['href'] or 'official-journal' in p['href']]
+                papers = [f"https://gazettes.africa{p['href']}" for p in year_soup.find_all('a', href=True) if 'government-gazette' in p['href']]
                 print(papers)
                 for p in papers:
-                    paper_soup = BeautifulSoup(requests.get(url=p).text, 'lxml')
-                    h1 = paper_soup.find('h1').text
-                    country_code = self.country_dictionary[country].split("/")[-2]
-                    h1 = h1.replace(country, country_code)
-                    h1 = h1.lower().replace(" ", "-")
-                    h1 = h1.replace('number', 'no')
-                    h1 = h1.replace('volume', 'vol')
-                    if country == 'Eswatini':
-                        h1 = h1.replace('Swaziland','sz')
-                    elif country == 'Economic Community of West African States':
-                        h1 = h1.replace('Economic Community of West African States','aa-ecowas')
-                    pdf_link = f"https://archive.gazettes.africa/archive/{country_code}/{year_int}/{h1}.pdf"
+                    pdf_link = f"{p}/source.pdf"
+                    filename = p.split("@")[-1] + ".pdf"
                     try:
                         os.mkdir(country)
                     except FileExistsError:
@@ -118,8 +95,7 @@ class GazettesAfrica:
                         os.mkdir(f"{country}/{year_int}")
                     except FileExistsError:
                         pass
-                    filename = h1
-                    if f"{filename}.pdf" not in os.listdir(f"{country}/{year_int}"):
+                    if f"{filename}" not in os.listdir(f"{country}/{year_int}"):
                         response = requests.get(url=pdf_link)
 
                         if response.status_code == 200:
@@ -138,11 +114,6 @@ class GazettesAfrica:
         for c in self.country_dictionary:
             self.check_country(c)
 
-    # The following method will print the names of all the countries
-    def print_countries(self):
-        for c in self.country_dictionary:
-            print(c)
-
 if __name__ == "__main__":
     ga = GazettesAfrica()
-    ga.download_country(country='Economic Community of West African States')
+    ga.download_countries()
