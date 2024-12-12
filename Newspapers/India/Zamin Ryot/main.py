@@ -48,7 +48,7 @@ class ZaminRyot:
                                 f.write(response.content)
                             with open('download_results.txt','a') as f:
                                 f.write(f'{year}/{date}/{i}.jpg was downloaded.\n')
-                            print(f'{year}/{date}/{i}.jpg was downloaded.\n')
+                            print(f'{year}/{date}/{i}.jpg was downloaded.')
                         else:
                             with open('download_results.txt','a') as f:
                                 f.write(f'{year}/{date}/{i}.jpg was not downloaded, it had response status code {response.status_code}\n')
