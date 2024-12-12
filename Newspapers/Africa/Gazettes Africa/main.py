@@ -35,7 +35,7 @@ class GazettesAfrica:
                 year_int = year.split("/")[-1]
                 print(year_int)
                 year_soup = BeautifulSoup(requests.get(url=year).text,'lxml')
-                papers = [f"https://gazettes.africa{p['href']}" for p in year_soup.find_all('a',href=True) if 'government-gazette' in p['href']]
+                papers = [f"https://gazettes.africa{p['href']}" for p in year_soup.find_all('a',href=True) if 'government-gazette' in p['href'] or 'official-journal' in p['href']]
                 print(papers)
                 for p in papers:
                     paper_soup = BeautifulSoup(requests.get(url=p).text,'lxml')
@@ -44,8 +44,11 @@ class GazettesAfrica:
                     h1 = h1.replace(country,country_code)
                     h1 = h1.lower().replace(" ","-")
                     h1 = h1.replace('number','no')
+                    h1 = h1.replace('volume','vol')
                     if country == 'Eswatini':
                         h1 = h1.replace('Swaziland','sz')
+                    elif country == 'Economic Community of West African States':
+                        h1 = h1.replace('Economic Community of West African States','aa-ecowas')
                     pdf_link = f"https://archive.gazettes.africa/archive/{country_code}/{year_int}/{h1}.pdf"
                     try:
                         os.mkdir(country)
@@ -92,7 +95,7 @@ class GazettesAfrica:
                 year_int = year.split("/")[-1]
                 print(year_int)
                 year_soup = BeautifulSoup(requests.get(url=year).text, 'lxml')
-                papers = [f"https://gazettes.africa{p['href']}" for p in year_soup.find_all('a', href=True) if 'government-gazette' in p['href']]
+                papers = [f"https://gazettes.africa{p['href']}" for p in year_soup.find_all('a', href=True) if 'government-gazette' in p['href'] or 'official-journal' in p['href']]
                 print(papers)
                 for p in papers:
                     paper_soup = BeautifulSoup(requests.get(url=p).text, 'lxml')
@@ -101,8 +104,11 @@ class GazettesAfrica:
                     h1 = h1.replace(country, country_code)
                     h1 = h1.lower().replace(" ", "-")
                     h1 = h1.replace('number', 'no')
+                    h1 = h1.replace('volume', 'vol')
                     if country == 'Eswatini':
                         h1 = h1.replace('Swaziland','sz')
+                    elif country == 'Economic Community of West African States':
+                        h1 = h1.replace('Economic Community of West African States','aa-ecowas')
                     pdf_link = f"https://archive.gazettes.africa/archive/{country_code}/{year_int}/{h1}.pdf"
                     try:
                         os.mkdir(country)
@@ -132,6 +138,11 @@ class GazettesAfrica:
         for c in self.country_dictionary:
             self.check_country(c)
 
+    # The following method will print the names of all the countries
+    def print_countries(self):
+        for c in self.country_dictionary:
+            print(c)
+
 if __name__ == "__main__":
     ga = GazettesAfrica()
-    ga.download_countries()
+    ga.download_country(country='Economic Community of West African States')
