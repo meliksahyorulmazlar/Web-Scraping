@@ -39,7 +39,7 @@ class GazettesAfrica:
                 print(papers)
                 for p in papers:
                     pdf_link = f"{p}/source.pdf"
-                    filename = p.split("@")[-1] + ".pdf"
+                    filename = p.split("@")[-1]
                     try:
                         os.mkdir(country)
                     except FileExistsError:
@@ -86,7 +86,7 @@ class GazettesAfrica:
                 print(papers)
                 for p in papers:
                     pdf_link = f"{p}/source.pdf"
-                    filename = p.split("@")[-1] + ".pdf"
+                    filename = p.split("@")[-1]
                     try:
                         os.mkdir(country)
                     except FileExistsError:
@@ -95,7 +95,7 @@ class GazettesAfrica:
                         os.mkdir(f"{country}/{year_int}")
                     except FileExistsError:
                         pass
-                    if f"{filename}" not in os.listdir(f"{country}/{year_int}"):
+                    if f"{filename}.pdf" not in os.listdir(f"{country}/{year_int}"):
                         response = requests.get(url=pdf_link)
 
                         if response.status_code == 200:
