@@ -10,7 +10,6 @@ class GazettesAfrica:
         self.main_page = 'https://gazettes.africa'
         self.country_dictionary = {}
         self.gather_countries()
-        self.check_country('Angola')
 
     # This gathers all the countries on the archive
     def gather_countries(self):
