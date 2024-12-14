@@ -10,6 +10,7 @@ class GazettesAfrica:
         self.main_page = 'https://gazettes.africa'
         self.country_dictionary = {}
         self.gather_countries()
+        self.check_country('Angola')
 
     # This gathers all the countries on the archive
     def gather_countries(self):
@@ -39,7 +40,9 @@ class GazettesAfrica:
                 print(papers)
                 for p in papers:
                     pdf_link = f"{p}/source.pdf"
-                    filename = p.split("@")[-1]
+                    date = p.split("@")[-1]
+                    code = p.split("/")[-1]
+                    filename = f"{date}-{code}"
                     try:
                         os.mkdir(country)
                     except FileExistsError:
@@ -86,7 +89,9 @@ class GazettesAfrica:
                 print(papers)
                 for p in papers:
                     pdf_link = f"{p}/source.pdf"
-                    filename = p.split("@")[-1]
+                    date = p.split("@")[-1]
+                    code = p.split("/")[-1]
+                    filename = f"{date}-{code}"
                     try:
                         os.mkdir(country)
                     except FileExistsError:
@@ -121,4 +126,4 @@ class GazettesAfrica:
 
 if __name__ == "__main__":
     ga = GazettesAfrica()
-    ga.download_countries()
+    ga.check_countries()
