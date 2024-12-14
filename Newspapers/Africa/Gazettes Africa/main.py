@@ -41,7 +41,7 @@ class GazettesAfrica:
                 for p in papers:
                     pdf_link = f"{p}/source.pdf"
                     date = p.split("@")[-1]
-                    code = p.split("/")[-1]
+                    code = p.split("/")[-2]
                     filename = f"{date}-{code}"
                     try:
                         os.mkdir(country)
@@ -90,7 +90,7 @@ class GazettesAfrica:
                 for p in papers:
                     pdf_link = f"{p}/source.pdf"
                     date = p.split("@")[-1]
-                    code = p.split("/")[-1]
+                    code = p.split("/")[-2]
                     filename = f"{date}-{code}"
                     try:
                         os.mkdir(country)
