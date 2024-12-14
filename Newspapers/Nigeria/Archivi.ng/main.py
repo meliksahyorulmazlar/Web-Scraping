@@ -9,7 +9,8 @@ class ArchiviNG:
     def __init__(self):
         self.main_page = 'https://archivi.ng/search?page=1'
         self.start_driver()
-
+    
+    # The following method starts the selenium webdriver
     def start_driver(self):
         chrome_options = webdriver.ChromeOptions()
         chrome_options.add_experimental_option('detach',True)
@@ -17,6 +18,7 @@ class ArchiviNG:
         self.driver = webdriver.Chrome(options=chrome_options)
         self.max_count = self.get_max_page()
 
+    #The following method finds the last page on the archive
     def get_max_page(self)->int:
         self.driver.get(self.main_page)
         time.sleep(3)
@@ -31,16 +33,19 @@ class ArchiviNG:
                     page_counts.append(page_count)
                 except ValueError:
                     pass
-
         page_count = max(page_counts)
         return page_count
 
     # The following method will download a page number between 1 and the max page number inclusive
     def download_page(self,page_number:int):
-        if 1<= page_number <= self.max_count:
+        if 1<= page_number <= self.max_count and page_number != 430:
             site = self.main_page.replace('1',str(page_number))
             self.driver.get(site)
-            dates = [item.text for item in self.driver.find_elements(By.CLASS_NAME,'item--desc')]
+            dates = [item.text for item in self.driver.find_elements(By.CLASS_NAME, 'item--desc')]
+            if page_number != self.max_count:
+                while len(dates) != 20:
+                    print(len(dates))
+                    dates = [item.text for item in self.driver.find_elements(By.CLASS_NAME, 'item--desc')]
             images = self.driver.find_elements(By.TAG_NAME,'img')
             images = [image.get_attribute('src') for image in images if 'amazon' in image.get_attribute('src')]
             for i  in range(len(images)):
@@ -71,10 +76,16 @@ class ArchiviNG:
 
     # The following method will check if all the images were downloaded or nor
     def check_page(self,page_number:int):
-        if 1 <= page_number <= self.max_count:
+        if 1 <= page_number <= self.max_count and page_number != 430:
             site = self.main_page.replace('1', str(page_number))
+            print(site)
             self.driver.get(site)
+
             dates = [item.text for item in self.driver.find_elements(By.CLASS_NAME, 'item--desc')]
+            if page_number != self.max_count:
+                while len(dates) != 20:
+                    print(len(dates))
+                    dates = [item.text for item in self.driver.find_elements(By.CLASS_NAME, 'item--desc')]
             images = self.driver.find_elements(By.TAG_NAME, 'img')
             images = [image.get_attribute('src') for image in images if 'amazon' in image.get_attribute('src')]
             for i in range(len(images)):
@@ -82,6 +93,7 @@ class ArchiviNG:
                 list_form = image.split("%20")
                 filename = list_form[-1]
                 date_form = dates[i].split(",")[0]
+
                 try:
                     os.mkdir(date_form)
                 except FileExistsError:
@@ -107,4 +119,4 @@ class ArchiviNG:
 
 if __name__ == "__main__":
     an = ArchiviNG()
-    an.check_pages()
+    an.download_page(430)
