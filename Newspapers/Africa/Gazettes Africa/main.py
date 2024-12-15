@@ -35,13 +35,14 @@ class GazettesAfrica:
                 year_int = year.split("/")[-1]
                 print(year_int)
                 year_soup = BeautifulSoup(requests.get(url=year).text,'lxml')
-                papers = [f"https://gazettes.africa{p['href']}" for p in year_soup.find_all('a',href=True) if 'government-gazette' in p['href']]
+                papers = [f"https://gazettes.africa{p['href']}" for p in year_soup.find_all('a', href=True) if "@" in p['href'] and 'laws' not in p['href']]
                 print(papers)
                 for p in papers:
                     pdf_link = f"{p}/source.pdf"
                     date = p.split("@")[-1]
                     code = p.split("/")[-2]
-                    filename = f"{date}-{code}"
+                    type = p.split("/")[-4]
+                    filename = f"{date}-{type}-{code}"
                     try:
                         os.mkdir(country)
                     except FileExistsError:
@@ -84,13 +85,14 @@ class GazettesAfrica:
                 year_int = year.split("/")[-1]
                 print(year_int)
                 year_soup = BeautifulSoup(requests.get(url=year).text, 'lxml')
-                papers = [f"https://gazettes.africa{p['href']}" for p in year_soup.find_all('a', href=True) if 'government-gazette' in p['href']]
+                papers = [f"https://gazettes.africa{p['href']}" for p in year_soup.find_all('a', href=True) if "@" in p['href'] and 'laws' not in p['href']]
                 print(papers)
                 for p in papers:
                     pdf_link = f"{p}/source.pdf"
                     date = p.split("@")[-1]
                     code = p.split("/")[-2]
-                    filename = f"{date}-{code}"
+                    type = p.split("/")[-4]
+                    filename = f"{date}-{type}-{code}"
                     try:
                         os.mkdir(country)
                     except FileExistsError:
