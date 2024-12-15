@@ -1,6 +1,7 @@
 # Cyprus Press Information Office
 import time
 
+import selenium.common.exceptions
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 import requests,os,lxml
@@ -19,8 +20,7 @@ class CyprusPressInformationOffice:
     def start_driver(self):
         chrome_options = webdriver.ChromeOptions()
         chrome_options.add_experimental_option('detach',True)
-        chrome_options.add_argument('--headless')
-
+        #chrome_options.add_argument('--headless')
         self.driver = webdriver.Chrome(options=chrome_options)
 
     # The following method gathers all the newspapers
@@ -44,7 +44,7 @@ class CyprusPressInformationOffice:
 
             for i in range(len(new_papers)):
                 code = new_papers[i].split("/")[-1].split("?")[0]
-                key = f"{names[i]}-{code}"
+                key = f"{names[i].strip()}-{code}"
                 value = f"https://www.pressarchive.cy{new_papers[i]}"
                 self.newspaper_dictionary[key] = value
 
@@ -54,45 +54,44 @@ class CyprusPressInformationOffice:
             os.mkdir(newspaper)
             site = self.newspaper_dictionary[newspaper]
             self.driver.get(site)
-            soup = BeautifulSoup(self.driver.page_source,'lxml')
-            pages = self.driver.find_element(By.CLASS_NAME, 'page-count')
-            page_count = int(pages.text.replace("of ", ""))
-            tuples = []
-            for i in range(1,1+1):
-                site = f"https://www.pressarchive.cy/s/en/item/31197?q=&page={i}"
-                self.driver.get(site)
-                soup = BeautifulSoup(self.driver.page_source,'lxml')
-                new_dates = [date.text.split(" ")[1] for date in soup.find_all('h5') if '\n' not in date.text]
-                new_links = [link['href'] for link in soup.find_all('a',href=True) if '/s/en/item/' in link['href'] and "#" not in link['href']]
-                for i in range(len(new_links)):
-                    tpl = f"https://www.pressarchive.cy{new_links[i]}",new_dates[i]
-                    tuples.append(tpl)
-
-            for tpl in tuples:
-                link = tpl[0]
-                date = tpl[1]
-                self.driver.get(url=link)
-                time.sleep(5)
-                image = self.driver.find_element(By.ID,'thumb0')
-                code = image.get_attribute('data-src')
-                code = code.split("_")[1]
-                pdf_link = f'https://www.pressarchive.cy/files/v2/publication_{code}_1/fullpdf'
-                filename = f"{newspaper} {date}.pdf"
-                response = requests.get(url=pdf_link)
-                if response.status_code == 200:
-                    with open(f"{newspaper}/{filename}",'wb') as f:
-                        f.write(response.content)
-                    with open('download_results.txt','a') as f:
-                        f.write(f"{newspaper}/{filename} was downloaded.\n")
-                    print(f"{newspaper}/{filename} was downloaded")
-                else:
-                    with open('download_results.txt','a') as f:
-                        f.write(f"{newspaper}/{filename} was downloaded,it had response {response.status_code}\n")
-                    print(f"{newspaper}/{filename} was downloaded,it had response {response.status_code}")
-
-
-
-
+            try:
+                pages = self.driver.find_element(By.CLASS_NAME, 'page-count')
+            except selenium.common.exceptions.NoSuchElementException:
+                print('nothing to download')
+            else:
+                page_count = int(pages.text.replace("of ", ""))
+                for i in range(1,page_count+1):
+                    site = f"https://www.pressarchive.cy/s/en/item/31197?q=&page={i}"
+                    self.driver.get(site)
+                    soup = BeautifulSoup(self.driver.page_source,'lxml')
+                    new_dates = [date.text.split(" ")[1] for date in soup.find_all('h5') if '\n' not in date.text]
+                    new_links = [link['href'] for link in soup.find_all('a',href=True) if '/s/en/item/' in link['href'] and "#" not in link['href']]
+                    for i in range(len(new_links)):
+                        link = f"https://www.pressarchive.cy{new_links[i]}"
+                        date = new_dates[i]
+                        self.driver.get(url=link)
+                        while True:
+                            try:
+                                image = self.driver.find_element(By.ID, 'thumb0')
+                            except selenium.common.exceptions.NoSuchElementException:
+                                continue
+                            else:
+                                break
+                        code = image.get_attribute('data-src')
+                        code = code.split("_")[1]
+                        pdf_link = f'https://www.pressarchive.cy/files/v2/publication_{code}_1/fullpdf'
+                        filename = f"{newspaper}-{date}.pdf"
+                        response = requests.get(url=pdf_link)
+                        if response.status_code == 200:
+                            with open(f"{newspaper}/{filename}",'wb') as f:
+                                f.write(response.content)
+                            with open('download_results.txt','a') as f:
+                                f.write(f"{newspaper}/{filename} was downloaded.\n")
+                            print(f"{newspaper}/{filename} was downloaded")
+                        else:
+                            with open('download_results.txt','a') as f:
+                                f.write(f"{newspaper}/{filename} was downloaded,it had response {response.status_code}\n")
+                            print(f"{newspaper}/{filename} was downloaded,it had response {response.status_code}")
 
     # The following method will download all the newspapers
     def download_newspapers(self):
@@ -108,42 +107,45 @@ class CyprusPressInformationOffice:
                 pass
             site = self.newspaper_dictionary[newspaper]
             self.driver.get(site)
-            soup = BeautifulSoup(self.driver.page_source, 'lxml')
-            pages = self.driver.find_element(By.CLASS_NAME, 'page-count')
-            page_count = int(pages.text.replace("of ", ""))
-            tuples = []
-            for i in range(1, 1 + 1):
-                site = f"https://www.pressarchive.cy/s/en/item/31197?q=&page={i}"
-                self.driver.get(site)
-                soup = BeautifulSoup(self.driver.page_source, 'lxml')
-                new_dates = [date.text.split(" ")[1] for date in soup.find_all('h5') if '\n' not in date.text]
-                new_links = [link['href'] for link in soup.find_all('a', href=True) if '/s/en/item/' in link['href'] and "#" not in link['href']]
-                for i in range(len(new_links)):
-                    tpl = f"https://www.pressarchive.cy{new_links[i]}", new_dates[i]
-                    tuples.append(tpl)
-
-            for tpl in tuples:
-                link = tpl[0]
-                date = tpl[1]
-                self.driver.get(url=link)
-                time.sleep(5)
-                image = self.driver.find_element(By.ID, 'thumb0')
-                code = image.get_attribute('data-src')
-                code = code.split("_")[1]
-                pdf_link = f'https://www.pressarchive.cy/files/v2/publication_{code}_1/fullpdf'
-                filename = f"{newspaper} {date}.pdf"
-                if filename not in os.listdir(newspaper):
-                    response = requests.get(url=pdf_link)
-                    if response.status_code == 200:
-                        with open(f"{newspaper}/{filename}", 'wb') as f:
-                            f.write(response.content)
-                        with open('download_results.txt', 'a') as f:
-                            f.write(f"{newspaper}/{filename} was downloaded.\n")
-                        print(f"{newspaper}/{filename} was downloaded")
-                    else:
-                        with open('download_results.txt', 'a') as f:
-                            f.write(f"{newspaper}/{filename} was downloaded,it had response {response.status_code}\n")
-                        print(f"{newspaper}/{filename} was downloaded,it had response {response.status_code}")
+            try:
+                pages = self.driver.find_element(By.CLASS_NAME, 'page-count')
+            except selenium.common.exceptions.NoSuchElementException:
+                print('nothing to download')
+            else:
+                page_count = int(pages.text.replace("of ", ""))
+                for i in range(1,page_count+1):
+                    site = f"https://www.pressarchive.cy/s/en/item/31197?q=&page={i}"
+                    self.driver.get(site)
+                    soup = BeautifulSoup(self.driver.page_source,'lxml')
+                    new_dates = [date.text.split(" ")[1] for date in soup.find_all('h5') if '\n' not in date.text]
+                    new_links = [link['href'] for link in soup.find_all('a',href=True) if '/s/en/item/' in link['href'] and "#" not in link['href']]
+                    for i in range(len(new_links)):
+                        link = f"https://www.pressarchive.cy{new_links[i]}"
+                        date = new_dates[i]
+                        self.driver.get(url=link)
+                        while True:
+                            try:
+                                image = self.driver.find_element(By.ID,'thumb0')
+                            except selenium.common.exceptions.NoSuchElementException:
+                                continue
+                            else:
+                                break
+                        code = image.get_attribute('data-src')
+                        code = code.split("_")[1]
+                        pdf_link = f'https://www.pressarchive.cy/files/v2/publication_{code}_1/fullpdf'
+                        filename = f"{newspaper}-{date}.pdf"
+                        if filename not in os.listdir(newspaper):
+                            response = requests.get(url=pdf_link)
+                            if response.status_code == 200:
+                                with open(f"{newspaper}/{filename}",'wb') as f:
+                                    f.write(response.content)
+                                with open('download_results.txt','a') as f:
+                                    f.write(f"{newspaper}/{filename} was downloaded.\n")
+                                print(f"{newspaper}/{filename} was downloaded")
+                            else:
+                                with open('download_results.txt','a') as f:
+                                    f.write(f"{newspaper}/{filename} was downloaded,it had response {response.status_code}\n")
+                                print(f"{newspaper}/{filename} was downloaded,it had response {response.status_code}")
 
     # The following method will check all the newspapers
     def check_newspapers(self):
