@@ -1,0 +1,5 @@
+sites to scrape:
+
+Thailand:
+The Phuket News Archive: https://www.thephuketnews.com/archive.php?page=1 (The Phuket News)
+change the directory name of the current thailand directory (Thaiger)
