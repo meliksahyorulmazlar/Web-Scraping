@@ -1,4 +1,6 @@
 sites to scrape:
+Afghanistan:
+•https://thekabultimes.com/category/e-paper/ Kabul Times
 
 Thailand:
 The Phuket News Archive: https://www.thephuketnews.com/archive.php?page=1 (The Phuket News)
