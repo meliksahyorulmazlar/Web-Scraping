@@ -105,6 +105,11 @@ class Delmagyarorszag:
         for y in self.year_dictionary:
             print(y)
 
+    #The following method will check all the years on the archive
+    def check_years(self):
+        for year in self.year_dictionary:
+            self.check_year(year)
+            
 if __name__ == "__main__":
     delmagyarorszag = Delmagyarorszag()
     delmagyarorszag.check_year(1950)
