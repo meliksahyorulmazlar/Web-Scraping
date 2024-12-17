@@ -2,9 +2,13 @@ sites to scrape:
 Afghanistan:
 •https://thekabultimes.com/category/e-paper/ Kabul Times
 
+Austria:
+•https://anno.onb.ac.at/alph_list.htm
+
 Thailand:
 The Phuket News Archive: https://www.thephuketnews.com/archive.php?page=1 (The Phuket News)
 change the directory name of the current thailand directory (Thaiger)
+•http://digital.nlt.go.th/dlib/items/show/19495?collection=32
 
 Chile:
 •https://elpinguino.com/digital/ from https://elpinguino.com/digital/index/2008/07 onwards El Pingüino
