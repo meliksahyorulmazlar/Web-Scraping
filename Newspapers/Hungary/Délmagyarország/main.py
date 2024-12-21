@@ -76,7 +76,6 @@ class Delmagyarorszag:
                 if n['href'].count("/") == 4:
                     if len(n['href'].split("/")[-2]) == 5:
                         links.append(n['href'])
-            links = [link for link in links if link == 'http://dmarchiv.bibl.u-szeged.hu/28151/']
             for i in range(len(links)):
                 link = links[i]
                 new_soup = BeautifulSoup(requests.get(url=link).text,'lxml')
