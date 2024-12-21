@@ -28,9 +28,10 @@ class Delmagyarorszag:
             soup = BeautifulSoup(requests.get(url=site).text, 'lxml')
             links = []
             for n in soup.find_all('a', href=True):
-                if n['href'].count("/") == 4:
-                    if len(n['href'].split("/")[-2]) == 5:
+                if 'http://dmarchiv.bibl.u-szeged.hu/' in n['href']:
                         links.append(n['href'])
+            print(links)
+            links = links[1:]
             for i in range(len(links)):
                 link = links[i]
                 new_soup = BeautifulSoup(requests.get(url=link).text, 'lxml')
@@ -73,9 +74,10 @@ class Delmagyarorszag:
             soup = BeautifulSoup(requests.get(url=site).text, 'lxml')
             links = []
             for n in soup.find_all('a', href=True):
-                if n['href'].count("/") == 4:
-                    if len(n['href'].split("/")[-2]) == 5:
+                if 'http://dmarchiv.bibl.u-szeged.hu/' in n['href']:
                         links.append(n['href'])
+            print(links)
+            links = links[1:]
             for i in range(len(links)):
                 link = links[i]
                 new_soup = BeautifulSoup(requests.get(url=link).text,'lxml')
