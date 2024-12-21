@@ -54,7 +54,7 @@ class KulturaRossiya:
             pdfs = [f"https://portal-kultura.ru{link['href']}" for link in soup.find_all('a', href=True) if 'pdf' in link['href']]
             for pdf in pdfs:
                 filename = pdf.split("/")[-1]
-                if filename not in os.listdir(year):
+                if filename not in os.listdir(str(year)):
                     response = requests.get(url=pdf)
                     if response.status_code == 200:
                         with open(f"{year}/{filename}", 'wb') as f:
