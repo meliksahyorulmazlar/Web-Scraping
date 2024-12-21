@@ -2,7 +2,6 @@
 
 import requests,os,lxml
 from bs4 import BeautifulSoup
-from sympy.physics.units import years
 
 
 class Argonaut:
