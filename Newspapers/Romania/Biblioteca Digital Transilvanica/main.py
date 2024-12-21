@@ -26,9 +26,9 @@ class BibliotecaDigitalTransilvanica:
             soup = BeautifulSoup(requests.get(url=site).text,'lxml')
             years = [f"{site}{year['href']}"for year in soup.find_all('a',href=True) if 'html' in year['href'] and 'periodice.html' not in year['href']]
             for year in years:
-                year_int = int(year.split("/")[-1].replace(".html",''))
+                year_str = year.split("/")[-1].replace(".html",'')
                 try:
-                    os.mkdir(f"{newspaper}/{year_int}")
+                    os.mkdir(f"{newspaper}/{year_str}")
                 except FileExistsError:
                     pass
                 newspaper_name = year.split('/')[-2]
@@ -36,19 +36,19 @@ class BibliotecaDigitalTransilvanica:
                 pdfs = [pdf['href'] for pdf in year_soup.find_all('a',href=True) if 'pdf' in pdf['href']]
                 for pdf in pdfs:
                     pdf_code = pdf.split("/")[-1]
-                    pdf_link = f'https://documente.bcucluj.ro/web/bibdigit/periodice/{newspaper_name}/{year_int}/{pdf_code}'
+                    pdf_link = f'https://documente.bcucluj.ro/web/bibdigit/periodice/{newspaper_name}/{year_str}/{pdf_code}'
 
                     response = requests.get(url=pdf_link)
                     if response.status_code == 200:
-                        with open(f"{newspaper}/{year_int}/{pdf_code}",'wb') as f:
+                        with open(f"{newspaper}/{year_str}/{pdf_code}",'wb') as f:
                             f.write(response.content)
                         with open('download_results.txt','a') as f:
-                            f.write(f"{newspaper}/{year_int}/{pdf_code} was downloaded.\n")
-                        print(f"{newspaper}/{year_int}/{pdf_code} was downloaded.")
+                            f.write(f"{newspaper}/{year_str}/{pdf_code} was downloaded.\n")
+                        print(f"{newspaper}/{year_str}/{pdf_code} was downloaded.")
                     else:
                         with open('download_results.txt','a') as f:
-                            f.write(f"{newspaper}/{year_int}/{pdf_code} was not downloaded, it had response status code {response.status_code}\n")
-                        print(f"{newspaper}/{year_int}/{pdf_code} was not downloaded, it had response status code {response.status_code}")
+                            f.write(f"{newspaper}/{year_str}/{pdf_code} was not downloaded, it had response status code {response.status_code}\n")
+                        print(f"{newspaper}/{year_str}/{pdf_code} was not downloaded, it had response status code {response.status_code}")
 
 
     # The following method will download all the newspapers on the archive
@@ -68,9 +68,9 @@ class BibliotecaDigitalTransilvanica:
             years = [f"{site}{year['href']}" for year in soup.find_all('a', href=True) if
                      'html' in year['href'] and 'periodice.html' not in year['href']]
             for year in years:
-                year_int = int(year.split("/")[-1].replace(".html", ''))
+                year_str = year.split("/")[-1].replace(".html", '')
                 try:
-                    os.mkdir(f"{newspaper}/{year_int}")
+                    os.mkdir(f"{newspaper}/{year_str}")
                 except FileExistsError:
                     pass
                 newspaper_name = year.split('/')[-2]
@@ -78,19 +78,19 @@ class BibliotecaDigitalTransilvanica:
                 pdfs = [pdf['href'] for pdf in year_soup.find_all('a', href=True) if 'pdf' in pdf['href']]
                 for pdf in pdfs:
                     pdf_code = pdf.split("/")[-1]
-                    if pdf_code not in os.listdir(f"{newspaper}/{year_int}"):
-                        pdf_link = f'https://documente.bcucluj.ro/web/bibdigit/periodice/{newspaper_name}/{year_int}/{pdf_code}'
+                    if pdf_code not in os.listdir(f"{newspaper}/{year_str}"):
+                        pdf_link = f'https://documente.bcucluj.ro/web/bibdigit/periodice/{newspaper_name}/{year_str}/{pdf_code}'
                         response = requests.get(url=pdf_link)
                         if response.status_code == 200:
-                            with open(f"{newspaper}/{year_int}/{pdf_code}", 'wb') as f:
+                            with open(f"{newspaper}/{year_str}/{pdf_code}", 'wb') as f:
                                 f.write(response.content)
                             with open('download_results.txt', 'a') as f:
-                                f.write(f"{newspaper}/{year_int}/{pdf_code} was downloaded.\n")
-                            print(f"{newspaper}/{year_int}/{pdf_code} was downloaded.")
+                                f.write(f"{newspaper}/{year_str}/{pdf_code} was downloaded.\n")
+                            print(f"{newspaper}/{year_str}/{pdf_code} was downloaded.")
                         else:
                             with open('download_results.txt', 'a') as f:
-                                f.write(f"{newspaper}/{year_int}/{pdf_code} was not downloaded, it had response status code {response.status_code}\n")
-                            print(f"{newspaper}/{year_int}/{pdf_code} was not downloaded, it had response status code {response.status_code}")
+                                f.write(f"{newspaper}/{year_str}/{pdf_code} was not downloaded, it had response status code {response.status_code}\n")
+                            print(f"{newspaper}/{year_str}/{pdf_code} was not downloaded, it had response status code {response.status_code}")
 
     # The following method will check all the newspapers for if all the newspapers have been downloaded or not
     def check_newspapers(self):
