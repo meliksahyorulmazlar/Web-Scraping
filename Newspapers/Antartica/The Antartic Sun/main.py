@@ -10,7 +10,7 @@ class TheAntarticSun:
         self.seasons = {}
         self.return_seasons()
 
-    # This method will get all the seasons on the archive from 1996-1997
+    # This method will get all the seasons on the archive from 1996-2007
     def return_seasons(self):
         soup = BeautifulSoup(requests.get(url=self.page).text,"lxml")
 
@@ -58,14 +58,44 @@ class TheAntarticSun:
                         f.write(f"{filename} was not downloaded,it had response status code {response.status_code}\n")
                     print(f"{filename} was not downloaded,it had response status code {response.status_code}")
 
-
-
     #This method will download all the seasons on the archive:
     def download_all(self):
         for season in self.seasons:
             self.download_season(season)
 
+    #The following method will check if all the pdfs for a particular season have been downloaded or not
+    def check_season(self,season:str):
+        if season in self.seasons:
+            print(season)
+            try:
+                os.mkdir(season)
+            except FileExistsError:
+                pass
 
+            url = self.seasons[season]
+            soup = BeautifulSoup(requests.get(url).text,"lxml")
+            pdfs = [f'https://antarcticsun.usap.gov{link["href"]}' for link in soup.find_all("a",href=True) if season in link["href"]]
+
+            for pdf in pdfs:
+                filename = pdf.split("/")[-1]
+                print(filename)
+                if filename not in os.listdir(season):
+                    response = requests.get(url=pdf)
+                    if response.status_code == 200:
+                        with open(f"{season}/{filename}","wb") as f:
+                            f.write(response.content)
+                        with open("download_results.txt","a") as f:
+                            f.write(f"{filename} was downloaded\n")
+                        print(f"{filename} was downloaded")
+                    else:
+                        with open("download_results.txt","a") as f:
+                            f.write(f"{filename} was not downloaded,it had response status code {response.status_code}\n")
+                        print(f"{filename} was not downloaded,it had response status code {response.status_code}")
+
+    # The following method will check if all the pdfs for all the seasons have been downloaded or not
+    def check_seasons(self):
+        for season in self.seasons:
+            self.check_season(season)
 
 if __name__ == "__main__":
     tas = TheAntarticSun()
