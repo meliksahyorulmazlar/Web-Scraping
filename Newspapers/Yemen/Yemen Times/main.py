@@ -28,13 +28,13 @@ class YemenTimes:
                     f.write(response.content)
                 with open("download_results.txt","a") as f:
                     f.write(f"{filename} was downloaded\n")
-                print(f"{filename} was downloaded\n")
+                print(f"{filename} was downloaded")
             else:
                 with open("download_results.txt","a") as f:
-                    f.write(f"{filename} was not downloaded, it had response status code {response.status_code}")
+                    f.write(f"{filename} was not downloaded, it had response status code {response.status_code}\n")
                 print(f"{filename} was not downloaded, it had response status code {response.status_code}")
 
-    #The following method will check if all the pdfs have been downloaded or not
+    #The following method will check if all the pdfs have been downloaded or not. If the code finds a pdf that has not been downloaded, this code will download it.
     def check_all(self):
         try:
             os.mkdir("Yemen Times Newspapers")
@@ -42,14 +42,13 @@ class YemenTimes:
             pass
         for download_link in self.download_links:
             filename = download_link.split("/")[-1]
-            print(filename)
             if filename not in os.listdir('Yemen Times Newspapers'):
                 response = requests.get(url=download_link)
                 if response.status_code == 200:
                     with open(f"Yemen Times Newspapers/{filename}","wb") as f:
                         f.write(response.content)
                     with open("download_results.txt","a") as f:
-                        f.write(f"{filename} was downloaded\n")
+                        f.write(f"{filename} was downloaded.\n")
                     print(f"{filename} was downloaded")
                 else:
                     with open("download_results.txt","a") as f:
