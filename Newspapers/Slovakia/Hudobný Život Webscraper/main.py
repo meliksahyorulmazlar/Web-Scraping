@@ -1,4 +1,4 @@
-#Webscraping a music magazine called Hudobný Život (it means musical life in slovak) from Slovakia
+#Webscraping a music magazine called Hudobný Život (it means musical life in slovak) from Slovakia
 
 import requests,os
 from bs4 import BeautifulSoup
@@ -8,13 +8,16 @@ class HudobnyZivot:
     def __init__(self):
         self.soup = BeautifulSoup(requests.get(url="https://hž.hc.sk").text,"lxml")
         self.years = [anchor.text for anchor in self.soup.find_all("a",href=True) if "#rok" in anchor["href"]]
-        self.name = "Hudobný Život"
+        self.name = "Hudobný Život"
 
     #This method will download all the pdfs found on the website
     #It takes no input
     def download_all(self):
         pdfs = [f"https://hž.hc.sk/{anchor['href']}" for anchor in self.soup.find_all("a",href=True) if ".pdf" in anchor["href"]]
-        os.makedirs(self.name)
+        try:
+            os.mkdir(self.name)
+        except FileExistsError:
+            pass
 
         for pdf in pdfs:
             response = requests.get(url=pdf)
@@ -36,7 +39,10 @@ class HudobnyZivot:
     def download_year(self,year:str):
         if year in self.years:
             pdfs = [f"https://hž.hc.sk/{anchor['href']}" for anchor in self.soup.find_all("a", href=True) if".pdf" in anchor["href"] and year in anchor["href"]]
-            os.makedirs(year)
+            try:
+                os.mkdir(self.name)
+            except FileExistsError:
+                pass
             for pdf in pdfs:
                 response = requests.get(url=pdf)
                 filename = pdf.split("/")[-1]
@@ -51,6 +57,51 @@ class HudobnyZivot:
                         f.write(f"{filename} was not downloaded, it had response status code {response.status_code}\n")
                     print(f"{filename} was not downloaded, it had response status code {response.status_code}")
 
+    #The following method will check if all the pdfs have been downloaded or not
+    def check_all(self):
+        pdfs = [f"https://hž.hc.sk/{anchor['href']}" for anchor in self.soup.find_all("a", href=True) if ".pdf" in anchor["href"]]
+        try:
+            os.mkdir(self.name)
+        except FileExistsError:
+            pass
+
+        for pdf in pdfs:
+            filename = pdf.split("/")[-1]
+            if filename not in os.listdir(self.name):
+                response = requests.get(url=pdf)
+                if response.status_code == 200:
+                    with open(f"{self.name}/{filename}", "wb") as f:
+                        f.write(response.content)
+                    with open("download_results.txt", "a") as f:
+                        f.write(f"{filename} was downloaded\n")
+                    print(f"{filename} was downloaded")
+                else:
+                    with open("download_results.txt", "a") as f:
+                        f.write(f"{filename} was not downloaded, it had response status code {response.status_code}\n")
+                    print(f"{filename} was not downloaded, it had response status code {response.status_code}")
+
+    # The following method will check if all the pdfs for a particular year have been downloaded or not
+    def check_year(self,year:str):
+        if year in self.years:
+            pdfs = [f"https://hž.hc.sk/{anchor['href']}" for anchor in self.soup.find_all("a", href=True) if".pdf" in anchor["href"] and year in anchor["href"]]
+            try:
+                os.mkdir(self.name)
+            except FileExistsError:
+                pass
+            for pdf in pdfs:
+                filename = pdf.split("/")[-1]
+                if filename not in os.listdir(year):
+                    response = requests.get(url=pdf)
+                    if response.status_code == 200:
+                        with open(f"{year}/{filename}", "wb") as f:
+                            f.write(response.content)
+                        with open("download_results.txt", "a") as f:
+                            f.write(f"{filename} was downloaded\n")
+                        print(f"{filename} was downloaded")
+                    else:
+                        with open("download_results.txt", "a") as f:
+                            f.write(f"{filename} was not downloaded, it had response status code {response.status_code}\n")
+                        print(f"{filename} was not downloaded, it had response status code {response.status_code}")
 
 if __name__ == "__main__":
     hz = HudobnyZivot()
