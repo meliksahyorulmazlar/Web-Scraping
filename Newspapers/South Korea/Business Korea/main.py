@@ -1,5 +1,5 @@
 #Business Korea is a business magazine in South Korea
-
+import os
 
 import requests,lxml,time
 from bs4 import BeautifulSoup
@@ -69,7 +69,7 @@ class BusinessKorea:
 
 
     #This method will download a specific numbered magazine for Business Korea
-    def download(self,number):
+    def download(self,number:int):
         if self.minimum < number < self.maximum:
             #This will check whether the number is missing
             if number not in self.missing :
@@ -90,15 +90,12 @@ class BusinessKorea:
 
                 print(page)
 
-
-
                 self.driver.get(page)
                 time.sleep(2)
                 current_page = self.driver.current_url
                 print(current_page)
 
                 response = requests.get(current_page)
-
 
                 if response.status_code == 200:
                     with open(f"{name}.pdf","wb") as f:
@@ -132,6 +129,61 @@ class BusinessKorea:
     #This method will download the latest magazine of Business Korea
     def download_latest(self):
         self.download(number=self.maximum)
+
+    # This method will check if a specific number has been downloaded or not
+    def check(self,number:int):
+        if self.minimum < number < self.maximum:
+            #This will check whether the number is missing
+            if number not in self.missing :
+                date = self.magazine_dictionary[number]
+                name = f"{number}-{date}"
+                if f"{name}.pdf" not in os.listdir():
+                    page = f"https://www.businesskorea.co.kr/pdf/list.html?category=&hosu={name}"
+
+                    print(page)
+                    soup = BeautifulSoup(requests.get(url=page).text,"lxml")
+
+                    pdf_links= [link["href"] for link in soup.find_all("a",href=True) if "check.php" in link["href"]]
+
+                    print(pdf_links)
+                    page = "https://www.businesskorea.co.kr/pdf/"
+
+                    for pdf_link in pdf_links[0:1]:
+                        page += pdf_link
+
+                    print(page)
+
+                    self.driver.get(page)
+                    time.sleep(2)
+                    current_page = self.driver.current_url
+                    print(current_page)
+
+                    response = requests.get(current_page)
+
+                    if response.status_code == 200:
+                        with open(f"{name}.pdf","wb") as f:
+                            f.write(response.content)
+                        with open("download_results.txt","a") as f:
+                            f.write(f"{name} was downloaded\n")
+                        print(f"{name} was downloaded\n")
+                    else:
+                        with open("download_results.txt","a") as f:
+                            f.write(f"{name} was not downloaded, it had response status code {response.status_code}\n")
+                        print(f"{name} was not downloaded, it had response status code {response.status_code}\n")
+
+    # The following method will check if all the numbers have been downloaded or not
+    def check_all(self):
+        for number in range(self.minimum,self.maximum+1):
+            self.check(number)
+
+    #The following method will check all the numbers for particular range
+    def check_n1_n2(self,n1:int,n2:int):
+        if n1 > n2:
+            c = n2
+            n2 = n1
+            n1 = c
+        for number in range(n1,n2+1):
+            self.check(number)
 
 if __name__ == "__main__":
     bk = BusinessKorea()
