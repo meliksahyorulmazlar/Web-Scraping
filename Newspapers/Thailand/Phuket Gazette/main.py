@@ -46,13 +46,49 @@ class PhuketGazette:
             self.download_year(year)
 
 
-    # his method will download all the pdfs on the website
+    # This method will download all the pdfs on the website
     def download_all(self):
         first_year = min(self.years)
         last_year = max(self.years)
         self.download_year1_year2(first_year,last_year)
 
+    # This method will check the pdfs of a particular year
+    def check_year(self,year:int):
+        if year in self.years:
+            pdfs = [link["href"] for link in self.soup.find_all("a", href=True) if str(year) in link["href"]]
+            pdfs = sorted(pdfs)
+            try:
+                os.mkdir(str(year))
+            except FileExistsError:
+                pass
+            for pdf in pdfs:
+                filename = pdf.split("/")[-1]
+                if filename in os.listdir(year):
+                    response = requests.get(url=pdf)
+                    if response.status_code == 200:
+                        with open(f"{year}/{filename}", "wb") as f:
+                            f.write(response.content)
+                        with open("download_results.txt", "a") as f:
+                            f.write(f"{filename} was downloaded\n")
+                        print(f"{filename} was downloaded")
+                    else:
+                        with open("download_results.txt", "a") as f:
+                            f.write(f"{filename} was not downloaded,it had response status code {response.status_code}\n")
+                        print(f"{filename} was not downloaded,it had response status code {response.status_code}")
 
+    # This method will download all the pdfs from one year to another
+    # check_year1_year2(2010,2015) will check 2010,2011,2012,2013,2014,2015
+    def check_year1_year2(self,year1:int,year2:int):
+        if year1 > year2:
+            c = year1
+            year1 = year2
+            year2 = c
+        for year in range(year1,year2+1):
+            self.check_year(year)
+
+    # The following method will check all the years on the archive
+    def check_all(self):
+        self.check_year1_year2(min(self.years),max(self.years))
 
 if __name__ == "__main__":
     pg = PhuketGazette()
