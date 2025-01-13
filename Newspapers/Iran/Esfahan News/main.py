@@ -1,4 +1,6 @@
 #Esfahan News pdf Webscraper
+import os
+
 import requests,lxml
 from bs4 import BeautifulSoup
 
@@ -56,9 +58,8 @@ class EsfahanNews:
     #This method will download all the pdfs found on the website
     def download_all(self):
         for year in self.year_dictionary:
-            links = self.find_pdfs(year_link=self.year_dictionary[year])
-            for link in links:
-                self.download_link(link)
+            self.download_year(year)
+
     #This method will download a year on the website
     #1399 in the persian calender will work
     #Example usage
@@ -82,7 +83,7 @@ class EsfahanNews:
     #if n1 is 500 , n2 = 505
     #it will download 500no.pdf 501no.pdf 502no.pdf 503no.pdf 504no.pdf 505no.pdf
     def download_n1_n2(self,n1:int,n2:int):
-        if n2 < n1:
+        if n1 > n2:
             c = n1
             n1 = n2
             n2 = c
@@ -96,7 +97,52 @@ class EsfahanNews:
             if n1 <= link_number <=n2:
                 self.download_link(download_link=link)
 
+    # The following method will check if the following link has been downloaded or not
+    def check_download_link(self,download_link:str):
+        filename = download_link.split("/")[-1]
+        if filename not in os.listdir():
+            response = requests.get(url=download_link)
+            if response.status_code == 200:
+                with open(f"{filename}", "wb") as f:
+                    f.write(response.content)
+                with open("download_results.txt", "a") as f:
+                    f.write(f"{filename} was downloaded\n")
+                print(f"{filename} was downloaded")
+            else:
+                with open("download_results.txt", "a") as f:
+                    f.write(f"{filename} was not downloaded,it had response status code {response.status_code}\n")
+                print(f"{filename} was not downloaded,it had response status code {response.status_code}")
 
+    # The following method will check all the links to see if they have been downloaded or not
+    def check_year(self,year:str):
+        if year in self.year_dictionary:
+            links = self.find_pdfs(year_link=self.year_dictionary[year])
+            for link in links:
+                self.check_download_link(link)
+        else:
+            print("Year not found")
+
+    # The following method will check all the links
+    def check_all(self):
+        for year in self.year_dictionary:
+            self.check_year(year)
+
+    #if n1 is 500 , n2 = 505
+    #it will download 500no.pdf 501no.pdf 502no.pdf 503no.pdf 504no.pdf 505no.pdf
+    def check_n1_n2(self,n1:int,n2:int):
+        if n1 > n2:
+            c = n1
+            n1 = n2
+            n2 = c
+
+        all_links = []
+        for year in self.year_dictionary:
+            all_links += self.find_pdfs(year_link=self.year_dictionary[year])
+
+        for link in all_links:
+            link_number = int((link.split("/")[-1]).strip("no.pdf"))
+            if n1 <= link_number <=n2:
+                self.check_download_link(download_link=link)
 
 if __name__ == "__main__":
     en = EsfahanNews()
