@@ -1,8 +1,8 @@
 #Бакинский рабочий a newspaper from Azerbaijan
 #Bakinsky Rabochiy meaning Baku Worker
-import time
+import os
 
-import requests,lxml,selenium
+import requests,lxml,selenium,time
 from bs4 import BeautifulSoup
 from selenium import webdriver
 
@@ -20,7 +20,6 @@ class BakinskyRabochiy:
             page = f"https://br.az/newspaper/?page={count}"
             print(page)
 
-
             soup = BeautifulSoup(requests.get(url=page).text,"lxml")
             pages = [link['href'] for link in soup.find_all("a",href=True) if "page=" in link["href"]]
             numbers = [int(page.split("=")[1]) for page in pages]
@@ -30,7 +29,6 @@ class BakinskyRabochiy:
             else:
                 count = max(numbers)
                 print(count)
-                time.sleep(1.5)
         return count
 
     #Method to download pdfs
@@ -68,11 +66,57 @@ class BakinskyRabochiy:
         for link in pdf_links:
             self.download_pdf(download_link=link)
 
+    # The following method will download from the n1th page till the n2nd page
+    def download_page1_page2(self,page1:int,page2:int):
+        if page1 > page2:
+            c = page1
+            page1 = page2
+            page2 = c
+
+        for i in range(page1,page2+1):
+            self.download_page(i)
+
     #This will download the entire archive
     def download_all(self):
-        self.number_pages = self.find_count()
-        for i in range(self.number_pages,-1,-1):
-            self.download_page(page_number=i)
+        self.download_page1_page2(1,self.number_pages)
+
+    # The following method will check if a pdf has been downloaded or not
+    def check_pdf(self,download_link:str):
+        filename = download_link.split("/")[-1]
+        if filename not in os.listdir():
+            response = requests.get(url=download_link)
+            if response.status_code == 200:
+                with open(f"{filename}", "wb") as f:
+                    f.write(response.content)
+                with open("download_results.txt", "a") as f:
+                    f.write(f"{filename} was downloaded\n")
+                print(f"{filename} was downloaded")
+            else:
+                with open("download_results.txt", "a") as f:
+                    f.write(f"{filename} was not downloaded,it had response status code {response.status_code}\n")
+                print(f"{filename} was not downloaded,it had response status code {response.status_code}")
+
+    # The following method will check a particular to see if its pdfs got downloaded or not
+    def check_page(self,page_number:int):
+        page = f"https://br.az/newspaper/?page={page_number}"
+        soup = BeautifulSoup(requests.get(url=page).text, "lxml")
+        pdf_links = [f'https://br.az{link["href"]}' for link in soup.find_all("a", href=True) if "pdf" in link["href"]]
+        for link in pdf_links:
+            self.check_pdf(download_link=link)
+
+    # This method will check all the pages to see if the files have been downloaded or not
+    def check_page1_page2(self,page1:int,page2:int):
+        if page1 > page2:
+            c = page1
+            page1 = page2
+            page2 = c
+
+        for i in range(page1,page2+1):
+            self.check_page(i)
+
+    # The following method will check the entire archive
+    def check_all(self):
+        self.check_page1_page2(1,self.number_pages)
 
 
 if __name__ == "__main__":
