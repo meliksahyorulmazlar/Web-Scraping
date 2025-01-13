@@ -67,10 +67,53 @@ class VataneEmrooz:
             self.download(i)
 
 
-    #This method will download a specific numbered newspaper of Vatan-e Emrooz if it exists
-    def download_number(self,number:int)
-        self.download(number)
+    # The following method will check the download of the newspapers
+    def check_download(self,number:int):
+        i = number
+        website = f"https://vatanemrooz.ir/?nid={i}&pid=1&type=0"
+        soup = BeautifulSoup(requests.get(url=website).text, "lxml")
+        try:
+            day = soup.find("div", class_="newspaperdate").text
+        except AttributeError:
+            pass
+        else:
+            filename = day + f" {i}"
+            try:
+                os.mkdir(filename)
+            except FileExistsError:
+                pass
+            pdfs = [f"https://vatanemrooz.ir{link['href']}" for link in soup.find_all("a", href=True) if "PagePDF" in link["href"] and "AllPagePDF" not in link['href']]
+            for pdf in pdfs:
+                if f"{pdfs.index(pdf) + 1}.pdf" not in os.listdir(filename):
+                    response = requests.get(url=pdf)
+                    if response.status_code == 200:
+                        with open(f"{filename}/{pdfs.index(pdf) + 1}.pdf", "wb") as f:
+                            f.write(response.content)
+                        with open("download_results.txt", "a") as f:
+                            f.write(f"{i}/{pdfs.index(pdf) + 1}.pdf was downloaded\n")
+                        print(f"{i}/{pdfs.index(pdf) + 1}.pdf was downloaded")
+                    else:
+                        with open("download_results.txt", "a") as f:
+                            f.write(
+                                f"{i}/{pdfs.index(pdf) + 1}.pdf was not downloaded,it had response status code {response.status_code}\n")
+                        print(f"{i}/{pdfs.index(pdf) + 1}.pdf was not downloaded,it had response status code {response.status_code}")
 
+    #This will check all the newspapers of Vatan-e Emrooz
+    def check_all(self):
+        for i in range(1,self.latest+1):
+            self.check_download(i)
+
+
+    #This will check all the newspapers of Vatan-e Emrooz from the n1th newspaper till the n2nd newspaper
+    #download_n1_n2(1,5)
+    #will download 1,2,3,4,5 of Vatan-e Emrooz
+    def check_n1_n2(self,n1:int,n2:int):
+        if n1 > n2:
+            c = n1
+            n1 = n2
+            n2 = c
+        for i in range(n1,n2+1):
+            self.check_download(i)
 
 if __name__ == "__main__":
     ve = VataneEmrooz()
