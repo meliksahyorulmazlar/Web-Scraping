@@ -5,7 +5,7 @@
 
 import persiantools.jdatetime
 from persiantools.jdatetime import JalaliDate
-import requests,os,lxml
+import requests,os,lxml,datetime
 from bs4 import BeautifulSoup
 from datetime import timedelta,datetime
 
@@ -21,39 +21,40 @@ class KayhanEnglish:
         self.today = datetime(day=current_day,month=current_month,year=current_year)
 
     #This will download a date
-    def download_date(self,current_date):
-        formatted_date = current_date.strftime('%Y/%m/%d')
-        webpage_url = f"https://kayhan.ir/en/publication?type_id=*&publication_id=-1&rpp=5&from_date={formatted_date}&to_date={formatted_date}&p=1"
-        soup = BeautifulSoup(requests.get(url=webpage_url).text, "lxml")
-        download_links = [f'{self.webpage}{link["href"]}' for link in soup.find_all("a", href=True) if ".pdf" in link["href"]]
-        if len(download_links) == 0:
-            pass
-        else:
-            day = current_date.day
-            month = current_date.month
-            year = current_date.year
-            try:
-                os.makedirs(str(year))
-            except FileExistsError:
+    def download_date(self,current_date:datetime.datetime):
+        if self.first_day <= current_date <= self.today:
+            formatted_date = current_date.strftime('%Y/%m/%d')
+            webpage_url = f"https://kayhan.ir/en/publication?type_id=*&publication_id=-1&rpp=5&from_date={formatted_date}&to_date={formatted_date}&p=1"
+            soup = BeautifulSoup(requests.get(url=webpage_url).text, "lxml")
+            download_links = [f'{self.webpage}{link["href"]}' for link in soup.find_all("a", href=True) if ".pdf" in link["href"]]
+            if len(download_links) == 0:
                 pass
-            directory_name = f"{year}/{day}-{month}-{year}"
-            os.makedirs(directory_name)
-            print(download_links)
-            for download_link in download_links:
-                response = requests.get(url=download_link)
-                filename = download_link.split("/")[-1].split("?")[0]
-                saved_as = f"{directory_name}/{filename}"
-                result = f"{day}-{month}-{year} {filename}"
-                if response.status_code == 200:
-                    with open(saved_as, "wb") as f:
-                        f.write(response.content)
-                    with open("download_results.txt", "a") as f:
-                        f.write(f"{result} was downloaded\n")
-                        print(f"{result} was downloaded")
-                else:
-                    with open("download_results.txt", "a") as f:
-                        f.write(f"{result} was not downloaded,it had response status code {response.status_code}\n")
-                        print(f"{result} was not downloaded,it had response status code {response.status_code}")
+            else:
+                day = current_date.day
+                month = current_date.month
+                year = current_date.year
+                try:
+                    os.makedirs(str(year))
+                except FileExistsError:
+                    pass
+                directory_name = f"{year}/{day}-{month}-{year}"
+                os.makedirs(directory_name)
+                print(download_links)
+                for download_link in download_links:
+                    response = requests.get(url=download_link)
+                    filename = download_link.split("/")[-1].split("?")[0]
+                    saved_as = f"{directory_name}/{filename}"
+                    result = f"{day}-{month}-{year} {filename}"
+                    if response.status_code == 200:
+                        with open(saved_as, "wb") as f:
+                            f.write(response.content)
+                        with open("download_results.txt", "a") as f:
+                            f.write(f"{result} was downloaded\n")
+                            print(f"{result} was downloaded")
+                    else:
+                        with open("download_results.txt", "a") as f:
+                            f.write(f"{result} was not downloaded,it had response status code {response.status_code}\n")
+                            print(f"{result} was not downloaded,it had response status code {response.status_code}")
 
     #The method will download all of Kayhan's English online archive
     def download_all(self):
@@ -66,8 +67,8 @@ class KayhanEnglish:
     #If you would like to input the dates in the gregorian calendar, you can use this method instead
     #kf.download_dates(datetime(day=4,month=2,year=2024),datetime(day=6,month=2,year=2024))
     #This will download all the newspapers for:
-    #4th,5th,6th February 2024
-    def download_dates(self,d1:datetime,d2:datetime):
+    #4th,5th,6th February 2025
+    def download_dates(self,d1:datetime.datetime,d2:datetime.datetime):
         if d1 > d2:
             day = d2
             d2 = d1
@@ -77,9 +78,65 @@ class KayhanEnglish:
             self.download_date(current_date)
             current_date += timedelta(days=1)
 
+    # The following method will check if the images for a particular date have been downloaded or not
+    def check_date(self,current_date:datetime.datetime):
+        if self.first_day <= current_date <= self.today:
+            formatted_date = current_date.strftime('%Y/%m/%d')
+            webpage_url = f"https://kayhan.ir/en/publication?type_id=*&publication_id=-1&rpp=5&from_date={formatted_date}&to_date={formatted_date}&p=1"
+            soup = BeautifulSoup(requests.get(url=webpage_url).text, "lxml")
+            download_links = [f'{self.webpage}{link["href"]}' for link in soup.find_all("a", href=True) if
+                              ".pdf" in link["href"]]
+            if len(download_links) == 0:
+                pass
+            else:
+                day = current_date.day
+                month = current_date.month
+                year = current_date.year
+                try:
+                    os.makedirs(str(year))
+                except FileExistsError:
+                    pass
+                directory_name = f"{year}/{day}-{month}-{year}"
+                try:
+                    os.mkdir(directory_name)
+                except FileExistsError:
+                    pass
+                print(download_links)
+                for download_link in download_links:
+                    filename = download_link.split("/")[-1].split("?")[0]
+                    saved_as = f"{directory_name}/{filename}"
+                    result = f"{day}-{month}-{year} {filename}"
+                    if filename not in os.listdir(directory_name):
+                        response = requests.get(url=download_link)
+                        if response.status_code == 200:
+                            with open(saved_as, "wb") as f:
+                                f.write(response.content)
+                            with open("download_results.txt", "a") as f:
+                                f.write(f"{result} was downloaded\n")
+                                print(f"{result} was downloaded")
+                        else:
+                            with open("download_results.txt", "a") as f:
+                                f.write(f"{result} was not downloaded,it had response status code {response.status_code}\n")
+                                print(f"{result} was not downloaded,it had response status code {response.status_code}")
+
+    # The following method will check from one date to another date
+    def check_d1_d2(self,d1:datetime.datetime,d2:datetime.datetime):
+        if d1 > d2:
+            day = d2
+            d2 = d1
+            d1 = day
+        current_date = d1
+        while current_date <= d2:
+            self.check_date(current_date)
+            current_date += timedelta(days=1)
+
+    # The following method will check the entire archive
+    def check_all(self):
+        start = self.first_day
+        end = self.today
+        self.check_d1_d2(start,end)
+
+
 if __name__ == "__main__":
     ke = KayhanEnglish()
     ke.download_all()
-
-
-
