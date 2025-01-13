@@ -77,7 +77,57 @@ class DonyaEqtesad:
     def download_number(self,number:int):
         self.download(number)
 
+    # The following method will check to see if the pdf has been downloaded or not
+    def check_download(self,number:int):
+        i = number
+        website = f"https://donya-e-eqtesad.com/روزنامه-شماره-{i}"
+        soup = BeautifulSoup(requests.get(url=website).text, "lxml")
+        day = soup.find_all("time")[-1].text
+        list = [self.replace_persian_numbers(char) for char in day]
+        day = "".join(list) + f" {i}"
+        print(day)
+        try:
+            os.mkdir(day)
+        except FileExistsError:
+            pass
+        image_links = [link["href"] for link in soup.find_all("a", href=True) if ".jpg" in link["href"]]
+        for j in range(len(image_links)):
+            filename = f"{i}-{j + 1}.jpg"
+            if filename not in os.listdir(day):
+                response = requests.get(url=image_links[j])
 
+                if response.status_code == 200:
+                    with open(f"{day}/{i}-{j + 1}.jpg", 'wb') as f:
+                        f.write(response.content)
+                    with open("download_results.txt", "a") as f:
+                        f.write(f"{i}-{j + 1}.jpg was downloaded\n")
+                    print(f"{i}-{j + 1}.jpg was downloaded")
+                else:
+                    with open("download_results.txt", "a") as f:
+                        f.write(f"{i}-{j + 1}.jpg was not downloaded,it had response status code\n")
+                    print(f"{i}-{j + 1}.jpg was not downloaded,it had response status code")
+
+    #The following method will check the entire archive of Donya-e Eqtesad
+    def check_all(self):
+        for i in range(1019,self.latest+1):
+            self.check_download(i)
+
+    #This method will check the latest number of Donya-e Eqtesad
+    def check_latest(self):
+        self.check_download(self.latest)
+
+    #This method will download all the numbers from n1 to n2
+    #download_n1_n2(1500,1503)
+    #This will download all the numbers from 1500 1501 1502 1503
+    def check_n1_n2(self,n1:int,n2:int):
+        if n1>n2:
+            c = n1
+            n1 = n2
+            n2 = c
+        for i in range(n1,n2+1):
+            self.check_download(number=i)
+
+    
 if __name__ == "__main__":
     de = DonyaEqtesad()
     de.download_all()
