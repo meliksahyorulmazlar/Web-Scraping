@@ -1,6 +1,7 @@
 #The Anglo Portuguese News was founded in 1937 by Major C. E. Wakeham, with Luiz Marques as editor.
 #It was the only English language newspaper published right through the Second World War in continental Europe, 
 #and the German broadcasting system referred to the paper as "Churchill's mouthpiece in Lisbon", which was a source of great pride to the editor.
+import os
 
 #Luiz Marques purchased the paper in 1954 and from then on was proprietor and editor until his death in October 1976.
 #His wife Susan Lowndes Marques, who had written for the newspaper since 1954, assumed the role of proprietor and editor after her husband's death 
@@ -54,6 +55,14 @@ class AngloPortugueseNews:
 
     #This method will download from 1 specific month to another
     def download_d1_d2(self,d1:tuple,d2:tuple):
+        if d1[1] > d2[1]:
+            c = d1
+            d1 = d2
+            d2 = c
+        elif d1[1] == d1[1] and d1[0] > d1[0]:
+            c = d1
+            d1 = d2
+            d2 = c
         d1_month = d1[0]
         d1_year = d1[1]
 
@@ -79,8 +88,71 @@ class AngloPortugueseNews:
     def download_all(self):
         self.download_d1_d2(d1=(2,1937),d2=(2,2004))
 
+    # The following method will check if the newspaper was downloaded or not
+    def check_month(self,month:int,year:int):
+        if month < 10:
+            month = f"0{month}"
+
+        website = f"https://www.angloportuguesenews.pt/?a=cl&cl=CL2.{year}.{month}&e=-------en-20--1--txt-txIN-------"
+
+        response = requests.get(url=website,headers=self.headers)
+        soup = BeautifulSoup(response.text,"lxml")
+        pdfs = [f'{self.main}{link["href"]}' for link in soup.find_all("a",href=True) if "APN" in link["href"]]
+        if len(pdfs) == 0:
+            print("There were no pdfs")
+        else:
+            for pdf in pdfs:
+                print(pdfs)
+                items = pdf.split("=")
+                item = items[2].strip("&e")
+
+                pdf_page = f"https://www.angloportuguesenews.pt/?a=is&oid={item}&type=staticpdf&e=-------en-20--1--txt-txIN-------"
+                if f"{item}.pdf" not in os.listdir():
+                    response = requests.get(pdf_page,headers=self.headers)
+                    if response.status_code == 200:
+                        with open(f"{item}.pdf","wb") as f:
+                            f.write(response.content)
+                        with open("download_results.txt","a") as f:
+                            f.write(f"{item} was downloaded\n")
+                        print(f"{item} was downloaded")
+                    else:
+                        with open("download_results.txt","a") as f:
+                            f.write(f"{item} was not downloaded, it had response status code {response.status_code}\n")
+                        print(f"{item} was not downloaded, it had response status code {response.status_code}\n")
+
+    # The following method will check from one month to another later month
+    def check_d1_d2(self,d1:tuple,d2:tuple):
+        if d1[1] > d2[1]:
+            c = d1
+            d1 = d2
+            d2 = c
+        elif d1[1] == d1[1] and d1[0] > d1[0]:
+            c = d1
+            d1 = d2
+            d2 = c
+        d1_month = d1[0]
+        d1_year = d1[1]
+
+        d2_month = d2[0]
+        d2_year = d2[1]
+
+        while not ((d1_month == d2_month) and (d1_year == d2_year)):
+            print(d1_month, d1_year)
+            month = d1_month
+            year = d1_year
+
+            self.check_month(month, year)
+
+            if month == 12:
+                d1_month = 1
+                d1_year += 1
+            else:
+                d1_month += 1
+
+    #This method will check the entire archive from 1937 to 2004
+    def check_all(self):
+        self.check_d1_d2(d1=(2,1937),d2=(2,2004))
 
 if __name__ == "__main__":
     apn = AngloPortugueseNews()
     apn.download_d1_d2(d1=(3,1961),d2=apn.end_month_year)
-     
