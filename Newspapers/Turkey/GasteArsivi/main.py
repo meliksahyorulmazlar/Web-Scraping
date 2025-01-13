@@ -107,6 +107,62 @@ class GasteArsivi:
         for i in range(len(self.newspapers)):
             self.download_newspaper(index=i)
 
+    # The following method will check if all the newspapers for a newspaper were downloaded or not
+    def check_newspaper(self,index:int):
+        if 0 <= index < len(self.newspapers):
+            name = self.newspapers[index]
+            os.makedirs(name)
+
+            website = self.newspaper_links[index]
+            soup = BeautifulSoup(requests.get(url=website).text,"lxml")
+            page_links = [number.text for number in soup.select("div nav ul li span")]
+            number_of_pages = int(page_links[-1])
+            newspaper_links = []
+
+            #finding all the newspapers
+            for i in range(1,number_of_pages+1):
+                current_page = f"{website}/{i}"
+                print(current_page)
+                soup = BeautifulSoup(requests.get(url=current_page).text,"lxml")
+                news_links = [f'https://www.gastearsivi.com{link["href"]}' for link in soup.find_all("a",href=True,itemprop=True) if link["itemprop"]=="mainEntityOfPage"]
+                for new_link in news_links:
+                    newspaper_links.append(new_link)
+
+            #finding all the pages of the newspaper
+            for link in newspaper_links:
+                newspaper_date = link.split("/")[-2]
+                os.makedirs(f"{name}/{newspaper_date}")
+
+                paper_soup = BeautifulSoup(requests.get(url=link).text,"lxml")
+                pages = [f'https://www.gastearsivi.com{link["href"]}' for link in paper_soup.find_all("a",href=True,class_="StyledComponents__StyledLink-sc-1vz7aia-18 hBkgwa mr-1")]
+
+                #downloading the pages
+                for page in pages:
+
+                    photo_soup = BeautifulSoup(requests.get(url=page).text,"lxml")
+                    photo = photo_soup.find("img",src=True)["src"]
+                    filename = photo.split("/")[-1]
+
+                    if filename not in os.listdir(f"{name}/{newspaper_date}"):
+                        response = requests.get(url=photo)
+
+                        if response.status_code == 200:
+                            with open(f"{name}/{newspaper_date}/{filename}","wb") as f:
+                                f.write(response.content)
+                            with open("download_results.txt","a") as f:
+                                f.write(f"{name}/{newspaper_date}/{filename} was downloaded\n")
+                            print(f"{name}/{newspaper_date}/{filename} was downloaded")
+                        else:
+                            with open("download_results.txt","a") as f:
+                                f.write(f"{name}/{newspaper_date}/{filename} was not downloaded,it had response status code {response.status_code}\n")
+                            print(f"{name}/{newspaper_date}/{filename} was downloaded,it had response status code {response.status_code}")
+
+    # The following method will check the entire archive
+    def check_all(self):
+        for i in range(len(self.newspapers)):
+            self.check_newspaper(index=i)
+
+
 if __name__ == "__main__":
     ga = GasteArsivi()
 
