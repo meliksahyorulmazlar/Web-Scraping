@@ -65,7 +65,43 @@ class Fotomac:
     def download_today(self):
         self.download_date(date=self.today)
 
+    # The following method will check if the date was downloaded or not
+    def check_date(self,date:datetime.datetime):
+        if date < self.start_date or date > self.today:
+            print("The date is not on the archive or the date is in the future.")
+        else:
+            day = date.day
+            month = date.month
+            year = date.year
+            website = f"https://egazete.fotomac.com.tr/eGazete/image/www_fotomac_com_tr/{year}/{month}/{day}/1"
+            formatted_date = f"{day}-{month}-{year}"
+            if f'{formatted_date}.jpeg' not in os.listdir():
+                response = requests.get(url=website)
+                if response.status_code == 200:
+                    with open(f"{formatted_date}.jpeg", "wb") as f:
+                        f.write(response.content)
+                    with open("download_results.txt", "a") as f:
+                        f.write(f"{formatted_date} was downloaded\n")
+                    print(f"{formatted_date} was downloaded")
+                else:
+                    with open("download_results.txt", "a") as f:
+                        f.write(f"{formatted_date} was not downloaded,it had response status code {response.status_code}\n")
+                    print(f"{formatted_date} was not downloaded,it had response status code {response.status_code}")
 
+    #The following method will check all the dates from one date to another later date
+    def check_d1_d2(self,d1:datetime.datetime,d2:datetime.datetime):
+        if d1 > d2:
+            c = d1
+            d1 = d2
+            d2 = c
+
+        while d1 <= d2:
+            self.check_date(d1)
+            d1 += self.one_day
+
+    # The following method will check the entire archive
+    def check_all(self):
+        self.check_d1_d2(self.start_date,self.today)
 
 
 if __name__ == "__main__":
