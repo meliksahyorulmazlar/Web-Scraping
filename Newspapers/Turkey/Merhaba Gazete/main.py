@@ -13,7 +13,7 @@ class MerhabaGazete:
         self.last_page = self.find_last()
 
 
-    #This will find the last page of the archive
+    #This will find the number of the last page of the archive
     def find_last(self)->int:
         #When I last checked the archive had 79 pages
         count = 79
@@ -106,7 +106,66 @@ class MerhabaGazete:
         link = links[-1]
         self.download_link(link)
 
+    # The following method will check if the number was downloaded or not
+    def check_number(self,number:int):
+        links = self.find_newspapers(number)
+        print(links)
+        for link in links:
+            self.check_link(link)
+
+    # The following method will check if the image has been downloaded before or not
+    def check_link(self,link_date:tuple):
+        download_link = link_date[0]
+        date = link_date[1]
+
+        soup = BeautifulSoup(requests.get(url=download_link).text, "lxml")
+        pages = [(image["alt"], image["src"]) for image in soup.find_all("img", src=True, alt=True) if
+                 "Sayfa" in image["alt"]]
+        pages.pop()
+
+        for i in range(len(pages)):
+            download_link = pages[i][1].split("/")
+            number = download_link[-2]
+            changed = download_link[-1].replace("_s", "")
+            download_link[-1] = changed
+            download_link = "/".join(download_link)
+
+
+
+            directory1 = f"{number}-{date}"
+            try:
+                os.mkdir(directory1)
+            except FileExistsError:
+                pass
+
+            if changed not in os.listdir(directory1):
+                response = requests.get(url=download_link)
+                if response.status_code == 200:
+                    with open(f"{directory1}/{changed}", "wb") as f:
+                        f.write(response.content)
+
+                    with open("download_results.txt", "a") as f:
+                        f.write(f"{directory1}/{changed} was downloaded\n")
+                    print(f"{directory1}/{changed} was downloaded")
+                else:
+                    with open("download_results.txt", "a") as f:
+                        f.write(
+                            f"{directory1}/{changed} was not downloaded,it had response status code {response.status_code}\n")
+                    print(f"{directory1}/{changed} was not downloaded,it had response status code {response.status_code}")
+
+    # The following method will check from one number to another later number
+    def check_n1_n2(self,n1:int,n2:int):
+        if n1 > n2:
+            c = n1
+            n1 = n2
+            n2 = c
+        for i in range(n1,n2+1):
+            self.check_number(i)
+
+    # The following method will check the entire archive
+    def check_all(self):
+        self.check_n1_n2(self.first_page,self.last_page)
+
 if __name__ == "__main__":
     mg = MerhabaGazete()
     mg.download_latest()
-
