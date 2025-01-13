@@ -86,14 +86,9 @@ class TehranTimes:
                 if word_date in title:
                     anchor_tag = li.find("a",href=True)
                     href = anchor_tag["href"]
-
-
                     no = href.split("/")[-1]
                     file_name = f"{no}-({formatted_date})"
-
                     download_link = f"https://www.tehrantimes.com{href}"
-
-                    response = requests.get(url=download_link)
 
                     try:
                         os.mkdir(f"{date.year}")
@@ -105,6 +100,7 @@ class TehranTimes:
                     except FileExistsError:
                         pass
 
+                    response = requests.get(url=download_link)
                     if response.status_code == 200:
                         with open(f"{date.year}/{date.month}{self.number_month_dictionary[date.month]}/{file_name}-{count}.pdf", "wb") as f:
                             f.write(response.content)
@@ -139,8 +135,73 @@ class TehranTimes:
     def download_latest_date(self):
         self.download_date(date=self.latest_date)
 
+    # The following method will check if the pdf has been downloaded or not
+    def check_date(self,date:datetime.datetime):
+        if self.start_date <= date <= self.latest_date:
+            day = date.day
+            month = date.month
+            year = date.year
+            formatted_date = f"{date.day}-{date.month}-{date.year}"
+
+            website = f"https://www.tehrantimes.com/archive?pi=1&ty=14&ms=2&ps=2&dy={day}&mn={month}&yr={year}"
+
+            soup = BeautifulSoup(requests.get(url=website).text, "lxml")
+
+            lis = soup.find_all("li", class_="mosaic mosaic-2 newspaper")
+            count = 1
+            for li in lis:
+                word_date = f"{day} {self.number_month_dictionary[month]} {year}"
+                span = li.find("span", title=True)
+                title = span["title"]
+                if word_date in title:
+                    anchor_tag = li.find("a", href=True)
+                    href = anchor_tag["href"]
+                    no = href.split("/")[-1]
+                    file_name = f"{no}-({formatted_date})"
+                    download_link = f"https://www.tehrantimes.com{href}"
+
+                    try:
+                        os.mkdir(f"{date.year}")
+                    except FileExistsError:
+                        pass
+
+                    try:
+                        os.mkdir(f"{date.year}/{date.month}{self.number_month_dictionary[date.month]}")
+                    except FileExistsError:
+                        pass
+
+                    if f"{file_name}-{count}.pdf" not in os.listdir(f"{date.year}/{date.month}{self.number_month_dictionary[date.month]}"):
+                        response = requests.get(url=download_link)
+                        if response.status_code == 200:
+                            with open(f"{date.year}/{date.month}{self.number_month_dictionary[date.month]}/{file_name}-{count}.pdf","wb") as f:
+                                f.write(response.content)
+                            with open("download_results.txt", "a") as f:
+                                f.write(f"{file_name}-{count} was downloaded\n")
+                            print(f"{file_name}-{count} was downloaded")
+                            count += 1
+                        else:
+                            with open("download_results.txt", "a") as f:
+                                f.write(
+                                    f"{file_name} was not downloaded,it had response status code {response.status_code}\n")
+                            print(f"{file_name} not was downloaded,it had response status code {response.status_code}")
+
+    # The following method will check from one date to another
+    def check_d1_d2(self,d1:datetime.datetime,d2:datetime.datetimea):
+        if d1 > d2:
+            c = d1
+            d1 = d2
+            d2 = d1
+
+        while d1 <= d2:
+            self.check_date(d1)
+            d1 += self.one_day
+
+    # The following method will check the entire archive
+    def check_all(self):
+        start = self.start_date
+        end = self.latest_date
+        self.check_d1_d2(start,end)
 
 if __name__ == "__main__":
     tt = TehranTimes()
-
     tt.download_all()
