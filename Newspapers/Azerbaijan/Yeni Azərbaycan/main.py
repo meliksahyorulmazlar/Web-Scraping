@@ -1,5 +1,7 @@
 #Yeni Azərbaycan pdf downloader
 #Newspaper from Azerbaijan
+import os
+
 import selenium
 
 
@@ -40,7 +42,6 @@ class YeniAzerbaycan:
 
         pdf_name = download_link.split("/")[-1]
 
-
         if response.status_code == 200:
             with open(f"{pdf_name}","wb") as f:
                 f.write(response.content)
@@ -62,6 +63,28 @@ class YeniAzerbaycan:
     def download_latest(self):
         link = self.links[0]
         self.download(link)
+
+    #The following method will check to see if it has been downloaded or not. If it has not been downloaded it will get downloaded
+    def check_download(self,download_link:str):
+        pdf_name = download_link.split("/")[-1]
+
+        if pdf_name not in os.listdir():
+            response = requests.get(url=download_link, headers=self.headers)
+            if response.status_code == 200:
+                with open(f"{pdf_name}", "wb") as f:
+                    f.write(response.content)
+                with open("download_results.txt", "a") as f:
+                    f.write(f"{pdf_name} was downloaded\n")
+                print(f"{pdf_name} was downloaded")
+            else:
+                with open("download_results.txt", "a") as f:
+                    f.write(f"{pdf_name} was not downloaded, it had response status code {response.status_code}\n")
+                print(f"{pdf_name} was not downloaded, it had response status code {response.status_code}")
+
+    # The following method will check all the pages
+    def check_all(self):
+        for link in self.links[::-1]:
+            self.check_download(link)
 
 
 if __name__ == "__main__":
