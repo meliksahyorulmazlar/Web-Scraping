@@ -34,11 +34,16 @@ class MagnitogorskyMetal:
             pdf_link = f"https://magmetall.ru/upload/archive_cache/{filename}"
             pdf_response = requests.get(url=pdf_link)
             if pdf_response.status_code == 200:
-                with open(f"{filename}",'wb') as f:
-                    f.write(pdf_response.content)
-                with open('download_results.txt','a') as f:
-                    f.write(f'{filename} was downloaded.\n')
-                print(f'{filename} was downloaded.')
+                if len(pdf_response.content) > 500000:
+                    with open(f"{filename}", 'wb') as f:
+                        f.write(pdf_response.content)
+                    with open('download_results.txt', 'a') as f:
+                        f.write(f'{filename} was downloaded.\n')
+                    print(f'{filename} was downloaded.')
+                else:
+                    with open('download_results.txt', 'a') as f:
+                        f.write(f'{filename} does not exist.\n')
+                    print(f'{filename} does not exist.')
             elif pdf_response.status_code == 404:
                 with open('download_results.txt','a') as f:
                     f.write(f'{filename} does not exist.\n')
@@ -80,12 +85,18 @@ class MagnitogorskyMetal:
             if filename not in os.listdir():
                 pdf_link = f"https://magmetall.ru/upload/archive_cache/{filename}"
                 pdf_response = requests.get(url=pdf_link)
+
                 if pdf_response.status_code == 200:
-                    with open(f"{filename}",'wb') as f:
-                        f.write(pdf_response.content)
-                    with open('download_results.txt','a') as f:
-                        f.write(f'{filename} was downloaded.\n')
-                    print(f'{filename} was downloaded.')
+                    if len(pdf_response.content) > 500000:
+                        with open(f"{filename}",'wb') as f:
+                            f.write(pdf_response.content)
+                        with open('download_results.txt','a') as f:
+                            f.write(f'{filename} was downloaded.\n')
+                        print(f'{filename} was downloaded.')
+                    else:
+                        with open('download_results.txt', 'a') as f:
+                            f.write(f'{filename} does not exist.\n')
+                        print(f'{filename} does not exist.')
                 elif pdf_response.status_code == 404:
                     with open('download_results.txt','a') as f:
                         f.write(f'{filename} does not exist.\n')
@@ -94,6 +105,7 @@ class MagnitogorskyMetal:
                     with open('download_results.txt', 'a') as f:
                         f.write(f'{filename} was not downloaded, it had response status code {pdf_response.status_code}\n')
                     print(f'{filename} was not downloaded, it had response status code {pdf_response.status_code}')
+
 
     # The following method will check from one date to another later date
     def check_d1_d2(self,d1:datetime.datetime,d2:datetime.datetime):
@@ -110,7 +122,7 @@ class MagnitogorskyMetal:
     def check_all(self):
         self.check_d1_d2(self.start_date, self.today)
 
+    
 if __name__ == "__main__":
     mm = MagnitogorskyMetal()
-    mm.check_d1_d2(self=)
-
+    mm.check_all()
