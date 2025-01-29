@@ -9,7 +9,7 @@ from bs4 import BeautifulSoup
 class WindAndSand:
     def __init__(self):
         self.start_webdriver()
-        self.minimum_date = (3,1950)
+        self.minimum_date = (1,1950)
         self.maximum_date = (12,2021)
 
 
@@ -61,24 +61,7 @@ class WindAndSand:
 
     # The following method will download all the dates from one date to another date
     def download_d1_d2(self,d1:tuple,d2:tuple):
-        if d1 < self.minimum_date:
-            d1 = self.minimum_date
-        if d2 < self.minimum_date:
-            d2 = self.minimum_date
-        if d1 > self.maximum_date:
-            d1 = self.maximum_date
-        if d2 > self.maximum_date:
-            d2 = self.maximum_date
-        # comparing years
-        if d2[1] < d1[1]:
-            c = d1
-            d1 = d2
-            d2 = c
-
-        if d1[1] == d2[1] and d1[0] > d2[1]:
-            c = d1
-            d1 = d2
-            d2 = c
+        d1,d2 = self.compare(d1, d2)
 
         while d1 != d2:
             print(d1)
@@ -129,42 +112,6 @@ class WindAndSand:
                     print(f"{filename} was not downloaded,it had response status code {response.status_code}")
             else:
                 print(f"{filename} was already downloaded")
-
-    # The following method will check from one date to another later date
-    def check_d1_d2(self,d1:tuple,d2:tuple):
-        if d1 < self.minimum_date:
-            d1 = self.minimum_date
-        if d2 < self.minimum_date:
-            d2 = self.minimum_date
-        if d1 > self.maximum_date:
-            d1 = self.maximum_date
-        if d2 > self.maximum_date:
-            d2 = self.maximum_date
-        # comparing years
-        if d2[1] < d1[1]:
-            c = d1
-            d1 = d2
-            d2 = c
-
-        if d1[1] == d2[1] and d1[0] > d2[1]:
-            c = d1
-            d1 = d2
-            d2 = c
-
-        while d1 != d2:
-            print(d1)
-            self.check_date(d1)
-            if d1[0] == 12:
-                x = 1
-                y = d1[1] + 1
-                d1 = x,y
-            else:
-                x = d1[0]+1
-                y = d1[1]
-                d1 = x,y
-        if d1 == d2:
-            print(d1)
-            self.check_date(d1)
 
     # The following method will download all the dates
     def download_all(self):
@@ -223,6 +170,59 @@ class WindAndSand:
             else:
                 print(f"{filename} was already downloaded")
 
+    # The following method will get the right d1 and d2
+    def compare(self,d1:tuple,d2:tuple):
+        if d1[1] < 1950:
+            d1 = self.minimum_date
+
+        if d2[1] < 1950:
+            d2 = self.minimum_date
+
+        if d2[1] > 2021:
+            d2 = self.maximum_date
+
+        if d1[1] > 2021:
+            d1 = self.maximum_date
+
+        if d1[0] > 12:
+            x = 12
+            y = d1[1]
+            d1 = x,y
+
+        if d2[0] > 12:
+            x = 12
+            y = d2[1]
+            d1 = x,y
+
+        if d1[1] > d2[1]:
+            return d2,d1
+
+        if d1[1] < d2[1]:
+            return d1,d2
+
+        if d1[0] > d2[0]:
+            return d2,d1
+
+        return d1,d2
+
+    # The following method will check from one date to another later date
+    def check_d1_d2(self,d1:tuple,d2:tuple):
+        d1,d2 = self.compare(d1,d2)
+        while d1 != d2:
+            print(d1)
+            self.check_date(d1)
+            if d1[0] == 12:
+                x = 1
+                y = d1[1] + 1
+                d1 = x,y
+            else:
+                x = d1[0]+1
+                y = d1[1]
+                d1 = x,y
+        if d1 == d2:
+            print(d1)
+            self.check_date(d1)
+
 if __name__ == '__main__':
     windsand = WindAndSand()
-    windsand.check_all()
+    windsand.check_d1_d2(d1=(1,2024),d2=(1,2023))
