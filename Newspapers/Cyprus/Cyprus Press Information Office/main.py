@@ -75,12 +75,15 @@ class CyprusPressInformationOffice:
                         self.driver.get(url=link)
                         with open('content.txt', 'w') as f:
                             f.write(BeautifulSoup(self.driver.page_source, 'lxml').prettify())
+                        code = None
                         with open('content.txt', 'r') as f:
                             lines = f.readlines()
                             for line in lines:
                                 if 'iiifResourceUri' in line:
                                     list_form = line.split("_")
                                     code = list_form[-1].split("/")[0]
+                        if code is None:
+                            continue
                         print(code)
                         filename = f"{newspaper}-{date}"
                         print(code, filename)
@@ -126,12 +129,15 @@ class CyprusPressInformationOffice:
                         print(self.driver.current_url)
                         with open('content.txt', 'w') as f:
                             f.write(BeautifulSoup(self.driver.page_source, 'lxml').prettify())
+                        code = None
                         with open('content.txt', 'r') as f:
                             lines = f.readlines()
                             for line in lines:
                                 if 'iiifResourceUri' in line:
                                     list_form = line.split("_")
                                     code = list_form[-1].split("/")[0]
+                        if code is None:
+                            continue
                         print(code)
                         filename = f"{newspaper}-{date}"
                         print(code,filename)
