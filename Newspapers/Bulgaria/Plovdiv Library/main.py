@@ -331,7 +331,7 @@ class PlovdivLibrary:
                                 time.sleep(1)
                                 continue
                         filetype = file_link.split(".")[-1]
-                        filename = text_part +"."+ filetype
+                        filename = tag.text +"."+ filetype
                         print(filename)
                         if filename not in os.listdir(f'periodicals/{periodical}'):
                             response = requests.get(url=file_link)
