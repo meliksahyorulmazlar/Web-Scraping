@@ -1,7 +1,6 @@
 # Teesdale Mercury Archive
-import os
 
-import requests,lxml,datetime
+import requests,lxml,datetime,os
 from bs4 import BeautifulSoup
 
 
@@ -50,6 +49,8 @@ class TeesdaleMercury:
                     number += 1
                     if number < 10:
                         number_code = f"0{number}"
+                    else:
+                        number_code = f"{number}"
                     pdf_link = f"http://teesdalemercuryarchive.org/pdf/{year}/{month_text}-{day_code}/{month_text}-{day_code}-{year}-{number_code}.pdf"
                     response = requests.get(url=pdf_link, headers=self.headers)
                     if response.status_code == 200:
@@ -113,6 +114,8 @@ class TeesdaleMercury:
                 while True:
                     if number < 10:
                         number_code = f"0{number}"
+                    else:
+                        number_code = f"{number}"
                     pdf_link = f"http://teesdalemercuryarchive.org/pdf/{year}/{month_text}-{day_code}/{month_text}-{day_code}-{year}-{number_code}.pdf"
                     filename = pdf_link.split("/")[-1]
                     if filename not in os.listdir(main_directory):
