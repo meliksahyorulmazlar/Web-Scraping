@@ -1,5 +1,4 @@
 # ANNO Historische Zeitungen und Zeitschriften
-import shutil
 
 import requests,os,lxml
 from bs4 import BeautifulSoup
@@ -85,6 +84,7 @@ class Anno:
                             numbers.append(data_tuple)
                     for number in numbers:
                         filename = number[1]
+                        filename = filename.replace("/","-")
                         os.mkdir(f"{newspaper}/{year_filename}/{filename}")
                         soup3 = BeautifulSoup(requests.get(url=number[0]).text,'lxml')
                         images = []
@@ -170,6 +170,7 @@ class Anno:
                                 numbers.append(data_tuple)
                         for number in numbers:
                             filename = number[1]
+                            filename = filename.replace("/","-")
                             try:
                                 os.mkdir(f"{newspaper}/{year_filename}/{filename}")
                             except FileExistsError:
