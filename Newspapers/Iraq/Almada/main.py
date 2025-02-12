@@ -1,5 +1,6 @@
 # Almada, Iraqi Newspaper
 
+# You can directly access the directory via https://almadapaper.net/file/archiveto2615/
 import requests,os,lxml
 from bs4 import BeautifulSoup
 
@@ -35,6 +36,8 @@ class Almada:
                 os.mkdir(number)
                 for pdf in pdfs:
                     filename = pdf.split("/")[-1]
+                    if "almada" not in pdf:
+                        pdf = 'https://almadapaper.net'+ pdf
                     response = requests.get(pdf)
                     if response.status_code == 200:
                         with open(f"{number}/{filename}",'wb') as f:
@@ -82,6 +85,8 @@ class Almada:
                 for pdf in pdfs:
                     filename = pdf.split("/")[-1]
                     if filename not in os.listdir(number):
+                        if "almada" not in pdf:
+                            pdf = 'https://almadapaper.net'+ pdf
                         response = requests.get(pdf)
                         if response.status_code == 200:
                             with open(f"{number}/{filename}",'wb') as f:
