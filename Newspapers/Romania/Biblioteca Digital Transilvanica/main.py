@@ -18,6 +18,11 @@ class BibliotecaDigitalTransilvanica:
                 value = f'https://documente.bcucluj.ro/{link["href"]}'
                 self.newspapers[key] = value
 
+    # The following method will print the names of all the newspapers
+    def print_newspapers(self):
+        for newspaper in self.newspapers:
+            print(newspaper)
+
     # The following method will download a specific newspaper
     def download_newspaper(self,newspaper:str):
         if newspaper in self.newspapers:
