@@ -3,7 +3,6 @@
 
 import requests,lxml,datetime,os
 from bs4 import BeautifulSoup
-from sympy.physics.units import years
 
 
 class AlWatanBahrain:
