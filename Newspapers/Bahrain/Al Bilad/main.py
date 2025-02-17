@@ -148,17 +148,38 @@ class AlBiladBahrain:
             filename = f"{number}.pdf"
             pdfs = [pdf['href'] for pdf in soup.find_all('a',href=True) if '.pdf' in pdf['href']]
             pdf = pdfs[0]
-            response = requests.get(pdf)
-            if response.status_code == 200:
-                with open(f"Newspapers/{filename}",'wb') as f:
-                    f.write(response.content)
-                with open('download_results.txt','a') as f:
-                    f.write(f"{filename} was downloaded.\n")
-                print(f"{filename} was downloaded.")
-            else:
-                with open('download_results.txt','a') as f:
-                    f.write(f"{filename} was not downloaded, it had response status code {response.status_code}\n")
-                print(f"{filename} was not downloaded, it had response status code {response.status_code}")
+            try:
+                pdf = pdfs[0]
+                response = requests.get(pdf)
+                if response.status_code == 200:
+                    with open(f"../../../../Volumes/Expansion/Al Bilad Bahrain/Newspapers/{filename}", 'wb') as f:
+                        f.write(response.content)
+                    with open('download_results.txt', 'a') as f:
+                        f.write(f"{filename} was downloaded.\n")
+                    print(f"{filename} was downloaded.")
+                else:
+                    with open('download_results.txt', 'a') as f:
+                        f.write(f"{filename} was not downloaded, it had response status code {response.status_code}\n")
+                    print(f"{filename} was not downloaded, it had response status code {response.status_code}")
+            except IndexError:
+                try:
+                    os.mkdir(f"Newspapers/{number}")
+                except FileExistsError:
+                    pass
+                pdfs = [pdf['pdflink'] for pdf in soup.find_all('a', href=True, pdflink=True) if '.pdf' in pdf['pdflink']]
+                for i in range(len(pdfs)):
+                    pdf_name = f"{i + 1}.pdf"
+                    response = requests.get(pdfs[i])
+                    if response.status_code == 200:
+                        with open(f"Newspapers/{number}/{pdf_name}",'wb') as f:
+                            f.write(response.content)
+                        with open('download_results.txt', 'a') as f:
+                            f.write(f"{number}/{pdf_name} was downloaded.\n")
+                        print(f"{number}/{pdf_name} was downloaded.")
+                    else:
+                        with open('download_results.txt', 'a') as f:
+                            f.write(f"{number}/{pdf_name} was not downloaded, it had response status code {response.status_code}")
+                        print(f"{number}/{pdf_name} was not downloaded, it had response status code {response.status_code}")
 
     # The following method will download from one issue number to another later issue number
     def download_newspaper_n1_n2(self,n1:int,n2:int):
@@ -174,6 +195,7 @@ class AlBiladBahrain:
     def download_all(self):
         self.check_n1_n2_supplements(self.minimum_newspapers,self.maximum_newspapers)
 
+    
     # The following method will check if a specific newspaper issue number has been downloaded or not
     def check_newspaper_issue(self, number: int):
         if self.minimum_newspapers <= number <= self.maximum_newspapers:
@@ -182,18 +204,45 @@ class AlBiladBahrain:
                 website = f"https://www.albiladpress.com/pdf-version/1/{number}"
                 soup = BeautifulSoup(requests.get(website).text, 'lxml')
                 pdfs = [pdf['href'] for pdf in soup.find_all('a', href=True) if '.pdf' in pdf['href']]
-                pdf = pdfs[0]
-                response = requests.get(pdf)
-                if response.status_code == 200:
-                    with open(f"Newspapers/{filename}", 'wb') as f:
-                        f.write(response.content)
-                    with open('download_results.txt', 'a') as f:
-                        f.write(f"{filename} was downloaded.\n")
-                    print(f"{filename} was downloaded.")
-                else:
-                    with open('download_results.txt', 'a') as f:
-                        f.write(f"{filename} was not downloaded, it had response status code {response.status_code}\n")
-                    print(f"{filename} was not downloaded, it had response status code {response.status_code}")
+                try:
+                    pdf = pdfs[0]
+                    response = requests.get(pdf)
+                    if response.status_code == 200:
+                        with open(f"Newspapers/{filename}", 'wb') as f:
+                            f.write(response.content)
+                        with open('download_results.txt', 'a') as f:
+                            f.write(f"{filename} was downloaded.\n")
+                        print(f"{filename} was downloaded.")
+                    else:
+                        with open('download_results.txt', 'a') as f:
+                            f.write(
+                                f"{filename} was not downloaded, it had response status code {response.status_code}\n")
+                        print(f"{filename} was not downloaded, it had response status code {response.status_code}")
+                except IndexError:
+                    try:
+                        os.mkdir(f"Newspapers/{number}")
+                    except FileExistsError:
+                        pass
+                    pdfs = [pdf['pdflink'] for pdf in soup.find_all('a', href=True, pdflink=True) if
+                            '.pdf' in pdf['pdflink']]
+                    for i in range(len(pdfs)):
+                        pdf_name = f"{i + 1}.pdf"
+                        if pdf_name not in os.listdir(f"Newspapers/{number}"):
+                            response = requests.get(pdfs[i])
+                            if response.status_code == 200:
+                                with open(f"Newspapers/{number}/{pdf_name}", 'wb') as f:
+                                    f.write(response.content)
+                                with open('download_results.txt', 'a') as f:
+                                    f.write(f"{number}/{pdf_name} was downloaded.\n")
+                                print(f"{number}/{pdf_name} was downloaded.")
+                            else:
+                                with open('download_results.txt', 'a') as f:
+                                    f.write(
+                                        f"{number}/{pdf_name} was not downloaded, it had response status code {response.status_code}")
+                                print(
+                                    f"{number}/{pdf_name} was not downloaded, it had response status code {response.status_code}")
+                        else:
+                            print(f"{number}/{filename} was already downloaded.")
             else:
                 print(f"{filename} was already downloaded")
 
