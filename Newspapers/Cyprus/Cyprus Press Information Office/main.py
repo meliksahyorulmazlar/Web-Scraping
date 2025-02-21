@@ -145,6 +145,8 @@ class CyprusPressInformationOffice:
                             self.check_individual_paper(code,filename,newspaper)
                         elif f'{filename}' in os.listdir(newspaper):
                             self.check_individual_paper(code,filename,newspaper)
+                        else:
+                            print(f"{filename} was already downloaded.")
 
     #The following method will download the newspapers
     def check_individual_paper(self,code,filename,newspaper):
@@ -180,6 +182,7 @@ class CyprusPressInformationOffice:
                     else:
                         loop = False
                 else:
+                    print(f"{number}.pdf was already downloaded.")
                     number += 1
         else:
             with open('download_results.txt', 'a') as f:
