@@ -1,7 +1,7 @@
 # Denmark Library
-import shutil
 
-import requests,os,lxml,time,datetime
+
+import requests,os,lxml,time,datetime,shutil
 import selenium.common.exceptions
 from bs4 import BeautifulSoup
 from selenium import webdriver
