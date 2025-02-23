@@ -109,11 +109,11 @@ class DenmarkLibrary:
                         if response.status_code == 200:
                             with open(f"{newspaper}/{filename}.pdf",'wb') as f:
                                 f.write(response.content)
-                            with open(f"download_results,txt",'a') as f:
+                            with open(f"download_results.txt",'a') as f:
                                 f.write(f"{newspaper}/{filename}.pdf was downloaded.\n")
                             print(f"{newspaper}/{filename}.pdf was downloaded.")
                         else:
-                            with open(f"download_results,txt",'a') as f:
+                            with open(f"download_results.txt",'a') as f:
                                 f.write(f"{newspaper}/{filename}.pdf was not downloaded, it had response status code {response.status_code}\n")
                             print(f"{newspaper}/{filename}.pdf was not downloaded, it had response status code {response.status_code}")
 
@@ -192,11 +192,11 @@ class DenmarkLibrary:
                             if response.status_code == 200:
                                 with open(f"{newspaper}/{filename}.pdf", 'wb') as f:
                                     f.write(response.content)
-                                with open(f"download_results,txt", 'a') as f:
+                                with open(f"download_results.txt", 'a') as f:
                                     f.write(f"{newspaper}/{filename}.pdf was downloaded.\n")
                                 print(f"{newspaper}/{filename}.pdf was downloaded.")
                             else:
-                                with open(f"download_results,txt", 'a') as f:
+                                with open(f"download_results.txt", 'a') as f:
                                     f.write(f"{newspaper}/{filename}.pdf was not downloaded, it had response status code {response.status_code}\n")
                                 print(f"{newspaper}/{filename}.pdf was not downloaded, it had response status code {response.status_code}")
 
