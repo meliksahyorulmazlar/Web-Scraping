@@ -1,12 +1,9 @@
 # Pelita Brunei, a newspaper from Brunei
-import datetime
-import time
 
 from selenium import webdriver
 from selenium.webdriver.common.by import By
-import requests,os,lxml
+import requests,os,lxml,time,datetime
 from bs4 import BeautifulSoup
-
 
 class PelitaBrunei:
     def __init__(self):
@@ -85,10 +82,8 @@ class PelitaBrunei:
                         print(f"{year}/{filename} was downloaded.")
                     else:
                         with open('download_results.txt', 'a') as f:
-                            f.write(
-                                f"{year}/{filename} was not downloaded, it had response status code {response.status_code}\n")
-                        print(
-                            f"{year}/{filename} was not downloaded, it had response status code {response.status_code}")
+                            f.write(f"{year}/{filename} was not downloaded, it had response status code {response.status_code}\n")
+                        print(f"{year}/{filename} was not downloaded, it had response status code {response.status_code}")
                 else:
                     print(f'{year}/{filename} was already downloaded')
 
@@ -105,8 +100,6 @@ class PelitaBrunei:
     # The following method will check the entire archive
     def check_all(self):
         self.check_y1_y2(self.first_year, self.current_year)
-
-
 
 
     # The following method will gather all the pdfs for a particular year
@@ -130,10 +123,11 @@ class PelitaBrunei:
                         if pdf['href'] not in pdfs:
                             pdfs.append(pdf['href'])
                         new_count += 1
+
                 if new_count == 0:
                     if extra_count > 0:
                         return []
-                    directories = [f"https://www.pelitabrunei.gov.bn" + l['href'] for l in soup.find_all('a', class_='ms-listlink')]
+                    directories = [f"https://www.pelitabrunei.gov.bn" + link['href'] for link in soup.find_all('a', class_='ms-listlink')]
                     for directory in directories:
                         self.driver.get(directory)
                         time.sleep(1)
@@ -145,8 +139,7 @@ class PelitaBrunei:
                                 new_count += 1
                     extra_count += 1
                 else:
-                    tags = [tag.get_attribute('onclick') for tag in self.driver.find_elements(By.TAG_NAME, 'a') if
-                            tag.get_attribute('onclick')]
+                    tags = [tag.get_attribute('onclick') for tag in self.driver.find_elements(By.TAG_NAME, 'a') if tag.get_attribute('onclick')]
                     tag = tags[-1]
                     x = tag.split('"')
                     try:
@@ -166,7 +159,6 @@ class PelitaBrunei:
                             self.driver.get(website)
             return pdfs
 
-
 if __name__ == "__main__":
     pb = PelitaBrunei()
-    pb.check_year(2015)
+    pb.check_all()
