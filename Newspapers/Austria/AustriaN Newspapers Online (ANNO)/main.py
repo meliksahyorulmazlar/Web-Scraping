@@ -85,21 +85,24 @@ class Anno:
                     for number in numbers:
                         filename = number[1]
                         filename = filename.replace("/","-")
-                        os.mkdir(f"{newspaper}/{year_filename}/{filename}")
-                        soup3 = BeautifulSoup(requests.get(url=number[0]).text,'lxml')
-                        images = []
-                        for image in soup3.find_all('img'):
-                            image_link = image['src'].split("?")[0]
-                            if "https" in image['src']:
-                                images.append(image_link)
-                        for i in range(len(images)):
-                            response = requests.get(images[i])
-                            if response.status_code == 200:
-                                with open(f"{newspaper}/{year_filename}/{filename}/{i+1}.jpeg",'wb') as f:
-                                    f.write(response.content)
-                                with open('download_results.txt','a') as f:
-                                    f.write(f"{newspaper}/{year_filename}/{filename}/{i+1}.jpeg was downloaded\n")
-                                print(f"{newspaper}/{year_filename}/{filename}/{i+1}.jpeg was downloaded")
+                        try:
+                            os.mkdir(f"{newspaper}/{year_filename}/{filename}")
+                        except FileExistsError:
+                            soup3 = BeautifulSoup(requests.get(url=number[0]).text,'lxml')
+                        else:
+                            images = []
+                            for image in soup3.find_all('img'):
+                                image_link = image['src'].split("?")[0]
+                                if "https" in image['src']:
+                                    images.append(image_link)
+                            for i in range(len(images)):
+                                response = requests.get(images[i])
+                                if response.status_code == 200:
+                                    with open(f"{newspaper}/{year_filename}/{filename}/{i+1}.jpeg",'wb') as f:
+                                        f.write(response.content)
+                                    with open('download_results.txt','a') as f:
+                                        f.write(f"{newspaper}/{year_filename}/{filename}/{i+1}.jpeg was downloaded\n")
+                                    print(f"{newspaper}/{year_filename}/{filename}/{i+1}.jpeg was downloaded")
 
     # The following method will download all the newspapers on the archive
     def download_newspapers(self)->None:
